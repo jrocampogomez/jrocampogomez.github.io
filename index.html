@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ══════════════════════════════════════════════════════════════════
+     EDIT ME FIRST: name, description, and your site URL
+     ══════════════════════════════════════════════════════════════════ -->
+<title>Jose Lastname — Physics, Stanford University</title>
+<meta name="description" content="Jose Lastname, physics undergraduate at Stanford University. High-energy astrophysics: blazar luminosity functions, evolution of active galactic nuclei, and statistical methods for flux-limited samples.">
+<meta name="author" content="Jose Lastname">
+
+<!-- Social preview (shows when someone shares your link) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jose Lastname — Physics, Stanford University">
+<meta property="og:description" content="High-energy astrophysics: blazar luminosity functions and statistical methods for flux-limited samples.">
+<meta name="twitter:card" content="summary">
+
+<meta name="theme-color" content="#f3f5f2" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#121614" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171c1a'/%3E%3Cpath d='M4 26 C12 26 18 18 28 6' stroke='%237fc4b1' stroke-width='2' fill='none'/%3E%3Ccircle cx='9' cy='11' r='1.6' fill='%23f3f5f2'/%3E%3Ccircle cx='16' cy='8' r='1.6' fill='%23f3f5f2'/%3E%3Ccircle cx='22' cy='15' r='1.6' fill='%23f3f5f2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS — change a color here and it changes everywhere
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#f3f5f2;        /* cool graph-paper white */
+  --paper-2:#e9ece8;      /* recessed panels */
+  --ink:#171c1a;          /* near-black, green undertone */
+  --ink-2:#5d6763;        /* secondary text, metadata */
+  --rule:#c9cfc9;         /* hairlines */
+  --accent:#25534a;       /* deep verdigris — links, data curve */
+  --accent-soft:rgba(37,83,74,.09);
+
+  --serif:"Newsreader",Iowan Old Style,Palatino,Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --measure:63ch;         /* reading width */
+  --rail:272px;           /* sidebar width */
+  --gutter:clamp(1.4rem,5vw,4rem);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#121614; --paper-2:#1a201d; --ink:#e6eae6; --ink-2:#98a39e;
+    --rule:#2e3733; --accent:#7fc4b1; --accent-soft:rgba(127,196,177,.10);
+  }
+}
+/* Manual override set by the theme button */
+html[data-theme="light"]{
+  --paper:#f3f5f2; --paper-2:#e9ece8; --ink:#171c1a; --ink-2:#5d6763;
+  --rule:#c9cfc9; --accent:#25534a; --accent-soft:rgba(37,83,74,.09);
+}
+html[data-theme="dark"]{
+  --paper:#121614; --paper-2:#1a201d; --ink:#e6eae6; --ink-2:#98a39e;
+  --rule:#2e3733; --accent:#7fc4b1; --accent-soft:rgba(127,196,177,.10);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. BASE
+   ═══════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:clamp(1.02rem,.4vw + .95rem,1.14rem);
+  font-weight:400; line-height:1.62; letter-spacing:.002em;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);transition:border-color .18s,color .18s}
+a:hover{border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;z-index:99;background:var(--paper);padding:.6rem 1rem;border:1px solid var(--accent)}
+
+/* Small mono utility type — used for anything that is *apparatus*
+   rather than prose: labels, dates, methods, axis ticks. */
+.mono{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.meta{font-family:var(--mono);font-size:.735rem;line-height:1.75;letter-spacing:.01em;color:var(--ink-2);text-transform:none}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. LAYOUT — persistent rail on the left, content on the right
+   ═══════════════════════════════════════════════════════════════════ */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;min-height:100vh}
+@media (max-width:900px){.shell{grid-template-columns:1fr}}
+
+.rail{
+  border-right:1px solid var(--rule); padding:2.6rem 1.7rem 2rem var(--gutter);
+  position:sticky; top:0; align-self:start; height:100vh;
+  display:flex; flex-direction:column; gap:1.6rem;
+}
+@media (max-width:900px){
+  .rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);
+        padding:1.9rem var(--gutter) 1.5rem}
+}
+.wordmark{font-size:1.34rem;font-weight:500;line-height:1.15;letter-spacing:-.012em;margin:0}
+.wordmark a{color:inherit;border:0}
+.wordmark .given{display:block;color:var(--ink-2);font-weight:400;font-style:italic}
+.rail-sub{margin:.55rem 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
+
+nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.1rem}
+@media (max-width:900px){nav ol{flex-direction:row;flex-wrap:wrap;gap:.1rem 1.1rem}}
+nav a{
+  display:block;padding:.22rem 0;border:0;color:var(--ink);
+  font-family:var(--mono);font-size:.745rem;letter-spacing:.13em;text-transform:uppercase;
+}
+nav a::before{content:"";display:inline-block;width:13px;height:1px;margin-right:9px;
+  vertical-align:middle;background:transparent;transition:background .2s}
+nav a:hover::before,nav a[aria-current="true"]::before{background:var(--accent)}
+nav a[aria-current="true"]{color:var(--accent)}
+@media (max-width:900px){nav a::before{display:none}}
+
+/* External links in the rail */
+.ilinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.12rem}
+.ilinks a{font-family:var(--mono);font-size:.735rem;letter-spacing:.02em;border-bottom-color:transparent}
+.ilinks a:hover{border-bottom-color:var(--accent)}
+@media (max-width:900px){.ilinks{flex-direction:row;flex-wrap:wrap;gap:.2rem 1rem}}
+
+.rail-foot{margin-top:auto;display:flex;flex-direction:column;gap:.8rem}
+@media (max-width:900px){
+  .rail-foot{flex-direction:row;align-items:center;justify-content:space-between;
+             gap:1rem;margin-top:.4rem;flex-wrap:wrap}
+}
+.themebtn{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:1px solid var(--rule);color:var(--ink-2);
+  padding:.4rem .7rem;cursor:pointer;width:max-content;transition:border-color .18s,color .18s
+}
+.themebtn:hover{border-color:var(--accent);color:var(--accent)}
+
+main{padding:0 var(--gutter) 5rem;min-width:0}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. HERO — the figure is the thesis of the page
+   ═══════════════════════════════════════════════════════════════════ */
+.hero{padding:clamp(2.6rem,7vw,5.2rem) 0 0;max-width:var(--measure)}
+.hero h1{
+  font-size:clamp(1.72rem,3.4vw,2.62rem);font-weight:300;line-height:1.24;
+  letter-spacing:-.018em;margin:0 0 1.1rem;text-wrap:balance;
+}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero p{margin:0 0 1rem;color:var(--ink-2);font-size:1.02em}
+
+.figure{margin:clamp(2.2rem,5vw,3.4rem) 0 0;max-width:760px}
+.figure canvas{width:100%;height:auto;display:block}
+.figcap{display:flex;gap:1.2rem;justify-content:space-between;align-items:baseline;
+  border-top:1px solid var(--rule);margin-top:.6rem;padding-top:.55rem;flex-wrap:wrap}
+.figcap p{margin:0;font-family:var(--mono);font-size:.715rem;line-height:1.6;color:var(--ink-2);max-width:52ch}
+.figcap .tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+
+/* ═══════════════════════════════════════════════════════════════════
+   5. SECTIONS
+   ═══════════════════════════════════════════════════════════════════ */
+section{padding:clamp(3rem,7vw,4.6rem) 0 0;scroll-margin-top:1.5rem}
+.head{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--rule);padding-bottom:.5rem;margin-bottom:1.9rem}
+.head h2{font-size:1.06rem;font-weight:500;letter-spacing:.01em;margin:0;flex:0 0 auto}
+.head .count{margin-left:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:right}
+.prose{max-width:var(--measure)}
+.prose p{margin:0 0 1.05em}
+.prose p:last-child{margin-bottom:0}
+.lede{font-size:1.1em}
+
+/* Entry: one research project, one repo, one piece of writing */
+.entry{max-width:var(--measure);padding:0 0 2.1rem;margin:0 0 2.1rem;border-bottom:1px solid var(--rule)}
+.entry:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.entry h3{font-size:1.12rem;font-weight:500;letter-spacing:-.005em;margin:0 0 .3rem;line-height:1.35}
+.entry h3 a{border-bottom-color:var(--rule)}
+.entry .meta{display:block;margin:0 0 .8rem}
+.entry .meta b{font-weight:400;color:var(--ink)}
+.entry p{margin:0 0 .8em}
+.entry p:last-child{margin-bottom:0}
+.status{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
+  border:1px solid var(--rule);padding:.16rem .45rem;margin-left:.4rem;color:var(--ink-2);vertical-align:.12em;white-space:nowrap}
+.status.live{color:var(--accent);border-color:var(--accent)}
+
+/* Compact list: talks, awards, courses */
+.rows{list-style:none;margin:0;padding:0;max-width:var(--measure)}
+.rows li{display:grid;grid-template-columns:7.6rem 1fr;gap:.2rem 1.2rem;padding:.62rem 0;border-bottom:1px solid var(--rule)}
+.rows li:last-child{border-bottom:0}
+.rows .when{font-family:var(--mono);font-size:.71rem;letter-spacing:.04em;color:var(--ink-2);padding-top:.3em}
+.rows .what{margin:0}
+.rows .what small{display:block;font-family:var(--mono);font-size:.71rem;color:var(--ink-2);margin-top:.15rem}
+@media (max-width:560px){
+  .rows li{grid-template-columns:1fr}
+  .rows .when{padding-top:0}
+}
+
+/* Toolbox chips */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:1.5rem 0 0;padding:0;max-width:var(--measure)}
+.chips li{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;color:var(--ink-2);
+  background:var(--paper-2);padding:.28rem .55rem}
+
+/* Pull-quote used once, in the writing section */
+.pull{max-width:var(--measure);margin:0 0 2.1rem;padding:0 0 0 1.2rem;border-left:2px solid var(--accent);
+  font-style:italic;color:var(--ink-2)}
+.pull p{margin:0}
+
+/* Contact block */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.4rem;max-width:var(--measure)}
+.contact div p{margin:.15rem 0 0;font-size:.95rem}
+
+footer{max-width:var(--measure);margin-top:clamp(3rem,7vw,4.6rem);padding-top:1.1rem;border-top:1px solid var(--rule)}
+footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:var(--ink-2)}
+
+/* Entrance: one quiet orchestrated reveal, then nothing moves again. */
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(9px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards}
+  .reveal:nth-child(1){animation-delay:.05s}
+  .reveal:nth-child(2){animation-delay:.13s}
+  .reveal:nth-child(3){animation-delay:.21s}
+  .reveal:nth-child(4){animation-delay:.29s}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+
+@media print{
+  .rail nav,.themebtn,.figure{display:none}
+  .shell{display:block}
+  body{background:#fff;color:#000;font-size:10.5pt}
+  a{color:#000;border:0}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="shell">
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SIDEBAR — name, navigation, theme button
+       ════════════════════════════════════════════════════════════════ -->
+  <header class="rail">
+    <div>
+      <p class="wordmark"><a href="#top"><span class="given">Jose</span>Lastname</a></p>
+      <p class="rail-sub">Physics undergraduate<br>Stanford University</p>
+    </div>
+
+    <nav aria-label="Sections">
+      <ol>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#talks">Talks &amp; awards</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#outreach">Outreach</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </nav>
+
+    <div class="rail-foot">
+      <!-- EDIT: your real links. Delete any line you don't use. -->
+      <ul class="ilinks">
+        <li><a href="cv.pdf">CV (PDF)</a></li>
+        <li><a href="https://github.com/YOUR-USERNAME">GitHub</a></li>
+        <li><a href="https://orcid.org/0000-0000-0000-0000">ORCID</a></li>
+        <li><a href="mailto:you@stanford.edu">Email</a></li>
+      </ul>
+      <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       MAIN
+       ════════════════════════════════════════════════════════════════ -->
+  <main id="main">
+    <div id="top" class="hero">
+      <h1 class="reveal">I study how the brightest jets in the universe evolve &mdash; and what a survey can&rsquo;t <em>see</em>.</h1>
+      <p class="reveal">Undergraduate in physics at Stanford, working at KIPAC on the luminosity functions and cosmological evolution of blazars. Most of my time goes to a question that sounds like bookkeeping and isn&rsquo;t: every flux-limited catalogue is missing exactly the objects that would tell you the most, and the correction is not optional.</p>
+      <p class="reveal meta">Currently &mdash; finishing an analysis of &gamma;-ray and radio luminosity evolution in flat-spectrum radio quasars. Applying to astrophysics PhD programs this cycle.</p>
+    </div>
+
+    <!-- SIGNATURE FIGURE. Synthetic/illustrative only: no data, no results. -->
+    <figure class="figure reveal">
+      <canvas id="plot" width="1520" height="620" role="img"
+        aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
+      <figcaption class="figcap">
+        <p>Luminosity vs. redshift for a flux-limited sample. The curve is the detection threshold; everything beneath it exists and is simply absent from the catalogue. Recovering the underlying distribution from what survives is the whole problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
+        <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
+      </figcaption>
+    </figure>
+
+    <!-- ─────────────────────────── ABOUT ─────────────────────────── -->
+    <section id="about" aria-labelledby="about-h">
+      <div class="head"><h2 id="about-h">About</h2><span class="count">Stanford &middot; KIPAC</span></div>
+      <div class="prose">
+        <p class="lede">I&rsquo;m a physics major at Stanford University and a research student at the Kavli Institute for Particle Astrophysics and Cosmology, where I work with Professor Vah&eacute; Petrosian on the evolution of active galactic nuclei.</p>
+        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium, and transferred to Stanford as a Jack Kent Cooke Foundation Transfer Scholar. That route shaped what I care about: I like problems where the difficulty is honest and where the method has to be defended line by line, and I have a low tolerance for results that only hold if you don&rsquo;t look at how the sample was built.</p>
+        <p>The tools I keep coming back to are nonparametric ones &mdash; Efron&ndash;Petrosian&rsquo;s permutation test, Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> method, bootstrap uncertainties &mdash; because they let you separate luminosity evolution from selection without assuming the answer first. Long term, I want to work on high-energy astrophysics and on the statistics that make survey data trustworthy.</p>
+        <p>Outside the lab I write poetry and short fiction, play guitar badly and often, and run telescopes for the public on clear nights.</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── RESEARCH ────────────────────────
+         TO ADD A PROJECT: copy one <article class="entry"> block.
+         ─────────────────────────────────────────────────────────── -->
+    <section id="research" aria-labelledby="research-h">
+      <div class="head"><h2 id="research-h">Research</h2><span class="count">2 active &middot; 1 past</span></div>
+
+      <article class="entry">
+        <h3>Luminosity evolution of blazars in &gamma;-rays and radio<span class="status live">Active</span></h3>
+        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vah&eacute; Petrosian &nbsp;&middot;&nbsp; 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
+        <p>Flat-spectrum radio quasars are detected in two very different surveys at once, and the two selections truncate the sample in different places. I&rsquo;m measuring how &gamma;-ray and radio luminosity evolve with redshift for a cross-matched 4LAC &times; VLBI &times; Gaia sample, using nonparametric methods that handle a doubly truncated dataset without assuming a functional form for the luminosity function.</p>
+        <p>The work replicates and extends Zeng, Petrosian &amp; Yi (2021): reconstructing local-frame cumulative luminosity functions properly requires de-evolving both the luminosities and the flux limits, which turns out to be where most published treatments quietly go wrong. I rebuilt the analysis pipeline from the ground up, audited the inherited code, and documented each correction.</p>
+        <p class="meta">Manuscript in preparation. Results pending advisor review, so nothing quantitative is posted here yet.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Recovering Fe&nbsp;II reverberation lags in OzDES<span class="status live">Active</span></h3>
+        <p class="meta">Simulation study &nbsp;&middot;&nbsp; 2026&ndash;present &nbsp;&middot;&nbsp; <b>Methods:</b> light-curve simulation &middot; cross-correlation &middot; lag-recovery bias</p>
+        <p>Reverberation mapping turns a time delay into a black hole mass, so the credibility of the mass depends entirely on whether the lag you recover is the lag that&rsquo;s really there. I&rsquo;m building a simulated continuum and broad-line light-curve generator matched to OzDES&rsquo;s cadence and noise, to characterise how often the Fe&nbsp;II lag is recovered and how it fails when it isn&rsquo;t.</p>
+        <p>The first useful output was unglamorous: seven methodological problems in the simulation code I inherited, and a rewritten generator that fixes them.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Undergraduate research, NASA California Space Grant<span class="status">Completed</span></h3>
+        <p class="meta">Los Angeles City College &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Jayesh Bhakta &nbsp;&middot;&nbsp; 2023&ndash;2024</p>
+        <p>My first research project, carried out at a community college with a small budget and a lot of enthusiasm, and presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024. <span class="meta">[Add a sentence here describing the project &mdash; you know this one better than any summary of it.]</span></p>
+      </article>
+    </section>
+
+    <!-- ─────────────────────────── CODE ──────────────────────────── -->
+    <section id="code" aria-labelledby="code-h">
+      <div class="head"><h2 id="code-h">Code</h2><span class="count">Python &middot; open on request</span></div>
+      <div class="prose">
+        <p>Almost all of my research is code, so I treat it as part of the result rather than scaffolding around it: version-controlled, diagnosed, and written so that someone else can find out where it&rsquo;s wrong.</p>
+      </div>
+
+      <article class="entry" style="margin-top:1.9rem">
+        <h3>Blazar evolution pipeline</h3>
+        <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
+        <p>An end-to-end analysis of a cross-matched blazar catalogue: sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian test statistic, C&minus; reconstruction of the luminosity function, broken-power-law fitting with multi-start optimisation, bootstrap uncertainties, and a suite of numbered diagnostics that each answer one question about whether the previous step actually worked.</p>
+        <p>Two fixes I&rsquo;m fond of: replacing a fragile <span class="meta">fsolve</span> call for the maximum accessible redshift with a bracketed <span class="meta">brentq</span> solver that cannot silently converge to the wrong root, and catching a sign error in a K-correction average that had been quietly reassigning most of the sample to the wrong subset.</p>
+        <p class="meta"><a href="https://github.com/YOUR-USERNAME">Repository</a> &mdash; available on request while the manuscript is in preparation.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Light-curve simulator for reverberation mapping</h3>
+        <p class="meta">Python &middot; damped random walk continuum &middot; transfer-function convolution</p>
+        <p>Generates continuum light curves, convolves them with a chosen transfer function to produce the line response, then re-samples onto a real survey&rsquo;s cadence with realistic photometric noise so that lag-recovery methods can be tested against a known truth.</p>
+      </article>
+
+      <!-- EDIT: keep this list honest — remove anything you wouldn't
+           want to be asked about in an interview. -->
+      <ul class="chips" aria-label="Tools">
+        <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
+        <li>Matplotlib</li><li>Jupyter</li><li>Git</li><li>LaTeX / AASTeX</li>
+        <li>Bash</li><li>Mathematica</li><li>SQL</li>
+      </ul>
+    </section>
+
+    <!-- ─────────────────── TALKS, AWARDS, TEACHING ─────────────────
+         TO ADD A ROW: copy one <li> block.
+         ─────────────────────────────────────────────────────────── -->
+    <section id="talks" aria-labelledby="talks-h">
+      <div class="head"><h2 id="talks-h">Talks &amp; awards</h2><span class="count">selected</span></div>
+      <ul class="rows">
+        <li>
+          <span class="when">2024</span>
+          <p class="what">National Conference on Undergraduate Research (NCUR)<small>Oral presentation &middot; [add title]</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Southern California Conferences for Undergraduate Research (SCCUR)<small>Poster &middot; [add title]</small></p>
+        </li>
+        <li>
+          <span class="when">2024&ndash;</span>
+          <p class="what">Jack Kent Cooke Foundation Undergraduate Transfer Scholarship<small>National award for community college transfer students</small></p>
+        </li>
+        <li>
+          <span class="when">2023&ndash;24</span>
+          <p class="what">NASA California Space Grant Consortium research fellowship<small>Los Angeles City College</small></p>
+        </li>
+        <!-- <li>
+          <span class="when">2027</span>
+          <p class="what">American Astronomical Society, 250th meeting<small>Poster &middot; title</small></p>
+        </li> -->
+      </ul>
+    </section>
+
+    <!-- ─────────────────────────── WRITING ───────────────────────── -->
+    <section id="writing" aria-labelledby="writing-h">
+      <div class="head"><h2 id="writing-h">Writing</h2><span class="count">poetry &middot; short fiction</span></div>
+      <div class="prose">
+        <p>I write poems and short stories. I don&rsquo;t keep it in a separate drawer from the physics: both are trained attention, and both are mostly revision.</p>
+      </div>
+
+      <blockquote class="pull" style="margin-top:1.9rem">
+        <p>[Put two or three lines of your own here &mdash; the ones you&rsquo;d want a stranger to read first &mdash; or delete this block entirely.]</p>
+      </blockquote>
+
+      <article class="entry">
+        <h3><em>Adi&oacute;s, y Bienvenidos</em><span class="status">In progress</span></h3>
+        <p class="meta">Poetry collection &middot; manuscript</p>
+        <p>A collection about leaving and arriving, and the fact that those are usually the same act. <span class="meta">[Replace with your own description &mdash; two sentences is plenty.]</span></p>
+      </article>
+
+      <article class="entry">
+        <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
+        <p class="meta">Short story</p>
+        <p><span class="meta">[One or two lines about the story, and a link if it&rsquo;s published anywhere.]</span></p>
+      </article>
+    </section>
+
+    <!-- ─────────────────────────── OUTREACH ──────────────────────── -->
+    <section id="outreach" aria-labelledby="outreach-h">
+      <div class="head"><h2 id="outreach-h">Outreach</h2><span class="count">public observing</span></div>
+      <div class="prose">
+        <p>I volunteer at [observatory name], running a Unistellar eVscope for public observing nights: aligning the instrument, choosing targets, and standing next to strangers while they see Saturn for the first time. It is the fastest way I know to remember why any of this matters.</p>
+        <p>I&rsquo;m also glad to talk with community college students about transferring into physics &mdash; the path is navigable and almost nobody explains it. If that&rsquo;s you, write to me.</p>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────── CONTACT ───────────────────────── -->
+    <section id="contact" aria-labelledby="contact-h">
+      <div class="head"><h2 id="contact-h">Contact</h2><span class="count">Stanford, CA</span></div>
+      <div class="contact">
+        <div>
+          <span class="mono">Email</span>
+          <p><a href="mailto:you@stanford.edu">you@stanford.edu</a></p>
+        </div>
+        <div>
+          <span class="mono">Code</span>
+          <p><a href="https://github.com/YOUR-USERNAME">github.com/YOUR-USERNAME</a></p>
+        </div>
+        <div>
+          <span class="mono">ORCID</span>
+          <p><a href="https://orcid.org/0000-0000-0000-0000">0000-0000-0000-0000</a></p>
+        </div>
+        <div>
+          <span class="mono">CV</span>
+          <p><a href="cv.pdf">Download (PDF)</a></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Last updated August 2026 &middot; Built by hand in one HTML file &middot; &copy; Jose Lastname</p>
+    </footer>
+  </main>
+</div>
+
+<!-- Machine-readable identity: helps search engines connect your name,
+     institution, and links. Update alongside the text above. -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Jose Lastname",
+  "jobTitle":"Undergraduate Researcher",
+  "description":"Physics undergraduate at Stanford University working on blazar luminosity functions and statistical methods for flux-limited samples.",
+  "affiliation":{"@type":"Organization","name":"Kavli Institute for Particle Astrophysics and Cosmology, Stanford University"},
+  "alumniOf":{"@type":"Organization","name":"Los Angeles City College"},
+  "knowsAbout":["Astrophysics","Active galactic nuclei","Blazars","Luminosity functions","Statistical methods for truncated data","Python"],
+  "url":"https://YOUR-USERNAME.github.io/",
+  "sameAs":["https://github.com/YOUR-USERNAME","https://orcid.org/0000-0000-0000-0000"]
+}
+</script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   Fig. 1 — a flux-limited sample.
+   Deterministic (seeded) so the figure is stable between visits, and
+   the threshold curve uses a real flat-LCDM luminosity distance.
+   ═══════════════════════════════════════════════════════════════════ */
+(function(){
+  var cv = document.getElementById('plot');
+  if(!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+
+  // --- cosmology: comoving then luminosity distance, flat LCDM -------
+  var OM = 0.3, OL = 0.7;
+  function E(z){ return Math.sqrt(OM*Math.pow(1+z,3) + OL); }
+  function dL(z){                        // in units of the Hubble distance
+    var n = 64, h = z/n, s = 0;
+    for(var i=0;i<=n;i++){
+      var w = (i===0||i===n) ? 1 : (i%2 ? 4 : 2);
+      s += w/E(i*h);
+    }
+    return (1+z) * (h/3) * s;
+  }
+  var Z0 = 0.02, ZMAX = 3.6;
+  var LMIN = 43.0, LMAX = 49.4;
+  // limiting luminosity: L_lim proportional to 4*pi*dL^2. The offset is
+  // chosen so the threshold enters at the bottom-left of the frame.
+  var OFF = LMIN - 2*Math.log10(dL(Z0));
+  function logLlim(z){ return 2*Math.log10(Math.max(dL(z),1e-6)) + OFF; }
+
+  // precompute the threshold in data coordinates (draw runs every frame)
+  var LIM = [];
+  for(var k=0;k<=240;k++){
+    var zk = Z0 + k/240*(ZMAX-Z0);
+    LIM.push([zk, Math.max(LMIN, Math.min(logLlim(zk), LMAX))]);
+  }
+
+  // --- seeded RNG so the scatter is the same every load -------------
+  var seed = 20260819;
+  function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
+
+  // --- build a synthetic sample ------------------------------------
+  var pts = [], tries = 0;
+  while(pts.length < 420 && tries++ < 40000){
+    var z = Z0 + Math.pow(rnd(), 0.62) * (ZMAX - Z0);
+    // luminosity function-ish: common faint, rare bright
+    var L = 43.5 + Math.pow(rnd(), 2.35) * 5.7;
+    if(L > logLlim(z) + 0.02) pts.push([z, L, rnd()]);
+  }
+
+  function draw(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = cv.clientWidth || 760, h = Math.round(w * 0.408);
+    cv.width = w*dpr; cv.height = h*dpr;
+    cv.style.height = h + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    var cs  = getComputedStyle(document.documentElement);
+    var ink = cs.getPropertyValue('--ink').trim()   || '#171c1a';
+    var acc = cs.getPropertyValue('--accent').trim()|| '#25534a';
+    var rul = cs.getPropertyValue('--rule').trim()  || '#c9cfc9';
+    var sub = cs.getPropertyValue('--ink-2').trim() || '#5d6763';
+
+    var pad = {l:44, r:8, t:10, b:26};
+    var X = function(z){ return pad.l + (z-Z0)/(ZMAX-Z0) * (w-pad.l-pad.r); };
+    var Y = function(L){ return h-pad.b - (L-LMIN)/(LMAX-LMIN) * (h-pad.t-pad.b); };
+
+    // axes
+    ctx.strokeStyle = rul; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h-pad.b); ctx.lineTo(w-pad.r, h-pad.b);
+    ctx.stroke();
+
+    // ticks
+    ctx.fillStyle = sub;
+    ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    [0.5,1,1.5,2,2.5,3,3.5].forEach(function(z){
+      ctx.beginPath(); ctx.moveTo(X(z), h-pad.b); ctx.lineTo(X(z), h-pad.b+4); ctx.stroke();
+      ctx.fillText(z.toFixed(1), X(z), h-pad.b+7);
+    });
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    [44,45,46,47,48,49].forEach(function(L){
+      ctx.beginPath(); ctx.moveTo(pad.l-4, Y(L)); ctx.lineTo(pad.l, Y(L)); ctx.stroke();
+      ctx.fillText(String(L), pad.l-7, Y(L));
+    });
+
+    // axis titles
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    ctx.fillText('redshift  z', pad.l+2, h-2);
+    ctx.save();
+    ctx.translate(11, pad.t+2); ctx.rotate(-Math.PI/2);
+    ctx.textAlign = 'right';
+    ctx.fillText('log L  [erg s⁻¹]', 0, 0);
+    ctx.restore();
+
+    // unobservable region + threshold curve
+    var curve = LIM.map(function(d){ return [X(d[0]), Y(d[1])]; });
+    ctx.beginPath();
+    ctx.moveTo(curve[0][0], h-pad.b);
+    curve.forEach(function(p){ ctx.lineTo(p[0], p[1]); });
+    ctx.lineTo(curve[curve.length-1][0], h-pad.b);
+    ctx.closePath();
+    ctx.fillStyle = acc; ctx.globalAlpha = 0.06; ctx.fill(); ctx.globalAlpha = 1;
+
+    // points, revealed left to right
+    var t = prefersMotion ? progress : 1;
+    ctx.fillStyle = ink;
+    pts.forEach(function(p){
+      var zn = (p[0]-Z0)/(ZMAX-Z0);
+      if(zn > t) return;
+      ctx.globalAlpha = 0.20 + p[2]*0.40;
+      ctx.beginPath();
+      ctx.arc(X(p[0]), Y(p[1]), 1.5 + p[2]*0.9, 0, 6.2832);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // the curve itself, drawn on top
+    ctx.strokeStyle = acc; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    curve.forEach(function(p,i){
+      if(p[0] > pad.l + t*(w-pad.l-pad.r)) return;
+      i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]);
+    });
+    ctx.stroke();
+
+    // label on the empty region
+    if(t > 0.75){
+      ctx.fillStyle = acc;
+      ctx.globalAlpha = Math.min((t-0.75)/0.25, 1) * 0.85;
+      ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+      ctx.fillText('BELOW THE FLUX LIMIT — NOT IN THE CATALOGUE', w-pad.r-6, h-pad.b-7);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  var prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = 0, start = null;
+  function frame(ts){
+    if(start === null) start = ts;
+    progress = Math.min((ts-start)/1400, 1);
+    draw();
+    if(progress < 1) requestAnimationFrame(frame);
+  }
+  draw();
+  if(prefersMotion) requestAnimationFrame(frame); else { progress = 1; draw(); }
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(draw, 140);
+  });
+
+  /* ── theme button ──────────────────────────────────────────────── */
+  var btn = document.getElementById('theme');
+  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function label(){ btn.textContent = dark ? 'Light' : 'Dark'; }
+  label();
+  btn.addEventListener('click', function(){
+    dark = !dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    label(); draw();
+  });
+
+  /* ── mark the section you're reading in the sidebar ────────────── */
+  var links = [].slice.call(document.querySelectorAll('nav a'));
+  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        links.forEach(function(a,i){
+          a.setAttribute('aria-current', targets[i] === e.target ? 'true' : 'false');
+        });
+      });
+    }, {rootMargin:'-15% 0px -70% 0px'});
+    targets.forEach(function(t){ if(t) io.observe(t); });
+  }
+})();
+</script>
+</body>
+</html>
