@@ -340,15 +340,16 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
       <article class="entry">
         <h3>Flight telemetry for experimental radio-controlled aircraft<span class="status">Completed</span></h3>
-        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024</p>
-        <p>Designed and built a data-logging telemetry system for experimental RC aircraft from customised off-the-shelf modules, leading a four-person team that integrated the sensors, microcontrollers, and wireless hardware, with the embedded software written in Python for ESP32 microcontrollers.</p>
-        <p>My first research project, and the one that taught me most of engineering is finding out which assumption was wrong. Presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024.</p>
+        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Built with:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
+        <p>Commercial telemetry systems for RC aircraft lock you into proprietary sensors and transmitter pairings, cost more than a student project can justify, and keep no local copy of the data if the radio link drops. We built one for $61 in off-the-shelf parts: an inertial measurement unit, barometric pressure sensor, GPS, and hall-effect current sensor on a Raspberry Pi Pico programmed in MicroPython, with a packet radio link and an onboard microSD card so a lost link doesn&rsquo;t mean lost data.</p>
+        <p>I also wrote the ground-station display in Java and Processing, deriving pitch and roll from the three-axis accelerometer. The aircraft flew, the device logged everything it was supposed to, and the downlink was unreliable &mdash; most likely interference between the plane&rsquo;s own control transmissions and our transmitter, which is the finding I&rsquo;d defend hardest, because it took longer to establish than anything that worked.</p>
+        <p class="meta"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
       </article>
     </section>
 
     <!-- ─────────────────────────── CODE ──────────────────────────── -->
     <section id="code" aria-labelledby="code-h">
-      <div class="head"><h2 id="code-h">Code</h2><span class="count">Python &middot; available on request</span></div>
+      <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects &middot; 1 public</span></div>
       <div class="prose">
         <p>Nearly all of my research is code, so I treat it as part of the result rather than scaffolding around it: version-controlled, diagnosed, and written so that someone else can find out where it&rsquo;s wrong.</p>
       </div>
@@ -372,10 +373,16 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <p>Tooling to run three lag estimators over the same OzDES light curves and compare them, plus a simulator that generates continuum and line light curves on a real survey&rsquo;s cadence and noise so that recovery can be tested against a known truth.</p>
       </article>
 
+      <article class="entry">
+        <h3>RC aircraft telemetry firmware and ground station</h3>
+        <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing &nbsp;&middot;&nbsp; <a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">github.com/jrocampogomez/RC-Plane-Telemetry&hellip;</a></p>
+        <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public, with the poster included.</p>
+      </article>
+
       <ul class="chips" aria-label="Tools">
         <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
-        <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>Mathematica</li>
-        <li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
+        <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
+        <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
       </ul>
       <p class="note">Repositories available on request while manuscripts are in preparation.</p>
     </section>
