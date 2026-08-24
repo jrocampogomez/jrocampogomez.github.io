@@ -4,17 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ══════════════════════════════════════════════════════════════════
-     EDIT ME FIRST: name, description, and your site URL
-     ══════════════════════════════════════════════════════════════════ -->
 <title>José R. Ocampo Gómez — Physics, Stanford University</title>
-<meta name="description" content="José R. Ocampo Gómez, physics undergraduate at Stanford University. High-energy astrophysics: blazar luminosity functions, evolution of active galactic nuclei, and statistical methods for flux-limited samples.">
+<meta name="description" content="José R. Ocampo Gómez, physics undergraduate at Stanford University. High-energy astrophysics: AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.">
 <meta name="author" content="José R. Ocampo Gómez">
 
-<!-- Social preview (shows when someone shares your link) -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="José R. Ocampo Gómez — Physics, Stanford University">
-<meta property="og:description" content="High-energy astrophysics: blazar luminosity functions and statistical methods for flux-limited samples.">
+<meta property="og:description" content="High-energy astrophysics: AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.">
 <meta name="twitter:card" content="summary">
 
 <meta name="theme-color" content="#f3f5f2" media="(prefers-color-scheme:light)">
@@ -23,7 +19,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 /* ═══════════════════════════════════════════════════════════════════
    1. DESIGN TOKENS — change a color here and it changes everywhere
@@ -223,15 +218,25 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   body{background:#fff;color:#000;font-size:10.5pt}
   a{color:#000;border:0}
 }
-</style>
-</head>
+
+/* --- additions for the expanded content ------------------------- */
+.rows .kind{font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);display:inline-block;margin-right:.5rem}
+.rows .what em{font-style:italic}
+.subhead{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);margin:2.1rem 0 .9rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule);
+  max-width:var(--measure)}
+.subhead:first-of-type{margin-top:0}
+.note{max-width:var(--measure);margin:1.5rem 0 0;font-family:var(--mono);font-size:.715rem;
+  line-height:1.7;color:var(--ink-2)}
+</style></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="shell">
 
   <!-- ════════════════════════════════════════════════════════════════
-       SIDEBAR — name, navigation, theme button
+       SIDEBAR
        ════════════════════════════════════════════════════════════════ -->
   <header class="rail">
     <div>
@@ -244,32 +249,31 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#code">Code</a></li>
-        <li><a href="#talks">Talks &amp; awards</a></li>
-        <li><a href="#writing">Writing</a></li>
+        <li><a href="#presentations">Presentations</a></li>
+        <li><a href="#awards">Awards</a></li>
         <li><a href="#outreach">Outreach</a></li>
+        <li><a href="#writing">Writing</a></li>
         <li><a href="#contact">Contact</a></li>
       </ol>
     </nav>
 
     <div class="rail-foot">
-      <!-- EDIT: your real links. Delete any line you don't use. -->
       <ul class="ilinks">
-        <li><a href="cv.pdf">CV (PDF)</a></li>
+        <li><a href="Ocampo-Gomez-CV.pdf">CV (PDF)</a></li>
         <li><a href="https://github.com/jrocampogomez">GitHub</a></li>
-        <li><a href="https://orcid.org/0000-0000-0000-0000">ORCID</a></li>
+        <li><a href="https://orcid.org/0009-0009-4123-9214">ORCID</a></li>
         <li><a href="mailto:jocampog@stanford.edu">Email</a></li>
+        <!-- Customise your LinkedIn URL first, then uncomment:
+        <li><a href="https://www.linkedin.com/in/YOUR-CUSTOM-URL">LinkedIn</a></li> -->
       </ul>
       <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
     </div>
   </header>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       MAIN
-       ════════════════════════════════════════════════════════════════ -->
   <main id="main">
     <div id="top" class="hero">
-      <h1 class="reveal">I study how the brightest jets in the universe evolve &mdash; and what a survey can&rsquo;t <em>see</em>.</h1>
-      <p class="reveal">Undergraduate in physics at Stanford, working at KIPAC on the luminosity functions and cosmological evolution of blazars. Most of my time goes to a question that sounds like bookkeeping and isn&rsquo;t: every flux-limited catalogue is missing exactly the objects that would tell you the most, and the correction is not optional.</p>
+      <h1 class="reveal">I work on active galaxies &mdash; how their light evolves, how big their emitting regions are, and what a survey can&rsquo;t <em>see</em>.</h1>
+      <p class="reveal">Physics undergraduate at Stanford and a researcher at KIPAC, splitting my time between the cosmological evolution of blazar luminosity functions and the size of the Fe&nbsp;II emitting region in active galactic nuclei. Both projects come down to the same discipline: every catalogue is missing exactly the objects that would tell you the most, and every measurement is only as good as the method that recovered it.</p>
       <p class="reveal meta">Currently &mdash; finishing an analysis of &gamma;-ray and radio luminosity evolution in flat-spectrum radio quasars. Applying to astrophysics PhD programs this cycle.</p>
     </div>
 
@@ -287,131 +291,214 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     <section id="about" aria-labelledby="about-h">
       <div class="head"><h2 id="about-h">About</h2><span class="count">Stanford &middot; KIPAC</span></div>
       <div class="prose">
-        <p class="lede">I&rsquo;m a physics major at Stanford University and a research student at the Kavli Institute for Particle Astrophysics and Cosmology, where I work with Professor Vah&eacute; Petrosian on the evolution of active galactic nuclei.</p>
-        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium, and transferred to Stanford as a Jack Kent Cooke Foundation Transfer Scholar. That route shaped what I care about: I like problems where the difficulty is honest and where the method has to be defended line by line, and I have a low tolerance for results that only hold if you don&rsquo;t look at how the sample was built.</p>
-        <p>The tools I keep coming back to are nonparametric ones &mdash; Efron&ndash;Petrosian&rsquo;s permutation test, Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> method, bootstrap uncertainties &mdash; because they let you separate luminosity evolution from selection without assuming the answer first. Long term, I want to work on high-energy astrophysics and on the statistics that make survey data trustworthy.</p>
-        <p>Outside the lab I write poetry and short fiction, play guitar badly and often, and run telescopes for the public on clear nights.</p>
+        <p class="lede">I&rsquo;m a physics major at Stanford University and an undergraduate researcher at the Kavli Institute for Particle Astrophysics and Cosmology, working with Professor Vahé Petrosian on AGN luminosity evolution and Professor Steven Allen on AGN reverberation mapping.</p>
+        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium, and transferred to Stanford as a Jack Kent Cooke Foundation Transfer Scholar. That route shaped what I care about: I like problems where the difficulty is honest and the method has to be defended line by line, and I have little patience for results that only hold if you don&rsquo;t look closely at how the sample was built.</p>
+        <p>The tools I keep returning to are nonparametric ones &mdash; the Efron&ndash;Petrosian permutation test, Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> estimator, bootstrap uncertainties &mdash; because they separate evolution from selection without assuming the answer first. Alongside the astrophysics I do policy research on space law and nuclear nonproliferation with the Stanford Student Space Initiative. Long term I want to work on high-energy astrophysics and on the statistics that make survey data trustworthy.</p>
+        <p>Outside the lab I write poetry and short fiction, play guitar badly and often, and run telescopes for the public on clear nights &mdash; in English and in Spanish.</p>
       </div>
+
+      <ul class="rows" style="margin-top:2rem">
+        <li>
+          <span class="when">Exp. 2027</span>
+          <p class="what">B.S. Physics, Core Pathway<small>Stanford University</small></p>
+        </li>
+        <li>
+          <span class="when">2020&ndash;2024</span>
+          <p class="what">A.S. for Transfer, <em>summa cum laude</em><small>Physics, Mathematics, Engineering &amp; Philosophy &middot; Los Angeles City College</small></p>
+        </li>
+      </ul>
     </section>
 
     <!-- ─────────────────────────── RESEARCH ────────────────────────
          TO ADD A PROJECT: copy one <article class="entry"> block.
          ─────────────────────────────────────────────────────────── -->
     <section id="research" aria-labelledby="research-h">
-      <div class="head"><h2 id="research-h">Research</h2><span class="count">2 active &middot; 1 past</span></div>
+      <div class="head"><h2 id="research-h">Research</h2><span class="count">3 active &middot; 1 past</span></div>
 
       <article class="entry">
-        <h3>Luminosity evolution of blazars in &gamma;-rays and radio<span class="status live">Active</span></h3>
-        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vah&eacute; Petrosian &nbsp;&middot;&nbsp; 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
-        <p>Flat-spectrum radio quasars are detected in two very different surveys at once, and the two selections truncate the sample in different places. I&rsquo;m measuring how &gamma;-ray and radio luminosity evolve with redshift for a cross-matched 4LAC &times; VLBI &times; Gaia sample, using nonparametric methods that handle a doubly truncated dataset without assuming a functional form for the luminosity function.</p>
-        <p>The work replicates and extends Zeng, Petrosian &amp; Yi (2021): reconstructing local-frame cumulative luminosity functions properly requires de-evolving both the luminosities and the flux limits, which turns out to be where most published treatments quietly go wrong. I rebuilt the analysis pipeline from the ground up, audited the inherited code, and documented each correction.</p>
-        <p class="meta">Manuscript in preparation. Results pending advisor review, so nothing quantitative is posted here yet.</p>
+        <h3>Cosmological evolution of FSRQ luminosity functions<span class="status live">Active</span></h3>
+        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
+        <p>A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m determining how the &gamma;-ray and radio luminosity functions of FSRQs evolve with redshift using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, with nonparametric methods that assume no functional form for the luminosity function and that account for the extra selection bias the optical redshift requirement introduces.</p>
+        <p>Once evolution is removed, the same machinery yields the intrinsic &gamma;-ray&ndash;radio luminosity correlation, which constrains how jet emission relates to emission from the accretion disk. Getting there meant rebuilding the analysis pipeline and documenting every correction: de-evolving both the luminosities and the flux limits is the step that is easiest to get wrong.</p>
+        <p class="meta">Manuscript in preparation. Nothing quantitative is posted here until it has been reviewed.</p>
       </article>
 
       <article class="entry">
-        <h3>Recovering Fe&nbsp;II reverberation lags in OzDES<span class="status live">Active</span></h3>
-        <p class="meta">Simulation study &nbsp;&middot;&nbsp; 2026&ndash;present &nbsp;&middot;&nbsp; <b>Methods:</b> light-curve simulation &middot; cross-correlation &middot; lag-recovery bias</p>
-        <p>Reverberation mapping turns a time delay into a black hole mass, so the credibility of the mass depends entirely on whether the lag you recover is the lag that&rsquo;s really there. I&rsquo;m building a simulated continuum and broad-line light-curve generator matched to OzDES&rsquo;s cadence and noise, to characterise how often the Fe&nbsp;II lag is recovered and how it fails when it isn&rsquo;t.</p>
-        <p>The first useful output was unglamorous: seven methodological problems in the simulation code I inherited, and a rewritten generator that fixes them.</p>
+        <h3>The Fe&nbsp;II emitting region in AGN, from OzDES reverberation mapping<span class="status live">Active</span></h3>
+        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; statistical simulation</p>
+        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring continuum&ndash;Fe&nbsp;II line lags in multi-epoch OzDES spectroscopy and testing whether three independent lag estimators agree on the same objects.</p>
+        <p>Where they disagree, simulations are what tell you which to believe, so a large part of the work is characterising how each method fails and propagating that honestly into the uncertainties. The goal is a constraint on the Fe&nbsp;II radius&ndash;luminosity relation that holds up under that scrutiny.</p>
       </article>
 
       <article class="entry">
-        <h3>Undergraduate research, NASA California Space Grant<span class="status">Completed</span></h3>
-        <p class="meta">Los Angeles City College &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Jayesh Bhakta &nbsp;&middot;&nbsp; 2023&ndash;2024</p>
-        <p>My first research project, carried out at a community college with a small budget and a lot of enthusiasm, and presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024. <span class="meta">[Add a sentence here describing the project &mdash; you know this one better than any summary of it.]</span></p>
+        <h3>Space law, space security, and nuclear nonproliferation<span class="status live">Active</span></h3>
+        <p class="meta">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; Policy Team co-lead since March 2026</p>
+        <p>I co-authored a policy paper on preventing the deployment of nuclear weapons in orbit, and now lead projects on satellite traffic management and the regulation of commercial and government activity in space.</p>
+        <p>It is a different mode of work from the astrophysics &mdash; an argument has to survive adversarial reading rather than statistical scrutiny &mdash; and I&rsquo;ve found the two sharpen each other. Both are ultimately about being precise regarding what you actually know.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Flight telemetry for experimental radio-controlled aircraft<span class="status">Completed</span></h3>
+        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024</p>
+        <p>Designed and built a data-logging telemetry system for experimental RC aircraft from customised off-the-shelf modules, leading a four-person team that integrated the sensors, microcontrollers, and wireless hardware, with the embedded software written in Python for ESP32 microcontrollers.</p>
+        <p>My first research project, and the one that taught me most of engineering is finding out which assumption was wrong. Presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024.</p>
       </article>
     </section>
 
     <!-- ─────────────────────────── CODE ──────────────────────────── -->
     <section id="code" aria-labelledby="code-h">
-      <div class="head"><h2 id="code-h">Code</h2><span class="count">Python &middot; open on request</span></div>
+      <div class="head"><h2 id="code-h">Code</h2><span class="count">Python &middot; available on request</span></div>
       <div class="prose">
-        <p>Almost all of my research is code, so I treat it as part of the result rather than scaffolding around it: version-controlled, diagnosed, and written so that someone else can find out where it&rsquo;s wrong.</p>
+        <p>Nearly all of my research is code, so I treat it as part of the result rather than scaffolding around it: version-controlled, diagnosed, and written so that someone else can find out where it&rsquo;s wrong.</p>
       </div>
 
       <article class="entry" style="margin-top:1.9rem">
-        <h3>Blazar evolution pipeline</h3>
+        <h3>FSRQ luminosity-function pipeline</h3>
         <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
-        <p>An end-to-end analysis of a cross-matched blazar catalogue: sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian test statistic, C&minus; reconstruction of the luminosity function, broken-power-law fitting with multi-start optimisation, bootstrap uncertainties, and a suite of numbered diagnostics that each answer one question about whether the previous step actually worked.</p>
-        <p>Two fixes I&rsquo;m fond of: replacing a fragile <span class="meta">fsolve</span> call for the maximum accessible redshift with a bracketed <span class="meta">brentq</span> solver that cannot silently converge to the wrong root, and catching a sign error in a K-correction average that had been quietly reassigning most of the sample to the wrong subset.</p>
-        <p class="meta"><a href="https://github.com/jrocampogomez">Repository</a> &mdash; available on request while the manuscript is in preparation.</p>
+        <p>End-to-end analysis of a cross-matched blazar catalogue: sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian test statistic, C&minus; reconstruction of the local luminosity function, broken-power-law fitting with multi-start optimisation, bootstrap uncertainties, and a suite of numbered diagnostics that each answer one question about whether the previous step actually worked.</p>
+        <p>Two fixes I&rsquo;m fond of: replacing a fragile <span class="meta">fsolve</span> call for the maximum accessible redshift with a bracketed <span class="meta">brentq</span> solver that cannot silently converge to the wrong root, and catching a sign error in a K-correction average that had been quietly assigning much of the sample to the wrong subset.</p>
       </article>
 
       <article class="entry">
-        <h3>Light-curve simulator for reverberation mapping</h3>
-        <p class="meta">Python &middot; damped random walk continuum &middot; transfer-function convolution</p>
-        <p>Generates continuum light curves, convolves them with a chosen transfer function to produce the line response, then re-samples onto a real survey&rsquo;s cadence with realistic photometric noise so that lag-recovery methods can be tested against a known truth.</p>
+        <h3>Bayesian AGN SED modelling</h3>
+        <p class="meta">Python &middot; Metropolis&ndash;Hastings MCMC &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
+        <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using Metropolis&ndash;Hastings MCMC to infer black hole masses and accretion rates from observational data. It reproduced published measurements for high-redshift blazars, and I used it to test how sensitive the inferred parameters are to the choice of numerical integration scheme &mdash; which turned out to matter more than I expected.</p>
       </article>
 
-      <!-- EDIT: keep this list honest — remove anything you wouldn't
-           want to be asked about in an interview. -->
+      <article class="entry">
+        <h3>Lag-recovery testing for reverberation mapping</h3>
+        <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
+        <p>Tooling to run three lag estimators over the same OzDES light curves and compare them, plus a simulator that generates continuum and line light curves on a real survey&rsquo;s cadence and noise so that recovery can be tested against a known truth.</p>
+      </article>
+
       <ul class="chips" aria-label="Tools">
         <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
-        <li>Matplotlib</li><li>Jupyter</li><li>Git</li><li>LaTeX / AASTeX</li>
-        <li>Bash</li><li>Mathematica</li><li>SQL</li>
+        <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>Mathematica</li>
+        <li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
       </ul>
+      <p class="note">Repositories available on request while manuscripts are in preparation.</p>
     </section>
 
-    <!-- ─────────────────── TALKS, AWARDS, TEACHING ─────────────────
+    <!-- ────────────────────── PRESENTATIONS ────────────────────────
          TO ADD A ROW: copy one <li> block.
          ─────────────────────────────────────────────────────────── -->
-    <section id="talks" aria-labelledby="talks-h">
-      <div class="head"><h2 id="talks-h">Talks &amp; awards</h2><span class="count">selected</span></div>
+    <section id="presentations" aria-labelledby="pres-h">
+      <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">4 posters &middot; 3 talks</span></div>
+
+      <p class="subhead">Posters</p>
       <ul class="rows">
         <li>
+          <span class="when">2026</span>
+          <p class="what">Probing the Fe&nbsp;II emission region of AGN with the OzDES RM project<small>Stanford Symposium of Undergraduate Research and Public Service (SURPS)</small></p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <p class="what">Probing the Fe&nbsp;II emission region of AGN with the OzDES RM project<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
+        </li>
+        <li>
           <span class="when">2024</span>
-          <p class="what">National Conference on Undergraduate Research (NCUR)<small>Oral presentation &middot; [add title]</small></p>
+          <p class="what">Flight data telemetry device with data logging using customised off-the-shelf modules for experimental radio-control aircraft<small>National Conference on Undergraduate Research (NCUR)</small></p>
         </li>
         <li>
           <span class="when">2023</span>
-          <p class="what">Southern California Conferences for Undergraduate Research (SCCUR)<small>Poster &middot; [add title]</small></p>
+          <p class="what">Flight data telemetry device with data logging using customised off-the-shelf modules for experimental radio-control aircraft<small>Southern California Conferences for Undergraduate Research (SCCUR)</small></p>
+        </li>
+      </ul>
+
+      <p class="subhead">Talks</p>
+      <ul class="rows">
+        <li>
+          <span class="when">2026</span>
+          <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
         </li>
         <li>
-          <span class="when">2024&ndash;</span>
-          <p class="what">Jack Kent Cooke Foundation Undergraduate Transfer Scholarship<small>National award for community college transfer students</small></p>
+          <span class="when">2026</span>
+          <p class="what">Magic with Lights<small>TRiO CenCal Conference, Evergreen Valley College &middot; KIPAC Public Outreach</small></p>
         </li>
         <li>
-          <span class="when">2023&ndash;24</span>
-          <p class="what">NASA California Space Grant Consortium research fellowship<small>Los Angeles City College</small></p>
+          <span class="when">2025</span>
+          <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
         </li>
-        <!-- <li>
-          <span class="when">2027</span>
-          <p class="what">American Astronomical Society, 250th meeting<small>Poster &middot; title</small></p>
-        </li> -->
       </ul>
     </section>
 
-    <!-- ─────────────────────────── WRITING ───────────────────────── -->
+    <!-- ─────────────────────────── AWARDS ────────────────────────── -->
+    <section id="awards" aria-labelledby="awards-h">
+      <div class="head"><h2 id="awards-h">Awards</h2><span class="count">fellowships &amp; scholarships</span></div>
+      <ul class="rows">
+        <li>
+          <span class="when">2026</span>
+          <p class="what">VPUE STEM Fellow<small>Stanford University</small></p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <p class="what">Physics SURP Funding<small>Stanford University</small></p>
+        </li>
+        <li>
+          <span class="when">2024</span>
+          <p class="what">Undergraduate Transfer Scholarship<small>Jack Kent Cooke Foundation &middot; national award for community college transfer students</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Physics &amp; Engineering Department Scholarship<small>Los Angeles City College</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Mathematics Department Scholarship<small>Los Angeles City College</small></p>
+        </li>
+        <li>
+          <span class="when">2022</span>
+          <p class="what">Eugene McKnight Philosophy Scholarship<small>Los Angeles City College</small></p>
+        </li>
+      </ul>
+      <p class="note">Member: American Physical Society &middot; National Society of Hispanic Physicists &middot; Society of Physics Students (since 2025)</p>
+    </section>
+
+    <!-- ────────────────── OUTREACH & SERVICE ─────────────────────── -->
+    <section id="outreach" aria-labelledby="outreach-h">
+      <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">public observing &middot; mentoring</span></div>
+
+      <article class="entry">
+        <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
+        <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
+        <p>I run public stargazing nights at the Stanford Student Observatory &mdash; operating the telescopes, managing the queue, and standing next to strangers while they see Saturn for the first time. It is the fastest way I know to remember why any of this matters.</p>
+        <p>I also give career talks and lead demonstrations for high school students from underrepresented backgrounds, and deliver astronomy talks in Spanish through the Noches Astronómicas programme, including moderated Q&amp;A.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
+        <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p>Facilitating workshops for 120+ students on the transfer process in STEM, and leading small groups of eight to ten for the part that actually helps: specific questions, specific answers, and the resources nobody tells you about.</p>
+        <p>I transferred from a community college myself, and the path is navigable in a way almost nobody explains. If that&rsquo;s you, write to me.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
+        <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p>Building community among transfer students and alumni; responsible for finances, budgeting, and the planning behind events that make a large university feel navigable when you arrive two years late.</p>
+      </article>
+    </section>
+
+    <!-- ─────────────────────────── WRITING ─────────────────────────
+         Fill these in or delete the section entirely.
+         ─────────────────────────────────────────────────────────── -->
     <section id="writing" aria-labelledby="writing-h">
       <div class="head"><h2 id="writing-h">Writing</h2><span class="count">poetry &middot; short fiction</span></div>
       <div class="prose">
         <p>I write poems and short stories. I don&rsquo;t keep it in a separate drawer from the physics: both are trained attention, and both are mostly revision.</p>
       </div>
 
-      <blockquote class="pull" style="margin-top:1.9rem">
-        <p>[Put two or three lines of your own here &mdash; the ones you&rsquo;d want a stranger to read first &mdash; or delete this block entirely.]</p>
-      </blockquote>
-
-      <article class="entry">
-        <h3><em>Adi&oacute;s, y Bienvenidos</em><span class="status">In progress</span></h3>
+      <article class="entry" style="margin-top:1.9rem">
+        <h3><em>Adiós, y Bienvenidos</em><span class="status">In progress</span></h3>
         <p class="meta">Poetry collection &middot; manuscript</p>
-        <p>A collection about leaving and arriving, and the fact that those are usually the same act. <span class="meta">[Replace with your own description &mdash; two sentences is plenty.]</span></p>
+        <p>A collection about leaving and arriving, and how often those turn out to be the same act. <span class="meta">[Two sentences in your own words &mdash; what the collection is actually doing.]</span></p>
       </article>
 
       <article class="entry">
         <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
         <p class="meta">Short story</p>
-        <p><span class="meta">[One or two lines about the story, and a link if it&rsquo;s published anywhere.]</span></p>
+        <p><span class="meta">[A line or two about the story, and a link if it&rsquo;s published anywhere.]</span></p>
       </article>
-    </section>
-
-    <!-- ─────────────────────────── OUTREACH ──────────────────────── -->
-    <section id="outreach" aria-labelledby="outreach-h">
-      <div class="head"><h2 id="outreach-h">Outreach</h2><span class="count">public observing</span></div>
-      <div class="prose">
-        <p>I volunteer at [observatory name], running a Unistellar eVscope for public observing nights: aligning the instrument, choosing targets, and standing next to strangers while they see Saturn for the first time. It is the fastest way I know to remember why any of this matters.</p>
-        <p>I&rsquo;m also glad to talk with community college students about transferring into physics &mdash; the path is navigable and almost nobody explains it. If that&rsquo;s you, write to me.</p>
-      </div>
     </section>
 
     <!-- ─────────────────────────── CONTACT ───────────────────────── -->
@@ -423,18 +510,19 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
           <p><a href="mailto:jocampog@stanford.edu">jocampog@stanford.edu</a></p>
         </div>
         <div>
+          <span class="mono">ORCID</span>
+          <p><a href="https://orcid.org/0009-0009-4123-9214">0009-0009-4123-9214</a></p>
+        </div>
+        <div>
           <span class="mono">Code</span>
           <p><a href="https://github.com/jrocampogomez">github.com/jrocampogomez</a></p>
         </div>
         <div>
-          <span class="mono">ORCID</span>
-          <p><a href="https://orcid.org/0000-0000-0000-0000">0000-0000-0000-0000</a></p>
-        </div>
-        <div>
           <span class="mono">CV</span>
-          <p><a href="cv.pdf">Download (PDF)</a></p>
+          <p><a href="Ocampo-Gomez-CV.pdf">Download (PDF)</a></p>
         </div>
       </div>
+      <p class="note">Languages: Spanish (fluent), English.</p>
     </section>
 
     <footer>
@@ -443,23 +531,24 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </main>
 </div>
 
-<!-- Machine-readable identity: helps search engines connect your name,
-     institution, and links. Update alongside the text above. -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Person",
   "name":"José R. Ocampo Gómez",
+  "givenName":"José",
+  "familyName":"Ocampo Gómez",
   "jobTitle":"Undergraduate Researcher",
-  "description":"Physics undergraduate at Stanford University working on blazar luminosity functions and statistical methods for flux-limited samples.",
+  "description":"Physics undergraduate at Stanford University working on AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.",
   "affiliation":{"@type":"Organization","name":"Kavli Institute for Particle Astrophysics and Cosmology, Stanford University"},
   "alumniOf":{"@type":"Organization","name":"Los Angeles City College"},
-  "knowsAbout":["Astrophysics","Active galactic nuclei","Blazars","Luminosity functions","Statistical methods for truncated data","Python"],
+  "knowsLanguage":["en","es"],
+  "knowsAbout":["Astrophysics","Active galactic nuclei","Blazars","Luminosity functions","Reverberation mapping","Statistical methods for truncated data","Python"],
   "url":"https://jrocampogomez.github.io/",
-  "sameAs":["https://github.com/jrocampogomez","https://orcid.org/0000-0000-0000-0000"]
+  "identifier":"https://orcid.org/0009-0009-4123-9214",
+  "sameAs":["https://github.com/jrocampogomez","https://orcid.org/0009-0009-4123-9214"]
 }
 </script>
-
 <script>
 /* ═══════════════════════════════════════════════════════════════════
    Fig. 1 — a flux-limited sample.
