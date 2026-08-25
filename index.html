@@ -746,41 +746,51 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   }
 })();
 </script>
-   <script>
+<script>
 /* ═══════════════════════════════════════════════════════════════════
-   Fig. 2 — reverberation mapping: the line follows the continuum.
-   Continuum is a seeded damped random walk; the line response is that
-   same series convolved with a Gaussian transfer function centred on
-   a lag. Synthetic throughout: no data.
+   Fig. 2 — reverberation mapping, drawn the way the data actually
+   arrives: observing seasons separated by gaps, discrete epochs with
+   photometric errors, a densely sampled continuum and a sparse,
+   noisier emission line. The faint curve behind each set of points is
+   the underlying model, so the delay stays legible.
+   Continuum: seeded damped random walk. Line: that same series
+   convolved with a Gaussian transfer function centred on the lag.
+   Synthetic throughout — no data.
    ═══════════════════════════════════════════════════════════════════ */
 (function(){
   var cv = document.getElementById('rmPlot');
   if(!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d');
 
-  // --- seeded RNG (different seed from Fig. 1) ----------------------
+  // --- seeded RNG ---------------------------------------------------
   var seed = 20260612;
   function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
-  function gauss(){                       // Box-Muller
+  function gauss(){
     var u = Math.max(rnd(), 1e-9), v = rnd();
     return Math.sqrt(-2*Math.log(u)) * Math.cos(6.283185307*v);
   }
 
-  var N = 320, TMAX = 200, DT = TMAX/(N-1);   // days
-  var LAG = 34, TAU_DRW = 26, WIDTH = 9;      // lag, DRW timescale, transfer width
+  // --- timeline: 5 observing seasons across ~5 years ----------------
+  var TMAX = 1800, DT = 4;               // days; model step
+  var PRE  = 900;                        // pre-roll so the lagged series is defined at t=0
+  var LAG  = 300, TAU_DRW = 420, WIDTH = 70;
+  var SEASON = 190, GAP = 175;           // observable window, then the source is behind the sun
 
-  // --- continuum: damped random walk -------------------------------
+  var N = Math.round((TMAX + PRE)/DT) + 1;
+  var t0 = -PRE;
+  function tOf(i){ return t0 + i*DT; }
+
+  // --- continuum model: damped random walk -------------------------
   var cont = new Array(N), x = 0;
   var a = Math.exp(-DT/TAU_DRW), b = Math.sqrt(1 - a*a);
   for(var i=0;i<N;i++){ x = a*x + b*gauss(); cont[i] = x; }
 
-  // --- line response: convolve with a Gaussian centred on the lag ---
+  // --- line model: convolve with a Gaussian centred on the lag ------
   var kern = [], kSpan = Math.ceil((LAG + 3*WIDTH)/DT);
   for(var k=0;k<=kSpan;k++){
-    var t = k*DT, e = (t - LAG)/WIDTH;
+    var e = (k*DT - LAG)/WIDTH;
     kern.push(Math.exp(-0.5*e*e));
   }
-  var kSum = kern.reduce(function(s,v){ return s+v; }, 0);
   var line = new Array(N);
   for(var i2=0;i2<N;i2++){
     var acc = 0, wt = 0;
@@ -790,54 +800,72 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       acc += kern[k2]*cont[j]; wt += kern[k2];
     }
     line[i2] = wt > 0 ? acc/wt : 0;
-    if(wt < 0.55*kSum) line[i2] = NaN;      // not enough history yet
   }
 
-  // normalise each trace to [-1, 1] so the panels are comparable
-  function norm(arr){
-    var v = arr.filter(function(d){ return !isNaN(d); });
-    var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v), m = (hi-lo)/2 || 1;
-    return arr.map(function(d){ return isNaN(d) ? NaN : (d - (lo+hi)/2)/m; });
+  // normalise both over the visible window only
+  function normalise(arr){
+    var v = [];
+    for(var i=0;i<N;i++) if(tOf(i) >= 0) v.push(arr[i]);
+    var lo = Math.min.apply(null,v), hi = Math.max.apply(null,v);
+    var mid = (lo+hi)/2, half = (hi-lo)/2 || 1;
+    return arr.map(function(d){ return (d-mid)/half; });
   }
-  cont = norm(cont); line = norm(line);
+  cont = normalise(cont); line = normalise(line);
 
-  // --- find a matching pair of peaks to annotate the delay ----------
-  function peakNear(arr, from, to){
-    var best = -Infinity, at = from;
-    for(var i=from;i<=to;i++){ if(!isNaN(arr[i]) && arr[i] > best){ best = arr[i]; at = i; } }
-    return at;
+  // --- sample the models into observing seasons --------------------
+  // Returns [{t, y, err}]. cadence = mean days between epochs.
+  function observe(model, cadence, noise, errScale){
+    var pts = [], t = 0;
+    while(t < TMAX){
+      var inSeason = (t % (SEASON+GAP)) < SEASON;
+      if(inSeason){
+        var i = Math.round((t + PRE)/DT);
+        if(i >= 0 && i < N){
+          var err = noise*(0.65 + 0.9*rnd())*errScale;
+          pts.push({ t:t, y: model[i] + err*gauss(), err: err });
+        }
+      }
+      t += cadence*(0.45 + 1.1*rnd());
+    }
+    return pts;
   }
-  var lo = Math.round(0.42*N), hi = Math.round(0.72*N);
-  var pC = peakNear(cont, lo, hi);
-  var pL = peakNear(line, pC, Math.min(pC + Math.round(2.2*LAG/DT), N-1));
+  // continuum: dense photometry, small errors. line: sparse spectroscopy, large errors.
+  var cPts = observe(cont, 7,  0.055, 1);
+  var lPts = observe(line, 26, 0.150, 1);
+
+  // --- where to draw the delay -------------------------------------
+  // The line model IS the continuum convolved with a kernel centred on
+  // LAG, so the responding feature sits at tC + LAG by construction.
+  // Searching for it independently just finds nearby local maxima.
+  function iOf(t){ return Math.round((t + PRE)/DT); }
+  var tC = 0, bestV = -Infinity;
+  for(var ip = iOf(150); ip <= iOf(TMAX - LAG - 120); ip++){
+    if(cont[ip] > bestV){ bestV = cont[ip]; tC = tOf(ip); }
+  }
+  var tL = tC + LAG;
 
   function draw(){
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = cv.clientWidth || 760, h = Math.round(w * 0.408);
+    var w = cv.clientWidth || 760, h = Math.round(w * 0.46);
     cv.width = w*dpr; cv.height = h*dpr;
     cv.style.height = h + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,w,h);
 
-    var cs  = getComputedStyle(document.documentElement);
-    var ink = cs.getPropertyValue('--ink').trim()   || '#171c1a';
-    var acc = cs.getPropertyValue('--accent').trim()|| '#25534a';
-    var rul = cs.getPropertyValue('--rule').trim()  || '#c9cfc9';
-    var sub = cs.getPropertyValue('--ink-2').trim() || '#5d6763';
+    var cs   = getComputedStyle(document.documentElement);
+    var ink  = cs.getPropertyValue('--ink').trim()    || '#171c1a';
+    var acc  = cs.getPropertyValue('--accent').trim() || '#25534a';
+    var rul  = cs.getPropertyValue('--rule').trim()   || '#c9cfc9';
+    var sub  = cs.getPropertyValue('--ink-2').trim()  || '#5d6763';
     var mono = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
 
     var pad = {l:44, r:8, t:12, b:26};
-    var plotH = h - pad.t - pad.b;
-    var rowH  = plotH/2;
-    var X = function(i){ return pad.l + (i/(N-1))*(w-pad.l-pad.r); };
-    // row 0 = continuum (upper), row 1 = line (lower)
-    var Y = function(v, row){
-      var mid = pad.t + rowH*(row + 0.5);
-      return mid - v*(rowH*0.36);
-    };
+    var rowH = (h - pad.t - pad.b)/2;
+    var X = function(t){ return pad.l + (t/TMAX)*(w-pad.l-pad.r); };
+    var Y = function(v,row){ return pad.t + rowH*(row+0.5) - v*(rowH*0.34); };
 
     var t = prefersMotion ? progress : 1;
-    var iMax = Math.round(t*(N-1));
+    var tCut = t*TMAX;
 
     // axes
     ctx.strokeStyle = rul; ctx.lineWidth = 1;
@@ -845,20 +873,20 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h-pad.b); ctx.lineTo(w-pad.r, h-pad.b);
     ctx.stroke();
 
-    // zero line for each row
-    ctx.strokeStyle = rul; ctx.setLineDash([2,3]);
-    [0,1].forEach(function(r){
-      ctx.beginPath(); ctx.moveTo(pad.l, Y(0,r)); ctx.lineTo(w-pad.r, Y(0,r)); ctx.stroke();
-    });
-    ctx.setLineDash([]);
+    // faint shading over the seasonal gaps — the source is unobservable
+    ctx.fillStyle = sub; ctx.globalAlpha = 0.05;
+    for(var g=SEASON; g<TMAX; g+=SEASON+GAP){
+      var gx = X(g), gw = X(Math.min(g+GAP,TMAX)) - gx;
+      ctx.fillRect(gx, pad.t, gw, h-pad.t-pad.b);
+    }
+    ctx.globalAlpha = 1;
 
     // time ticks
     ctx.fillStyle = sub; ctx.font = mono;
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    [0,50,100,150,200].forEach(function(day){
-      var i = (day/TMAX)*(N-1);
-      ctx.beginPath(); ctx.moveTo(X(i), h-pad.b); ctx.lineTo(X(i), h-pad.b+4); ctx.stroke();
-      ctx.fillText(String(day), X(i), h-pad.b+7);
+    [0,400,800,1200,1600].forEach(function(d){
+      ctx.beginPath(); ctx.moveTo(X(d), h-pad.b); ctx.lineTo(X(d), h-pad.b+4); ctx.stroke();
+      ctx.fillText(String(d), X(d), h-pad.b+7);
     });
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
     ctx.fillText('time  [days]', pad.l+2, h-2);
@@ -868,51 +896,71 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.fillText('relative flux', 0, 0);
     ctx.restore();
 
-    // the two traces
-    function trace(arr, row, colour, wide){
-      ctx.strokeStyle = colour; ctx.lineWidth = wide;
+    // underlying model, faint
+    function model(arr,row,colour){
+      ctx.strokeStyle = colour; ctx.lineWidth = 1; ctx.globalAlpha = 0.28;
       ctx.beginPath();
       var started = false;
-      for(var i=0;i<=iMax;i++){
-        if(isNaN(arr[i])){ started = false; continue; }
-        var px = X(i), py = Y(arr[i], row);
+      for(var i=0;i<N;i++){
+        var tt = tOf(i);
+        if(tt < 0) continue;
+        if(tt > tCut) break;
+        var px = X(tt), py = Y(arr[i],row);
         started ? ctx.lineTo(px,py) : ctx.moveTo(px,py);
         started = true;
       }
-      ctx.stroke();
+      ctx.stroke(); ctx.globalAlpha = 1;
     }
-    trace(cont, 0, ink, 1.3);
-    trace(line, 1, acc, 1.6);
+    model(cont,0,ink);
+    model(line,1,acc);
+
+    // observed epochs: error bar then marker
+    function epochs(pts,row,colour,r){
+      ctx.strokeStyle = colour; ctx.fillStyle = colour;
+      pts.forEach(function(p){
+        if(p.t > tCut) return;
+        var px = X(p.t);
+        ctx.globalAlpha = 0.5; ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(px, Y(p.y - p.err, row));
+        ctx.lineTo(px, Y(p.y + p.err, row));
+        ctx.stroke();
+        ctx.globalAlpha = 0.9;
+        ctx.beginPath(); ctx.arc(px, Y(p.y,row), r, 0, 6.2832); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+    }
+    epochs(cPts,0,ink,1.7);
+    epochs(lPts,1,acc,2.2);
 
     // trace labels
     ctx.font = mono; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
     ctx.fillStyle = sub;
-    ctx.fillText('CONTINUUM', pad.l + 6, pad.t + 3);
+    ctx.fillText('CONTINUUM \u00b7 PHOTOMETRY', pad.l+6, pad.t+3);
     ctx.fillStyle = acc;
-    ctx.fillText('Fe II LINE', pad.l + 6, pad.t + rowH + 3);
+    ctx.fillText('EMISSION LINE \u00b7 SPECTROSCOPY', pad.l+6, pad.t+rowH+3);
 
-    // delay annotation, once both peaks have been drawn
-    if(iMax >= pL){
-      var xC = X(pC), xL = X(pL);
+    // the delay
+    if(tCut >= tL){
+      var xC = X(tC), xL = X(tL);
       ctx.strokeStyle = sub; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
-      ctx.beginPath(); ctx.moveTo(xC, Y(cont[pC],0)); ctx.lineTo(xC, h-pad.b); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(xL, Y(line[pL],1)); ctx.lineTo(xL, h-pad.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xC, pad.t); ctx.lineTo(xC, h-pad.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xL, pad.t); ctx.lineTo(xL, h-pad.b); ctx.stroke();
       ctx.setLineDash([]);
 
-      // arrow between them, sitting just above the x-axis
-      var ay = h - pad.b - 9;
+      var ay = h - pad.b - 10;
       ctx.strokeStyle = acc; ctx.fillStyle = acc; ctx.lineWidth = 1.2;
       ctx.beginPath(); ctx.moveTo(xC, ay); ctx.lineTo(xL, ay); ctx.stroke();
       [[xC,1],[xL,-1]].forEach(function(d){
         ctx.beginPath();
         ctx.moveTo(d[0], ay);
-        ctx.lineTo(d[0] + d[1]*5, ay - 3);
-        ctx.lineTo(d[0] + d[1]*5, ay + 3);
+        ctx.lineTo(d[0]+d[1]*5, ay-3);
+        ctx.lineTo(d[0]+d[1]*5, ay+3);
         ctx.closePath(); ctx.fill();
       });
       ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
       ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-      ctx.fillText('lag \u03c4', (xC+xL)/2, ay - 5);
+      ctx.fillText('lag \u03c4', (xC+xL)/2, ay-5);
     }
   }
 
@@ -920,7 +968,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   var progress = 0, start = null;
   function frame(ts){
     if(start === null) start = ts;
-    progress = Math.min((ts-start)/1600, 1);
+    progress = Math.min((ts-start)/1700, 1);
     draw();
     if(progress < 1) requestAnimationFrame(frame);
   }
@@ -941,3 +989,5 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 </script>
 </body>
 </html>
+
+
