@@ -746,5 +746,198 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   }
 })();
 </script>
+   <script>
+/* ═══════════════════════════════════════════════════════════════════
+   Fig. 2 — reverberation mapping: the line follows the continuum.
+   Continuum is a seeded damped random walk; the line response is that
+   same series convolved with a Gaussian transfer function centred on
+   a lag. Synthetic throughout: no data.
+   ═══════════════════════════════════════════════════════════════════ */
+(function(){
+  var cv = document.getElementById('rmPlot');
+  if(!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+
+  // --- seeded RNG (different seed from Fig. 1) ----------------------
+  var seed = 20260612;
+  function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
+  function gauss(){                       // Box-Muller
+    var u = Math.max(rnd(), 1e-9), v = rnd();
+    return Math.sqrt(-2*Math.log(u)) * Math.cos(6.283185307*v);
+  }
+
+  var N = 320, TMAX = 200, DT = TMAX/(N-1);   // days
+  var LAG = 34, TAU_DRW = 26, WIDTH = 9;      // lag, DRW timescale, transfer width
+
+  // --- continuum: damped random walk -------------------------------
+  var cont = new Array(N), x = 0;
+  var a = Math.exp(-DT/TAU_DRW), b = Math.sqrt(1 - a*a);
+  for(var i=0;i<N;i++){ x = a*x + b*gauss(); cont[i] = x; }
+
+  // --- line response: convolve with a Gaussian centred on the lag ---
+  var kern = [], kSpan = Math.ceil((LAG + 3*WIDTH)/DT);
+  for(var k=0;k<=kSpan;k++){
+    var t = k*DT, e = (t - LAG)/WIDTH;
+    kern.push(Math.exp(-0.5*e*e));
+  }
+  var kSum = kern.reduce(function(s,v){ return s+v; }, 0);
+  var line = new Array(N);
+  for(var i2=0;i2<N;i2++){
+    var acc = 0, wt = 0;
+    for(var k2=0;k2<kern.length;k2++){
+      var j = i2 - k2;
+      if(j < 0) break;
+      acc += kern[k2]*cont[j]; wt += kern[k2];
+    }
+    line[i2] = wt > 0 ? acc/wt : 0;
+    if(wt < 0.55*kSum) line[i2] = NaN;      // not enough history yet
+  }
+
+  // normalise each trace to [-1, 1] so the panels are comparable
+  function norm(arr){
+    var v = arr.filter(function(d){ return !isNaN(d); });
+    var lo = Math.min.apply(null, v), hi = Math.max.apply(null, v), m = (hi-lo)/2 || 1;
+    return arr.map(function(d){ return isNaN(d) ? NaN : (d - (lo+hi)/2)/m; });
+  }
+  cont = norm(cont); line = norm(line);
+
+  // --- find a matching pair of peaks to annotate the delay ----------
+  function peakNear(arr, from, to){
+    var best = -Infinity, at = from;
+    for(var i=from;i<=to;i++){ if(!isNaN(arr[i]) && arr[i] > best){ best = arr[i]; at = i; } }
+    return at;
+  }
+  var lo = Math.round(0.42*N), hi = Math.round(0.72*N);
+  var pC = peakNear(cont, lo, hi);
+  var pL = peakNear(line, pC, Math.min(pC + Math.round(2.2*LAG/DT), N-1));
+
+  function draw(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = cv.clientWidth || 760, h = Math.round(w * 0.408);
+    cv.width = w*dpr; cv.height = h*dpr;
+    cv.style.height = h + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    var cs  = getComputedStyle(document.documentElement);
+    var ink = cs.getPropertyValue('--ink').trim()   || '#171c1a';
+    var acc = cs.getPropertyValue('--accent').trim()|| '#25534a';
+    var rul = cs.getPropertyValue('--rule').trim()  || '#c9cfc9';
+    var sub = cs.getPropertyValue('--ink-2').trim() || '#5d6763';
+    var mono = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
+
+    var pad = {l:44, r:8, t:12, b:26};
+    var plotH = h - pad.t - pad.b;
+    var rowH  = plotH/2;
+    var X = function(i){ return pad.l + (i/(N-1))*(w-pad.l-pad.r); };
+    // row 0 = continuum (upper), row 1 = line (lower)
+    var Y = function(v, row){
+      var mid = pad.t + rowH*(row + 0.5);
+      return mid - v*(rowH*0.36);
+    };
+
+    var t = prefersMotion ? progress : 1;
+    var iMax = Math.round(t*(N-1));
+
+    // axes
+    ctx.strokeStyle = rul; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h-pad.b); ctx.lineTo(w-pad.r, h-pad.b);
+    ctx.stroke();
+
+    // zero line for each row
+    ctx.strokeStyle = rul; ctx.setLineDash([2,3]);
+    [0,1].forEach(function(r){
+      ctx.beginPath(); ctx.moveTo(pad.l, Y(0,r)); ctx.lineTo(w-pad.r, Y(0,r)); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    // time ticks
+    ctx.fillStyle = sub; ctx.font = mono;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    [0,50,100,150,200].forEach(function(day){
+      var i = (day/TMAX)*(N-1);
+      ctx.beginPath(); ctx.moveTo(X(i), h-pad.b); ctx.lineTo(X(i), h-pad.b+4); ctx.stroke();
+      ctx.fillText(String(day), X(i), h-pad.b+7);
+    });
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    ctx.fillText('time  [days]', pad.l+2, h-2);
+    ctx.save();
+    ctx.translate(11, pad.t+2); ctx.rotate(-Math.PI/2);
+    ctx.textAlign = 'right';
+    ctx.fillText('relative flux', 0, 0);
+    ctx.restore();
+
+    // the two traces
+    function trace(arr, row, colour, wide){
+      ctx.strokeStyle = colour; ctx.lineWidth = wide;
+      ctx.beginPath();
+      var started = false;
+      for(var i=0;i<=iMax;i++){
+        if(isNaN(arr[i])){ started = false; continue; }
+        var px = X(i), py = Y(arr[i], row);
+        started ? ctx.lineTo(px,py) : ctx.moveTo(px,py);
+        started = true;
+      }
+      ctx.stroke();
+    }
+    trace(cont, 0, ink, 1.3);
+    trace(line, 1, acc, 1.6);
+
+    // trace labels
+    ctx.font = mono; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillStyle = sub;
+    ctx.fillText('CONTINUUM', pad.l + 6, pad.t + 3);
+    ctx.fillStyle = acc;
+    ctx.fillText('Fe II LINE', pad.l + 6, pad.t + rowH + 3);
+
+    // delay annotation, once both peaks have been drawn
+    if(iMax >= pL){
+      var xC = X(pC), xL = X(pL);
+      ctx.strokeStyle = sub; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
+      ctx.beginPath(); ctx.moveTo(xC, Y(cont[pC],0)); ctx.lineTo(xC, h-pad.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xL, Y(line[pL],1)); ctx.lineTo(xL, h-pad.b); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // arrow between them, sitting just above the x-axis
+      var ay = h - pad.b - 9;
+      ctx.strokeStyle = acc; ctx.fillStyle = acc; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(xC, ay); ctx.lineTo(xL, ay); ctx.stroke();
+      [[xC,1],[xL,-1]].forEach(function(d){
+        ctx.beginPath();
+        ctx.moveTo(d[0], ay);
+        ctx.lineTo(d[0] + d[1]*5, ay - 3);
+        ctx.lineTo(d[0] + d[1]*5, ay + 3);
+        ctx.closePath(); ctx.fill();
+      });
+      ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      ctx.fillText('lag \u03c4', (xC+xL)/2, ay - 5);
+    }
+  }
+
+  var prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = 0, start = null;
+  function frame(ts){
+    if(start === null) start = ts;
+    progress = Math.min((ts-start)/1600, 1);
+    draw();
+    if(progress < 1) requestAnimationFrame(frame);
+  }
+  draw();
+  if(prefersMotion) requestAnimationFrame(frame); else { progress = 1; draw(); }
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt); rt = setTimeout(draw, 140);
+  });
+
+  // repaint when the theme button flips data-theme on <html>
+  if(window.MutationObserver){
+    new MutationObserver(draw).observe(document.documentElement,
+      {attributes:true, attributeFilter:['data-theme']});
+  }
+})();
+</script>
 </body>
 </html>
