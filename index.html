@@ -272,29 +272,38 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
   <main id="main">
     <div id="top" class="hero">
-      <h1 class="reveal">I work on active galaxies &mdash; how their light evolves, how big their emitting regions are, and what a survey can&rsquo;t <em>see</em>.</h1>
-      <p class="reveal">Physics undergraduate at Stanford and a researcher at KIPAC, splitting my time between the cosmological evolution of blazar luminosity functions and the size of the Fe&nbsp;II emitting region in active galactic nuclei. Both projects come down to the same discipline: every catalogue is missing exactly the objects that would tell you the most, and every measurement is only as good as the method that recovered it.</p>
-      <p class="reveal meta">Currently &mdash; finishing an analysis of &gamma;-ray and radio luminosity evolution in flat-spectrum radio quasars. Applying to astrophysics PhD programs this cycle.</p>
+      <h1 class="reveal">I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
+      <p class="reveal">I'm a physics undergraduate at Stanford, where I currently work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping, mentored by Dr. Zhefu Yu.</p>
     </div>
 
-    <!-- SIGNATURE FIGURE. Synthetic/illustrative only: no data, no results. -->
-    <figure class="figure reveal">
-      <canvas id="plot" width="1520" height="620" role="img"
-        aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
-      <figcaption class="figcap">
-        <p>Luminosity vs. redshift for a flux-limited sample. The curve is the detection threshold; everything beneath it exists and is simply absent from the catalogue. Recovering the underlying distribution from what survives is the whole problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
-        <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
-      </figcaption>
-    </figure>
+     <!-- SIGNATURE FIGURE 1. Synthetic/illustrative only: no data, no results. -->
+<figure class="figure reveal">
+  <canvas id="plot" width="1520" height="620" role="img"
+    aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
+  <figcaption class="figcap">
+    <p>Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
+    <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
+  </figcaption>
+</figure>
+
+<!-- SIGNATURE FIGURE 2. Synthetic/illustrative only: no data, no results. -->
+<figure class="figure reveal">
+  <canvas id="rmPlot" width="1520" height="620" role="img"
+    aria-label="Illustrative two-panel reverberation mapping figure. The left panel shows a variable continuum light curve, while the right panel shows an emission-line light curve responding after a time delay."></canvas>
+  <figcaption class="figcap">
+    <p>The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
+    <span class="tag">Fig. 2 &nbsp;/&nbsp; reverberation</span>
+  </figcaption>
+</figure>
 
     <!-- ─────────────────────────── ABOUT ─────────────────────────── -->
     <section id="about" aria-labelledby="about-h">
       <div class="head"><h2 id="about-h">About</h2><span class="count">Stanford &middot; KIPAC</span></div>
       <div class="prose">
-        <p class="lede">I&rsquo;m a physics major at Stanford University and an undergraduate researcher at the Kavli Institute for Particle Astrophysics and Cosmology, working with Professor Vahé Petrosian on AGN luminosity evolution and Professor Steven Allen on AGN reverberation mapping.</p>
-        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium, and transferred to Stanford as a Jack Kent Cooke Foundation Transfer Scholar. That route shaped what I care about: I like problems where the difficulty is honest and the method has to be defended line by line, and I have little patience for results that only hold if you don&rsquo;t look closely at how the sample was built.</p>
-        <p>The tools I keep returning to are nonparametric ones &mdash; the Efron&ndash;Petrosian permutation test, Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> estimator, bootstrap uncertainties &mdash; because they separate evolution from selection without assuming the answer first. Alongside the astrophysics I do policy research on space law and nuclear nonproliferation with the Stanford Student Space Initiative. Long term I want to work on high-energy astrophysics and on the statistics that make survey data trustworthy.</p>
-        <p>Outside the lab I write poetry and short fiction, play guitar badly and often, and run telescopes for the public on clear nights &mdash; in English and in Spanish.</p>
+        <p class="lede">I’m a physics major at Stanford University, where I work with Professor Vahé Petrosian on AGN luminosity evolution and Professor Steven Allen on reverberation mapping, through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC).</p>
+        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
+        <p>Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>        
+        <p>Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
       </div>
 
       <ul class="rows" style="margin-top:2rem">
@@ -318,31 +327,30 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <article class="entry">
         <h3>Cosmological evolution of FSRQ luminosity functions<span class="status live">Active</span></h3>
         <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
-        <p>A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m determining how the &gamma;-ray and radio luminosity functions of FSRQs evolve with redshift using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, with nonparametric methods that assume no functional form for the luminosity function and that account for the extra selection bias the optical redshift requirement introduces.</p>
-        <p>Once evolution is removed, the same machinery yields the intrinsic &gamma;-ray&ndash;radio luminosity correlation, which constrains how jet emission relates to emission from the accretion disk. Getting there meant rebuilding the analysis pipeline and documenting every correction: de-evolving both the luminosities and the flux limits is the step that is easiest to get wrong.</p>
-        <p class="meta">Manuscript in preparation. Nothing quantitative is posted here until it has been reviewed.</p>
+        <p>A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
+        <p>Using the Efron&ndash;Petrosian method and Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> estimator, I&rsquo;m recovering the luminosity evolution and local luminosity functions of the population. Once the evolution is removed, the same analysis allows me to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
       </article>
 
       <article class="entry">
-        <h3>The Fe&nbsp;II emitting region in AGN, from OzDES reverberation mapping<span class="status live">Active</span></h3>
-        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; statistical simulation</p>
-        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring continuum&ndash;Fe&nbsp;II line lags in multi-epoch OzDES spectroscopy and testing whether three independent lag estimators agree on the same objects.</p>
-        <p>Where they disagree, simulations are what tell you which to believe, so a large part of the work is characterising how each method fails and propagating that honestly into the uncertainties. The goal is a constraint on the Fe&nbsp;II radius&ndash;luminosity relation that holds up under that scrutiny.</p>
+        <h3>The Fe&nbsp;II emitting region in AGN<span class="status live">Active</span></h3>
+        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>        
+        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at <span class="meta">z</span> &asymp; 1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
+        <p>I&rsquo;m applying and cross-validating three independent lag estimators, then using simulations to quantify their accuracy and failure modes under realistic noise and sampling. The goal is to constrain the Fe&nbsp;II radius&ndash;luminosity relation and ultimately use it to estimate supermassive black hole masses.</p>
       </article>
 
       <article class="entry">
         <h3>Space law, space security, and a rocketry framework for Uruguay<span class="status live">Active</span></h3>
-        <p class="meta">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; Policy Team co-lead since March 2026<br><b>Areas:</b> international space law &middot; space security &middot; nuclear nonproliferation &middot; satellite traffic management</p>
-        <p>Amateur and high-power rocketry in Uruguay sits outside any dedicated national licensing or airspace regime, which is a gap with real consequences: under Article&nbsp;VI of the Outer Space Treaty, a state is responsible for the activities of its non-governmental actors whether or not it has authorised them. I lead a project drafting a model regulatory framework to close it &mdash; comparing existing regimes such as the FAA&rsquo;s amateur rocket classifications and the safety codes the hobby writes for itself, and working out which licensing, motor-classification, and airspace-coordination provisions actually transfer into Uruguayan civil aviation law.</p>
-        <p>The larger ambition is to make the country a regional hub for the activity rather than merely a place where it is permitted, which turns the question into one about launch-site siting, third-party liability, and how a small state builds regulatory capacity it doesn&rsquo;t yet have. I also co-authored a policy paper on preventing the deployment of nuclear weapons in orbit, and lead work on satellite traffic management.</p>
-        <p>It is a different mode of work from the astrophysics &mdash; an argument has to survive adversarial reading rather than statistical scrutiny &mdash; and I&rsquo;ve found the two sharpen each other. Both are ultimately about being precise regarding what you actually know.</p>
+        <p class="meta">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; <b>Policy Team co-lead</b> since March 2026<br><b>Areas:</b> international space law &middot; space security &middot; nuclear nonproliferation &middot; satellite traffic management</p>
+        <p>Amateur and high-power rocketry in Uruguay sits outside any dedicated national licensing or airspace regime. Under Article&nbsp;VI of the Outer Space Treaty, however, a state is responsible for the activities of its non-governmental actors whether or not it has authorised them. I&rsquo;m working on a project to draft a model regulatory framework for the activity, comparing existing regimes such as the FAA&rsquo;s amateur rocket classifications and the safety codes developed by the hobby itself, and considering which licensing, motor-classification, and airspace-coordination provisions could transfer into Uruguayan civil aviation law.</p>
+        <p>The larger goal is to explore whether Uruguay could become a regional hub for amateur rocketry rather than simply a place where the activity is permitted. That raises questions about launch-site siting, third-party liability, and how a small state can build regulatory capacity where a dedicated framework does not yet exist. I also co-authored a policy paper on preventing the deployment of nuclear weapons in orbit and lead additional work on satellite traffic management.</p>
+        <p>I like that the work sits somewhere between technical research and practical policy: the questions are grounded in science and engineering, but the answers have to work in the real world.</p>
       </article>
 
       <article class="entry">
         <h3>Flight telemetry for experimental radio-controlled aircraft<span class="status">Completed</span></h3>
-        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Built with:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
-        <p>Commercial telemetry systems for RC aircraft lock you into proprietary sensors and transmitter pairings, cost more than a student project can justify, and keep no local copy of the data if the radio link drops. We built one for $61 in off-the-shelf parts: an inertial measurement unit, barometric pressure sensor, GPS, and hall-effect current sensor on a Raspberry Pi Pico programmed in MicroPython, with a packet radio link and an onboard microSD card so a lost link doesn&rsquo;t mean lost data.</p>
-        <p>I also wrote the ground-station display in Java and Processing, deriving pitch and roll from the three-axis accelerometer. The aircraft flew, the device logged everything it was supposed to, and the downlink was unreliable &mdash; most likely interference between the plane&rsquo;s own control transmissions and our transmitter, which is the finding I&rsquo;d defend hardest, because it took longer to establish than anything that worked.</p>
+        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Technologies:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
+        <p>I built a low-cost flight telemetry and data-logging system for experimental RC aircraft, integrating inertial, barometric, GPS, and current sensors on a Raspberry Pi Pico programmed in MicroPython. The system used a packet-based nRF24L01 radio link alongside onboard microSD logging, so data would be preserved even if the radio connection was lost.</p>
+        <p>I also developed a real-time ground-station display in Java and Processing, deriving aircraft pitch and roll from three-axis accelerometer data. During flight testing, I identified radio-frequency interference between the aircraft&rsquo;s control and telemetry transmissions as the source of instability in the downlink.</p>
         <p class="meta"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
       </article>
     </section>
