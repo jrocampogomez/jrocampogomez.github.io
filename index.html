@@ -833,20 +833,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   var cPts = observe(cont, 7,  0.055, 1);
   var lPts = observe(line, 26, 0.150, 1);
 
-  // --- where to draw the delay -------------------------------------
-  // The line model IS the continuum convolved with a kernel centred on
-  // LAG, so the responding feature sits at tC + LAG by construction.
-  // Searching for it independently just finds nearby local maxima.
-  function iOf(t){ return Math.round((t + PRE)/DT); }
-  var tC = 0, bestV = -Infinity;
-  for(var ip = iOf(150); ip <= iOf(TMAX - LAG - 120); ip++){
-    if(cont[ip] > bestV){ bestV = cont[ip]; tC = tOf(ip); }
-  }
-  var tL = tC + LAG;
-
   function draw(){
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = cv.clientWidth || 760, h = Math.round(w * 0.46);
+    var w = cv.clientWidth || 760, h = Math.round(w * 0.48);
     cv.width = w*dpr; cv.height = h*dpr;
     cv.style.height = h + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -861,11 +850,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
     var pad = {l:44, r:8, t:12, b:26};
     var rowH = (h - pad.t - pad.b)/2;
-    var X = function(t){ return pad.l + (t/TMAX)*(w-pad.l-pad.r); };
+    var XSPAN = TMAX;
+    var X = function(t){ return pad.l + (t/XSPAN)*(w-pad.l-pad.r); };
     var Y = function(v,row){ return pad.t + rowH*(row+0.5) - v*(rowH*0.34); };
 
     var t = prefersMotion ? progress : 1;
-    var tCut = t*TMAX;
+    var tCut = t*XSPAN;
 
     // axes
     ctx.strokeStyle = rul; ctx.lineWidth = 1;
@@ -873,18 +863,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h-pad.b); ctx.lineTo(w-pad.r, h-pad.b);
     ctx.stroke();
 
-    // faint shading over the seasonal gaps — the source is unobservable
-    ctx.fillStyle = sub; ctx.globalAlpha = 0.05;
-    for(var g=SEASON; g<TMAX; g+=SEASON+GAP){
-      var gx = X(g), gw = X(Math.min(g+GAP,TMAX)) - gx;
-      ctx.fillRect(gx, pad.t, gw, h-pad.t-pad.b);
-    }
-    ctx.globalAlpha = 1;
-
     // time ticks
     ctx.fillStyle = sub; ctx.font = mono;
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    [0,400,800,1200,1600].forEach(function(d){
+    [0,300,600,900,1200,1500,1800].forEach(function(d){
       ctx.beginPath(); ctx.moveTo(X(d), h-pad.b); ctx.lineTo(X(d), h-pad.b+4); ctx.stroke();
       ctx.fillText(String(d), X(d), h-pad.b+7);
     });
@@ -896,72 +878,54 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.fillText('relative flux', 0, 0);
     ctx.restore();
 
-    // underlying model, faint
-    function model(arr,row,colour){
-      ctx.strokeStyle = colour; ctx.lineWidth = 1; ctx.globalAlpha = 0.28;
+    // divider between the panels
+    ctx.strokeStyle = rul; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, pad.t+rowH); ctx.lineTo(w-pad.r, pad.t+rowH); ctx.stroke();
+
+    // underlying model, faint. dt shifts the series along the time axis.
+    function model(arr,row,colour,dt){
+      ctx.strokeStyle = colour; ctx.lineWidth = 1; ctx.globalAlpha = 0.26;
       ctx.beginPath();
       var started = false;
       for(var i=0;i<N;i++){
         var tt = tOf(i);
         if(tt < 0) continue;
-        if(tt > tCut) break;
-        var px = X(tt), py = Y(arr[i],row);
+        if(tt + dt > tCut || tt + dt > XSPAN) break;
+        var px = X(tt+dt), py = Y(arr[i],row);
         started ? ctx.lineTo(px,py) : ctx.moveTo(px,py);
         started = true;
       }
       ctx.stroke(); ctx.globalAlpha = 1;
     }
-    model(cont,0,ink);
-    model(line,1,acc);
 
-    // observed epochs: error bar then marker
-    function epochs(pts,row,colour,r){
+    // observed epochs: error bar, then marker
+    function epochs(pts,row,colour,r,dt){
       ctx.strokeStyle = colour; ctx.fillStyle = colour;
       pts.forEach(function(p){
-        if(p.t > tCut) return;
-        var px = X(p.t);
-        ctx.globalAlpha = 0.5; ctx.lineWidth = 1;
+        var tt = p.t + dt;
+        if(tt > tCut || tt > XSPAN) return;
+        var px = X(tt);
+        ctx.globalAlpha = 0.45; ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(px, Y(p.y - p.err, row));
         ctx.lineTo(px, Y(p.y + p.err, row));
         ctx.stroke();
-        ctx.globalAlpha = 0.9;
+        ctx.globalAlpha = 0.85;
         ctx.beginPath(); ctx.arc(px, Y(p.y,row), r, 0, 6.2832); ctx.fill();
       });
       ctx.globalAlpha = 1;
     }
-    epochs(cPts,0,ink,1.7);
-    epochs(lPts,1,acc,2.2);
 
-    // trace labels
+    // ── panel 0: the continuum ────────────────────────────────────
+    model(cont,0,ink,0);   epochs(cPts,0,ink,1.6,0);
+
+    // ── panel 1: the emission line echoing it, late ───────────────
+    model(line,1,acc,0);   epochs(lPts,1,acc,2.2,0);
+
+    // panel labels
     ctx.font = mono; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-    ctx.fillStyle = sub;
-    ctx.fillText('CONTINUUM \u00b7 PHOTOMETRY', pad.l+6, pad.t+3);
-    ctx.fillStyle = acc;
-    ctx.fillText('EMISSION LINE \u00b7 SPECTROSCOPY', pad.l+6, pad.t+rowH+3);
-
-    // the delay
-    if(tCut >= tL){
-      var xC = X(tC), xL = X(tL);
-      ctx.strokeStyle = sub; ctx.lineWidth = 1; ctx.setLineDash([2,3]);
-      ctx.beginPath(); ctx.moveTo(xC, pad.t); ctx.lineTo(xC, h-pad.b); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(xL, pad.t); ctx.lineTo(xL, h-pad.b); ctx.stroke();
-      ctx.setLineDash([]);
-
-      var ay = h - pad.b - 10;
-      ctx.strokeStyle = acc; ctx.fillStyle = acc; ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.moveTo(xC, ay); ctx.lineTo(xL, ay); ctx.stroke();
-      [[xC,1],[xL,-1]].forEach(function(d){
-        ctx.beginPath();
-        ctx.moveTo(d[0], ay);
-        ctx.lineTo(d[0]+d[1]*5, ay-3);
-        ctx.lineTo(d[0]+d[1]*5, ay+3);
-        ctx.closePath(); ctx.fill();
-      });
-      ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-      ctx.fillText('lag \u03c4', (xC+xL)/2, ay-5);
-    }
+    ctx.fillStyle = sub; ctx.fillText('CONTINUUM',     pad.l+7, pad.t+4);
+    ctx.fillStyle = acc; ctx.fillText('EMISSION LINE', pad.l+7, pad.t+rowH+4);
   }
 
   var prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
