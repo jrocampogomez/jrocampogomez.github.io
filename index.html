@@ -248,6 +248,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   .rv{opacity:0;transform:translateY(15px);
       transition:opacity .66s var(--ease), transform .66s var(--ease)}
   .rv.in{opacity:1;transform:none}
+  /* Leaving the viewport: fade in place. No slide on the way out — an
+     element sliding downward as it exits the top reads as a glitch. */
+  .rv.out{opacity:0;transform:none;
+      transition:opacity .52s var(--ease), transform .52s var(--ease)}
   .view.is-active{animation:viewIn .34s var(--ease) both}
   @keyframes viewIn{from{opacity:0}to{opacity:1}}
 }
@@ -686,13 +690,21 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
   var io = null;
   if(!REDUCED && 'IntersectionObserver' in window){
+    // Elements are never unobserved: they fade in on the way into view and
+    // back out on the way out. The negative rootMargin means the fade starts
+    // as a block nears the edge of the screen rather than after it has gone.
     io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
-        if(!e.isIntersecting) return;
-        e.target.classList.add('in');
-        io.unobserve(e.target);
+        var el = e.target;
+        if(e.isIntersecting){
+          el.classList.remove('out');
+          el.classList.add('in');
+        } else if(el.classList.contains('in')){
+          el.classList.remove('in');
+          el.classList.add('out');   // only fade out what has already arrived
+        }
       });
-    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    }, { rootMargin:'-8% 0px -10% 0px', threshold:0 });
   }
 
   function reveal(scope){
@@ -700,7 +712,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     if(REDUCED || !io){ items.forEach(function(el){ el.classList.add('rv','in'); }); return; }
     var vh = window.innerHeight, shown = 0;
     items.forEach(function(el){
-      el.classList.remove('in');
+      io.unobserve(el);
+      el.classList.remove('in','out');
       el.classList.add('rv');
       el.style.transitionDelay = '';
       var top = el.getBoundingClientRect().top;
@@ -708,12 +721,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         // already on screen when the tab opens: stagger it in
         el.style.transitionDelay = Math.min(shown*70, 420) + 'ms';
         shown++;
+        // drop the stagger once it has played, so later fades are immediate
+        setTimeout(function(){ el.style.transitionDelay = ''; }, 1200);
         requestAnimationFrame(function(){
           requestAnimationFrame(function(){ el.classList.add('in'); });
         });
-      } else {
-        io.observe(el);
       }
+      io.observe(el);   // keep watching, in both directions, from now on
     });
   }
 
