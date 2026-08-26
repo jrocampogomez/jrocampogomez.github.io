@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -193,6 +193,13 @@ main{padding:0 var(--gutter) 5rem;min-width:0}
 .view{display:none}
 .view.is-active{display:block}
 
+/* ── bilingual: only ever hide, never force a display value, so each
+   element keeps its natural one (block, inline, grid) when shown.
+   data-lang lives in the markup, so this works with JS disabled too. */
+html[data-lang="en"] .es{display:none}
+html[data-lang="es"] .en{display:none}
+.btnrow{display:flex;gap:.45rem;flex-wrap:wrap}
+
 /* ═══════════════════════════════════════════════════════════════════
    4. HERO — the figure is the thesis of the page
    ═══════════════════════════════════════════════════════════════════ */
@@ -330,19 +337,20 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <header class="rail">
     <div>
       <p class="wordmark"><a href="#about"><span class="given">José R.</span>Ocampo Gómez</a></p>
-      <p class="rail-sub">Physics undergraduate<br>Stanford University</p>
+      <p class="rail-sub en">Physics undergraduate<br>Stanford University</p>
+      <p class="rail-sub es" lang="es">Estudiante de licenciatura en física<br>Universidad de Stanford</p>
     </div>
 
     <nav id="tabnav" aria-label="Sections">
       <ol>
-        <li><a href="#about">About</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#code">Code</a></li>
-        <li><a href="#presentations">Presentations</a></li>
-        <li><a href="#awards">Awards</a></li>
-        <li><a href="#outreach">Outreach</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about"><span class="en">About</span><span class="es" lang="es">Sobre mí</span></a></li>
+        <li><a href="#research"><span class="en">Research</span><span class="es" lang="es">Investigación</span></a></li>
+        <li><a href="#code"><span class="en">Code</span><span class="es" lang="es">Código</span></a></li>
+        <li><a href="#presentations"><span class="en">Presentations</span><span class="es" lang="es">Presentaciones</span></a></li>
+        <li><a href="#awards"><span class="en">Awards</span><span class="es" lang="es">Premios</span></a></li>
+        <li><a href="#outreach"><span class="en">Outreach</span><span class="es" lang="es">Divulgación</span></a></li>
+        <li><a href="#writing"><span class="en">Writing</span><span class="es" lang="es">Escritura</span></a></li>
+        <li><a href="#contact"><span class="en">Contact</span><span class="es" lang="es">Contacto</span></a></li>
       </ol>
     </nav>
 
@@ -351,10 +359,14 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <li><a href="Ocampo-Gomez-CV.pdf">CV (PDF)</a></li>
         <li><a href="https://github.com/jrocampogomez">GitHub</a></li>
         <li><a href="https://orcid.org/0009-0009-4123-9214">ORCID</a></li>
-        <li><a href="mailto:jocampog@stanford.edu">Email</a></li>
+        <li><a href="mailto:jocampog@stanford.edu"><span class="en">Email</span><span class="es" lang="es">Correo</span></a></li>
         <li><a href="https://www.linkedin.com/in/jrocampogomez/">LinkedIn</a></li>
       </ul>
-      <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
+      <div class="btnrow">
+        <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
+        <button class="themebtn" id="lang" type="button" aria-live="polite"
+                lang="es" hreflang="es">Español</button>
+      </div>
     </div>
   </header>
 
@@ -363,8 +375,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ══════════════════ TAB 1 · LANDING + ABOUT ═══════════════════ -->
   <div class="view is-active" id="v-about">
     <div id="top" class="hero">
-      <h1>I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
-      <p>I'm a physics undergraduate at Stanford, where I work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC), with Dr. Zhefu Yu as my mentor on the latter project.</p>
+      <h1 class="en">I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
+      <h1 class="es" lang="es">Trabajo con galaxias activas: cómo evoluciona su luz, qué tan grandes son sus regiones de emisión, y lo que ni nuestros mejores telescopios <em>alcanzan a ver</em>.</h1>
+      <p class="en">I'm a physics undergraduate at Stanford, where I work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC), with Dr. Zhefu Yu as my mentor on the latter project.</p>
+      <p class="es" lang="es">Estudio la licenciatura en física en Stanford, donde trabajo con el Prof. Vahé Petrosian en la evolución de la luminosidad de los AGN y con el Prof. Steven Allen en mapeo de reverberación, a través del Kavli Institute for Particle Astrophysics and Cosmology (KIPAC); en este último proyecto mi mentor es el Dr. Zhefu Yu.</p>
     </div>
 
     <!-- SIGNATURE FIGURE 1. Synthetic/illustrative only: no data, no results. -->
@@ -372,8 +386,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <canvas id="plot" width="1520" height="620" role="img"
         aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
       <figcaption class="figcap">
-        <p>Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
-        <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
+        <p class="en">Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
+        <p class="es" lang="es">Luminosidad contra desplazamiento al rojo en una muestra limitada por flujo. La curva marca el umbral de detección: las fuentes por debajo de ella son simplemente demasiado débiles para que el sondeo las registre. Esa población ausente es lo que vuelve engañosas a estas muestras; entender qué nos falta es buena parte del problema. <em>Esquema ilustrativo &mdash; puntos sintéticos, sin datos.</em></p>
+        <span class="tag en">Fig. 1 &nbsp;/&nbsp; truncation</span>
+        <span class="tag es" lang="es">Fig. 1 &nbsp;/&nbsp; truncamiento</span>
       </figcaption>
     </figure>
 
@@ -382,29 +398,37 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <canvas id="rmPlot" width="1520" height="620" role="img"
         aria-label="Illustrative two-panel reverberation mapping figure. The upper panel shows a variable continuum light curve; the lower panel shows the emission line responding to it, smoothed and delayed, with no data for the first lag because the echo has not yet arrived."></canvas>
       <figcaption class="figcap">
-        <p>The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
-        <span class="tag">Fig. 2 &nbsp;/&nbsp; reverberation</span>
+        <p class="en">The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
+        <p class="es" lang="es">La idea básica del mapeo de reverberación: cuando una galaxia activa varía, el gas alrededor de su agujero negro central responde después de un retraso. Medir ese retraso nos permite estimar el tamaño de la región que produce la emisión y, en última instancia, la masa del agujero negro supermasivo que habita el centro de la galaxia. <em>Esquema ilustrativo &mdash; curvas de luz sintéticas, sin datos.</em></p>
+        <span class="tag en">Fig. 2 &nbsp;/&nbsp; reverberation</span>
+        <span class="tag es" lang="es">Fig. 2 &nbsp;/&nbsp; reverberación</span>
       </figcaption>
     </figure>
 
     <!-- ─────────────────────────── ABOUT ─────────────────────────── -->
     <section id="about" aria-labelledby="about-h">
-      <div class="head"><h2 id="about-h">About</h2><span class="count">Stanford &middot; KIPAC</span></div>
+      <div class="head"><h2 id="about-h"><span class="en">About</span><span class="es" lang="es">Sobre mí</span></h2><span class="count">Stanford &middot; KIPAC</span></div>
       <div class="prose">
-        <p class="lede">My path into physics has been a little unconventional.</p>
-        <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
-        <p>Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
-        <p>Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
+        <p class="lede en">My path into physics has been a little unconventional.</p>
+        <p class="lede es" lang="es">Mi camino hacia la física ha sido un poco fuera de lo común.</p>
+        <p class="en">I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
+        <p class="es" lang="es">Empecé en Los Angeles City College, donde hice mi primera investigación a través del NASA California Space Grant Consortium bajo la supervisión del Prof. Jayesh Bhakta, y me transferí a Stanford como becario de transferencia de la Fundación Jack Kent Cooke. No es el camino que esperaba tomar, pero es el que me trajo hasta aquí.</p>
+        <p class="en">Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
+        <p class="es" lang="es">Fuera de la astrofísica, soy co-líder del equipo de política pública en la Stanford Student Space Initiative, donde trabajo en derecho espacial internacional, seguridad espacial y no proliferación nuclear. También participo en divulgación en STEM: desde asesorar a estudiantes de <i>community college</i> a través del Community College Outreach Program de Stanford hasta apoyar en las noches públicas de observación, donde opero los telescopios y ayudo a los visitantes a recorrer el cielo. Buena parte de lo que me importa es que la ciencia se sienta accesible—ya sea ayudándole a alguien a encontrar su camino hacia STEM o simplemente dándole la oportunidad de asomarse a un telescopio y hacer preguntas.</p>
+        <p class="en">Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
+        <p class="es" lang="es">A largo plazo quiero trabajar en astrofísica, donde sea que eso me deje entre la teoría y la observación, sin dejar de involucrarme en las preguntas más amplias sobre ciencia, tecnología y sociedad. Fuera de la física escribo poesía y narrativa, y me gusta estar al aire libre: bajo un cielo despejado, en la playa, o perdido en el bosque.</p>
       </div>
 
       <ul class="rows" style="margin-top:2rem">
         <li>
-          <span class="when">Exp. 2027</span>
-          <p class="what">B.S. Physics, Core Pathway<small>Stanford University</small></p>
+          <span class="when"><span class="en">Exp. 2027</span><span class="es" lang="es">2027 (est.)</span></span>
+          <p class="what en">B.S. Physics, Core Pathway<small>Stanford University</small></p>
+          <p class="what es" lang="es">Licenciatura en Física, Core Pathway<small>Universidad de Stanford</small></p>
         </li>
         <li>
           <span class="when">2020&ndash;2024</span>
-          <p class="what">A.S. for Transfer, <em>summa cum laude</em><small>Physics, Mathematics, Engineering &amp; Philosophy &middot; Los Angeles City College</small></p>
+          <p class="what en">A.S. for Transfer, <em>summa cum laude</em><small>Physics, Mathematics, Engineering &amp; Philosophy &middot; Los Angeles City College</small></p>
+          <p class="what es" lang="es">Associate of Science for Transfer, <em>summa cum laude</em><small>Física, Matemáticas, Ingeniería y Filosofía &middot; Los Angeles City College</small></p>
         </li>
       </ul>
     </section>
@@ -415,37 +439,51 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
        ═══════════════════════════════════════════════════════════════ -->
   <div class="view" id="v-research">
     <section id="research" aria-labelledby="research-h">
-      <div class="head"><h2 id="research-h">Research</h2><span class="count">3 active &middot; 1 past</span></div>
+      <div class="head"><h2 id="research-h"><span class="en">Research</span><span class="es" lang="es">Investigación</span></h2><span class="count en">3 active &middot; 1 past</span><span class="count es" lang="es">3 activos &middot; 1 concluido</span></div>
 
       <article class="entry">
-        <h3>Cosmological evolution of FSRQ luminosity functions<span class="status live">Active</span></h3>
-        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
-        <p>A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
-        <p>Once the evolution is separated out, what remains is the intrinsic &gamma;-ray&ndash;radio luminosity correlation &mdash; a constraint on how much of a blazar&rsquo;s output comes from the jet rather than the disk.</p>
+        <h3><span class="en">Cosmological evolution of FSRQ luminosity functions</span><span class="es" lang="es">Evolución cosmológica de las funciones de luminosidad de los FSRQ</span><span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
+        <p class="meta es" lang="es">KIPAC, Universidad de Stanford &nbsp;&middot;&nbsp; <b>Asesor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; junio 2025&ndash;presente<br><b>Métodos:</b> prueba de permutación de Efron&ndash;Petrosian &middot; C&minus; de Lynden-Bell &middot; correcciones K &middot; bootstrap</p>
+        <p class="en">A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
+        <p class="es" lang="es">Un cuásar de espectro plano en radio entra en esta muestra sólo si es lo bastante brillante en rayos &gamma;, lo bastante brillante en radio <em>y además</em> tiene un desplazamiento al rojo óptico medido: tres truncamientos distintos actuando sobre un mismo conjunto de datos. Estudio la evolución cosmológica de las funciones de luminosidad en rayos &gamma; y en radio de los FSRQ con una muestra trivariada construida a partir de observaciones de Fermi-LAT, VLBI y Gaia DR2, tomando en cuenta el sesgo de selección adicional que introduce la medición del desplazamiento al rojo óptico.</p>
+        <p class="en">Once the evolution is separated out, what remains is the intrinsic &gamma;-ray&ndash;radio luminosity correlation &mdash; a constraint on how much of a blazar&rsquo;s output comes from the jet rather than the disk.</p>
+        <p class="es" lang="es">Una vez separada la evolución, lo que queda es la correlación intrínseca entre las luminosidades en rayos &gamma; y en radio: una restricción sobre cuánto de lo que emite un blazar viene del jet y no del disco.</p>
       </article>
 
       <article class="entry">
-        <h3>The Fe&nbsp;II emitting region in AGN<span class="status live">Active</span></h3>
-        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>
-        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at z&nbsp;&asymp;&nbsp;1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
-        <p>A lag is a light-travel time, so measuring it measures a size &mdash; and that radius, with the width of the emission line, gives a black hole mass through the virial theorem. Each measurement takes years of monitoring, so the sample of objects measured this way is still small.</p>
+        <h3><span class="en">The Fe&nbsp;II emitting region in AGN</span><span class="es" lang="es">La región de emisión de Fe&nbsp;II en los AGN</span><span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>
+        <p class="meta es" lang="es">KIPAC, Universidad de Stanford &nbsp;&middot;&nbsp; <b>Asesor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; junio 2025&ndash;presente<br><b>Métodos:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; validación con simulaciones</p>
+        <p class="en">Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at z&nbsp;&asymp;&nbsp;1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
+        <p class="es" lang="es">El mapeo de reverberación convierte un retraso temporal en un tamaño físico, así que un radio &mdash; o una masa de agujero negro &mdash; es apenas tan confiable como el retraso del que salió. Estoy midiendo retrasos de reverberación entre el continuo del AGN y la emisión de Fe&nbsp;II en el ultravioleta en 25 núcleos activos de galaxias monitoreados por OzDES a z&nbsp;&asymp;&nbsp;1&ndash;2, con observaciones fotométricas y espectroscópicas de varios años.</p>
+        <p class="en">A lag is a light-travel time, so measuring it measures a size &mdash; and that radius, with the width of the emission line, gives a black hole mass through the virial theorem. Each measurement takes years of monitoring, so the sample of objects measured this way is still small.</p>
+        <p class="es" lang="es">Un retraso es un tiempo de viaje de la luz, así que medirlo es medir un tamaño; y ese radio, junto con el ancho de la línea de emisión, da una masa de agujero negro por el teorema del virial. Cada medición pide años de monitoreo, así que la muestra de objetos medidos de esta forma sigue siendo chica.</p>
       </article>
 
 
       <article class="entry">
-        <h3>Space law, space security, and a rocketry framework for Uruguay<span class="status live">Active</span></h3>
-        <p class="meta">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; <b>Policy Team co-lead</b> since March 2026<br><b>Areas:</b> international space law &middot; space security &middot; nuclear nonproliferation &middot; satellite traffic management</p>
-        <p>Amateur and high-power rocketry in Uruguay sits outside any dedicated national licensing or airspace regime. Under Article&nbsp;VI of the Outer Space Treaty, however, a state is responsible for the activities of its non-governmental actors whether or not it has authorised them. I&rsquo;m working on a project to draft a model regulatory framework for the activity, comparing existing regimes such as the FAA&rsquo;s amateur rocket classifications and the safety codes developed by the hobby itself, and considering which licensing, motor-classification, and airspace-coordination provisions could transfer into Uruguayan civil aviation law.</p>
-        <p>The larger goal is to explore whether Uruguay could become a regional hub for amateur rocketry rather than simply a place where the activity is permitted. That raises questions about launch-site siting, third-party liability, and how a small state can build regulatory capacity where a dedicated framework does not yet exist. I also co-authored a policy paper on preventing the deployment of nuclear weapons in orbit and lead additional work on satellite traffic management.</p>
-        <p>I like that the work sits somewhere between technical research and practical policy: the questions are grounded in science and engineering, but the answers have to work in the real world.</p>
+        <h3><span class="en">Space law, space security, and a rocketry framework for Uruguay</span><span class="es" lang="es">Derecho espacial, seguridad espacial y un marco regulatorio de cohetería para Uruguay</span><span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; <b>Policy Team co-lead</b> since March 2026<br><b>Areas:</b> international space law &middot; space security &middot; nuclear nonproliferation &middot; satellite traffic management</p>
+        <p class="meta es" lang="es">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Investigador de política pública, sept 2025&ndash;presente &nbsp;&middot;&nbsp; <b>Co-líder del equipo de política</b> desde marzo 2026<br><b>Áreas:</b> derecho espacial internacional &middot; seguridad espacial &middot; no proliferación nuclear &middot; gestión del tráfico satelital</p>
+        <p class="es" lang="es">La cohetería amateur y de alta potencia en Uruguay queda fuera de cualquier régimen nacional dedicado de licencias o de espacio aéreo. Sin embargo, bajo el Artículo&nbsp;VI del Tratado sobre el Espacio Ultraterrestre, un Estado responde por las actividades de sus actores no gubernamentales, las haya autorizado o no. Trabajo en un proyecto para redactar un marco regulatorio modelo para la actividad, comparando regímenes que ya existen &mdash; como las clasificaciones de cohetes amateur de la FAA y los códigos de seguridad que la afición misma se ha puesto &mdash; y viendo qué disposiciones de licenciamiento, clasificación de motores y coordinación del espacio aéreo podrían trasladarse a la legislación aeronáutica uruguaya.</p>
+        <p class="en">Amateur and high-power rocketry in Uruguay sits outside any dedicated national licensing or airspace regime. Under Article&nbsp;VI of the Outer Space Treaty, however, a state is responsible for the activities of its non-governmental actors whether or not it has authorised them. I&rsquo;m working on a project to draft a model regulatory framework for the activity, comparing existing regimes such as the FAA&rsquo;s amateur rocket classifications and the safety codes developed by the hobby itself, and considering which licensing, motor-classification, and airspace-coordination provisions could transfer into Uruguayan civil aviation law.</p>
+        <p class="es" lang="es">El objetivo más amplio es explorar si Uruguay podría volverse un centro regional de cohetería amateur, y no nada más un lugar donde la actividad está permitida. Eso abre preguntas sobre dónde se pueden autorizar los lanzamientos, quién responde por los daños a terceros, y cómo un Estado pequeño construye capacidad regulatoria donde todavía no hay un marco dedicado. También fui coautor de un documento de política sobre cómo prevenir el despliegue de armas nucleares en órbita, y encabezo trabajo adicional sobre gestión del tráfico satelital.</p>
+        <p class="en">The larger goal is to explore whether Uruguay could become a regional hub for amateur rocketry rather than simply a place where the activity is permitted. That raises questions about launch-site siting, third-party liability, and how a small state can build regulatory capacity where a dedicated framework does not yet exist. I also co-authored a policy paper on preventing the deployment of nuclear weapons in orbit and lead additional work on satellite traffic management.</p>
+        <p class="es" lang="es">Me gusta que el trabajo esté a medio camino entre la investigación técnica y la política pública: las preguntas se sostienen en la ciencia y la ingeniería, pero las respuestas tienen que funcionar en el mundo real.</p>
+        <p class="en">I like that the work sits somewhere between technical research and practical policy: the questions are grounded in science and engineering, but the answers have to work in the real world.</p>
       </article>
 
       <article class="entry">
-        <h3>Flight telemetry for experimental radio-controlled aircraft<span class="status">Completed</span></h3>
-        <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Technologies:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
-        <p>Working with a four-person team, I built a low-cost flight telemetry and data-logging system for experimental RC aircraft, integrating inertial, barometric, GPS, and current sensors on a Raspberry Pi Pico programmed in MicroPython. The system used a packet-based nRF24L01 radio link alongside onboard microSD logging, so data would be preserved even if the radio connection was lost.</p>
-        <p>I also developed a real-time ground-station display in Java and Processing, deriving aircraft pitch and roll from three-axis accelerometer data. During flight testing, I identified radio-frequency interference between the aircraft&rsquo;s control and telemetry transmissions as the source of instability in the downlink.</p>
-        <p class="meta"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
+        <h3><span class="en">Flight telemetry for experimental radio-controlled aircraft</span><span class="es" lang="es">Telemetría de vuelo para aviones de radiocontrol experimentales</span><span class="status"><span class="en">Completed</span><span class="es" lang="es">Concluido</span></span></h3>
+        <p class="meta es" lang="es">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Asesor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; abril 2023&ndash;abril 2024<br><b>Tecnologías:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
+        <p class="meta en">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Technologies:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
+        <p class="es" lang="es">Con un equipo de cuatro personas construí un sistema de telemetría y registro de datos de bajo costo para aviones de radiocontrol experimentales, integrando sensores inerciales, barométricos, de GPS y de corriente en una Raspberry Pi Pico programada en MicroPython. El sistema usaba un enlace de radio por paquetes nRF24L01 junto con registro local en microSD, para no perder los datos aunque se cayera la conexión.</p>
+        <p class="en">Working with a four-person team, I built a low-cost flight telemetry and data-logging system for experimental RC aircraft, integrating inertial, barometric, GPS, and current sensors on a Raspberry Pi Pico programmed in MicroPython. The system used a packet-based nRF24L01 radio link alongside onboard microSD logging, so data would be preserved even if the radio connection was lost.</p>
+        <p class="es" lang="es">También desarrollé la interfaz de estación en tierra en tiempo real, en Java y Processing, obteniendo el cabeceo y el alabeo de la aeronave a partir de un acelerómetro de tres ejes. Durante las pruebas de vuelo identifiqué interferencia de radiofrecuencia entre las transmisiones de control de la aeronave y las de telemetría como la causa de la inestabilidad del enlace de bajada.</p>
+        <p class="en">I also developed a real-time ground-station display in Java and Processing, deriving aircraft pitch and roll from three-axis accelerometer data. During flight testing, I identified radio-frequency interference between the aircraft&rsquo;s control and telemetry transmissions as the source of instability in the downlink.</p>
+        <p class="meta en"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
+        <p class="meta es" lang="es"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repositorio y póster</a> &middot; presentado en SCCUR&nbsp;2023 y NCUR&nbsp;2024</p>
       </article>
     </section>
   </div>
@@ -453,35 +491,45 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ════════════════════════ TAB 3 · CODE ════════════════════════ -->
   <div class="view" id="v-code">
     <section id="code" aria-labelledby="code-h">
-      <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects</span></div>
+      <div class="head"><h2 id="code-h"><span class="en">Code</span><span class="es" lang="es">Código</span></h2><span class="count en">4 projects</span><span class="count es" lang="es">4 proyectos</span></div>
       <div class="prose">
-        <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind my research projects.</p>
+        <p class="en">A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind my research projects.</p>
+        <p class="es" lang="es">Buena parte de mi investigación ocurre en la computadora, así que aquí guardo algo del trabajo de análisis y simulación que está detrás de mis proyectos.</p>
       </div>
 
       <article class="entry" style="margin-top:1.9rem">
-        <h3>FSRQ luminosity evolution analysis</h3>
+        <h3><span class="en">FSRQ luminosity evolution analysis</span><span class="es" lang="es">Análisis de la evolución de luminosidad de los FSRQ</span></h3>
         <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
-        <p>Computational analysis of a tri-variate FSRQ sample constructed from Fermi-LAT &gamma;-ray, VLBI radio, and Gaia DR2 optical observations. The analysis includes sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian method, and Lynden-Bell&rsquo;s C&minus; estimator to recover the luminosity evolution, differential luminosity functions, cumulative density functions, and co-moving density evolution of the population.</p>
-        <p>I&rsquo;m also characterizing the resulting luminosity functions with broken-power-law models and estimating uncertainties through bootstrap resampling. Once the evolution is removed, the same analysis can be used to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
+        <p class="es" lang="es">Análisis computacional de una muestra trivariada de FSRQ construida a partir de observaciones en rayos &gamma; de Fermi-LAT, en radio de VLBI y en óptico de Gaia DR2. El análisis incluye la construcción de la muestra y sus límites de truncamiento, correcciones K, el método de Efron&ndash;Petrosian y el estimador C&minus; de Lynden-Bell para recuperar la evolución de la luminosidad, las funciones de luminosidad diferenciales, las funciones de densidad acumulada y la evolución de la densidad comóvil de la población.</p>
+        <p class="en">Computational analysis of a tri-variate FSRQ sample constructed from Fermi-LAT &gamma;-ray, VLBI radio, and Gaia DR2 optical observations. The analysis includes sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian method, and Lynden-Bell&rsquo;s C&minus; estimator to recover the luminosity evolution, differential luminosity functions, cumulative density functions, and co-moving density evolution of the population.</p>
+        <p class="es" lang="es">También estoy caracterizando las funciones de luminosidad resultantes con modelos de ley de potencias quebrada y estimando incertidumbres por remuestreo bootstrap. Una vez removida la evolución, el mismo análisis sirve para medir la correlación intrínseca entre las luminosidades en rayos &gamma; y en radio, e investigar la relación entre la emisión del jet y la del disco de acreción.</p>
+        <p class="en">I&rsquo;m also characterizing the resulting luminosity functions with broken-power-law models and estimating uncertainties through bootstrap resampling. Once the evolution is removed, the same analysis can be used to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
       </article>
 
       <article class="entry">
-        <h3>Lag-recovery testing for reverberation mapping</h3>
-        <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
-        <p>Computational tools for measuring and validating reverberation lags in the OzDES reverberation mapping data. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
-        <p>A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
+        <h3><span class="en">Lag-recovery testing for reverberation mapping</span><span class="es" lang="es">Pruebas de recuperación de retrasos para mapeo de reverberación</span></h3>
+        <p class="meta en">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
+        <p class="meta es" lang="es">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; curvas de luz simuladas</p>
+        <p class="es" lang="es">Herramientas computacionales para medir y validar retrasos de reverberación en los datos de mapeo de reverberación de OzDES. Corro tres estimadores de retraso independientes sobre las mismas curvas de luz y uso simulaciones con la cadencia y el ruido reales del sondeo para probar qué tan confiablemente cada método recupera retrasos de entrada conocidos.</p>
+        <p class="en">Computational tools for measuring and validating reverberation lags in the OzDES reverberation mapping data. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
+        <p class="es" lang="es">Ahora me enfoco en desarrollar cortes de calidad que distingan las mediciones de retraso confiables de aquellas donde el retraso recuperado es sensible al ruido, al muestreo o a otras características de las curvas de luz. Esos cortes servirán para armar una muestra confiable con la que restringir la relación radio&ndash;luminosidad del Fe&nbsp;II y, en última instancia, masas de agujeros negros.</p>
+        <p class="en">A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
       </article>
 
       <article class="entry">
-        <h3><a href="https://github.com/jrocampogomez/blazar-disk-sed-mcmc">Bayesian AGN SED modelling</a><span class="status live">Public</span></h3>
-        <p class="meta">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
-        <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
+        <h3><a href="https://github.com/jrocampogomez/blazar-disk-sed-mcmc"><span class="en">Bayesian AGN SED modelling</span><span class="es" lang="es">Modelado bayesiano de SED de AGN</span></a><span class="status live"><span class="en">Public</span><span class="es" lang="es">Público</span></span></h3>
+        <p class="meta en">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
+        <p class="meta es" lang="es">Python &middot; MCMC de Metropolis&ndash;Hastings propio &middot; integración numérica propia &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
+        <p class="es" lang="es">Una implementación en Python del ajuste de distribuciones espectrales de energía de disco delgado para AGN, usando mi propia implementación de Metropolis&ndash;Hastings y mi propio integrador numérico para inferir masas de agujeros negros y tasas de acreción a partir de datos observacionales. Reproduje mediciones publicadas para blazares de alto desplazamiento al rojo y probé qué tanto dependen los parámetros inferidos del esquema de integración numérica.</p>
+        <p class="en">A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
       </article>
 
       <article class="entry">
-                <h3><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">RC aircraft telemetry firmware and ground station</a><span class="status live">Public</span></h3>
-                <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing</p>
-        <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public repository and poster.</p>
+        <h3><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico"><span class="en">RC aircraft telemetry firmware and ground station</span><span class="es" lang="es">Firmware de telemetría y estación en tierra para avión RC</span></a><span class="status live"><span class="en">Public</span><span class="es" lang="es">Público</span></span></h3>
+        <p class="meta en">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing</p>
+        <p class="meta es" lang="es">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing</p>
+        <p class="es" lang="es">Firmware a bordo que lee una IMU, un barómetro, GPS y un sensor de corriente por I&sup2;C y SPI, escribe en microSD y transmite por un enlace de radio por paquetes; más una aplicación de estación en tierra que decodifica el flujo y grafica la orientación y la telemetría de potencia en vivo. Repositorio y póster públicos.</p>
+        <p class="en">Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public repository and poster.</p>
       </article>
 
       <ul class="chips" aria-label="Tools">
@@ -489,7 +537,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
         <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
       </ul>
-      <p class="note">The two AGN pipelines stay private until their manuscripts are out; happy to share on request.</p>
+      <p class="note en">The two AGN pipelines stay private until their manuscripts are out; happy to share on request.</p>
+      <p class="note es" lang="es">Los dos pipelines de AGN se quedan privados hasta que salgan sus manuscritos; con gusto los comparto si me escriben.</p>
     </section>
   </div>
 
@@ -498,9 +547,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
        ═══════════════════════════════════════════════════════════════ -->
   <div class="view" id="v-presentations">
     <section id="presentations" aria-labelledby="pres-h">
-      <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">5 posters &middot; 3 talks</span></div>
+      <div class="head"><h2 id="pres-h"><span class="en">Presentations</span><span class="es" lang="es">Presentaciones</span></h2><span class="count en">5 posters &middot; 3 talks</span><span class="count es" lang="es">5 pósters &middot; 3 charlas</span></div>
 
-      <p class="subhead">Posters</p>
+      <p class="subhead en">Posters</p>
+      <p class="subhead es" lang="es">Pósters</p>
       <ul class="rows">
         <li>
           <span class="when">2026</span>
@@ -524,11 +574,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         </li>
       </ul>
 
-      <p class="subhead">Talks</p>
+      <p class="subhead en">Talks</p>
+      <p class="subhead es" lang="es">Charlas</p>
       <ul class="rows">
         <li>
           <span class="when">2026</span>
-          <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
+          <p class="what"><span class="kind"><span class="en">Invited</span><span class="es" lang="es">Invitada</span></span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
         </li>
         <li>
           <span class="when">2026</span>
@@ -536,7 +587,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         </li>
         <li>
           <span class="when">2025</span>
-          <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
+          <p class="what"><span class="kind"><span class="en">In Spanish</span><span class="es" lang="es">En español</span></span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
         </li>
       </ul>
     </section>
@@ -545,7 +596,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ═══════════════════════ TAB 5 · AWARDS ═══════════════════════ -->
   <div class="view" id="v-awards">
     <section id="awards" aria-labelledby="awards-h">
-      <div class="head"><h2 id="awards-h">Awards</h2><span class="count">6 awards</span></div>
+      <div class="head"><h2 id="awards-h"><span class="en">Awards</span><span class="es" lang="es">Premios</span></h2><span class="count en">6 awards</span><span class="count es" lang="es">6 premios</span></div>
 
       <ul class="rows">
         <li>
@@ -579,26 +630,34 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ═════════════════ TAB 6 · OUTREACH & SERVICE ═════════════════ -->
   <div class="view" id="v-outreach">
     <section id="outreach" aria-labelledby="outreach-h">
-      <div class="head"><h2 id="outreach-h">Outreach</h2><span class="count">STEM outreach &middot; mentoring</span></div>
+      <div class="head"><h2 id="outreach-h"><span class="en">Outreach</span><span class="es" lang="es">Divulgación</span></h2><span class="count en">STEM outreach &middot; mentoring</span><span class="count es" lang="es">divulgación en STEM &middot; mentoría</span></div>
 
       <article class="entry">
-        <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
-        <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
-        <p>I volunteer at public stargazing nights at the Stanford Student Observatory, operating the telescopes and talking with visitors about whatever&rsquo;s up that night. I also give career talks and run demonstrations for high school and community college students.</p>
-        <p>I give some of these talks in Spanish through the Noches Astronómicas programme &mdash; which is harder than translating, since a lot of this vocabulary I only ever learned in English.</p>
+        <h3>KIPAC Public Outreach<span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
+        <p class="meta es" lang="es">Miembro del equipo &nbsp;&middot;&nbsp; sept 2025&ndash;presente</p>
+        <p class="en">I volunteer at public stargazing nights at the Stanford Student Observatory, operating the telescopes and talking with visitors about whatever&rsquo;s up that night. I also give career talks and run demonstrations for high school and community college students.</p>
+        <p class="es" lang="es">Soy voluntario en las noches públicas de observación en el Stanford Student Observatory: opero los telescopios y platico con los visitantes sobre lo que se alcance a ver esa noche. También doy charlas sobre trayectorias en ciencia y hago demostraciones para estudiantes de preparatoria y de <i>community college</i>.</p>
+        <p class="en">I give some of these talks in Spanish through the Noches Astronómicas programme &mdash; which is harder than translating, since a lot of this vocabulary I only ever learned in English.</p>
+        <p class="es" lang="es">Algunas de estas charlas las doy en español, con el programa Noches Astronómicas, y resulta más difícil que traducir: buena parte de este vocabulario nunca lo aprendí en español.</p>
       </article>
 
       <article class="entry">
-        <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
-        <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-        <p>I attend transfer-process workshops alongside community college students and mentor them in small groups of eight to ten where the questions people are actually worried about tend to come out.</p>
-        <p>I transferred to Stanford from a community college myself, so helping other students navigate that path is something I care about personally.</p>
+        <h3>Stanford Community College Outreach Program<span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p class="meta es" lang="es">Mentor &nbsp;&middot;&nbsp; junio 2026&ndash;presente</p>
+        <p class="en">I attend transfer-process workshops alongside community college students and mentor them in small groups of eight to ten where the questions people are actually worried about tend to come out.</p>
+        <p class="es" lang="es">Asisto a los talleres sobre el proceso de transferencia junto con estudiantes de <i>community college</i> y después los asesoro en grupos chicos de ocho a diez, que es donde salen las preguntas que de verdad les preocupan.</p>
+        <p class="en">I transferred to Stanford from a community college myself, so helping other students navigate that path is something I care about personally.</p>
+        <p class="es" lang="es">Yo me transferí a Stanford desde un <i>community college</i>, así que ayudarle a otros estudiantes a recorrer ese camino es algo que me importa en lo personal.</p>
       </article>
 
       <article class="entry">
-        <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
-        <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-        <p>Building community among Stanford&rsquo;s transfer students and alumni, including finances, budgeting, and event planning. The group connects incoming transfers with current students and alumni who have already been through it.</p>
+        <h3>Stanford Transfer Network<span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
+        <p class="meta en">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p class="meta es" lang="es">Co-presidente &nbsp;&middot;&nbsp; junio 2026&ndash;presente</p>
+        <p class="en">Building community among Stanford&rsquo;s transfer students and alumni, including finances, budgeting, and event planning. The group connects incoming transfers with current students and alumni who have already been through it.</p>
+        <p class="es" lang="es">Construir comunidad entre los estudiantes de transferencia y los exalumnos de Stanford, incluyendo finanzas, presupuesto y organización de eventos. El grupo conecta a quienes van llegando por transferencia con estudiantes y exalumnos que ya pasaron por lo mismo.</p>
       </article>
     </section>
   </div>
@@ -607,46 +666,71 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <div class="view" id="v-writing">
     <section id="writing" aria-labelledby="writing-h">
       <div class="head">
-        <h2 id="writing-h">Writing</h2>
-        <span class="count">poetry &middot; fiction</span>
+        <h2 id="writing-h"><span class="en">Writing</span><span class="es" lang="es">Escritura</span></h2>
+        <span class="count en">poetry &middot; fiction</span><span class="count es" lang="es">poesía &middot; narrativa</span>
       </div>
 
       <div class="prose">
-        <p>
+        <p class="en">
          I write poetry and fiction alongside studying physics. I&rsquo;ve written more than
          a hundred poems, as well as short stories and the beginnings of several
          longer works. I enjoy moving between different forms, voices, and styles.
         </p>
+        <p class="es" lang="es">
+         Escribo poesía y narrativa a la par de estudiar física. Llevo más de cien
+         poemas, además de cuentos y los inicios de varios proyectos más largos. Me
+         gusta moverme entre distintas formas, voces y estilos.
+        </p>
       </div>
 
       <article class="entry" style="margin-top:1.9rem">
-        <h3><em>Adiós, y Bienvenidos</em><span class="status">Poetry</span></h3>
-        <p class="meta">Poetry collection &middot; ongoing</p>
-        <p>
+        <h3><em>Adiós, y Bienvenidos</em><span class="status"><span class="en">Poetry</span><span class="es" lang="es">Poesía</span></span></h3>
+        <p class="meta en">Poetry collection &middot; ongoing</p>
+        <p class="meta es" lang="es">Colección de poesía &middot; en curso</p>
+        <p class="en">
           Poems about immigration, memory, loneliness, love, and the strange
           distances between leaving and arriving. Rain, astronomy, and the natural
           world recur throughout the collection as ways of writing about home,
           loss, identity, and the people we carry with us.
         </p>
+        <p class="es" lang="es">
+          Poemas sobre la migración, la memoria, la soledad, el amor y las distancias
+          extrañas que hay entre irse y llegar. La lluvia, la astronomía y el mundo
+          natural reaparecen a lo largo de la colección como maneras de escribir sobre
+          el hogar, la pérdida, la identidad y la gente que uno carga consigo.
+        </p>
       </article>
 
       <article class="entry">
-        <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
-        <p class="meta">Short story</p>
-        <p>
+        <h3>&ldquo;There Was No Need&rdquo;<span class="status"><span class="en">Short fiction</span><span class="es" lang="es">Cuento</span></span></h3>
+        <p class="meta en">Short story</p>
+        <p class="meta es" lang="es">Cuento</p>
+        <p class="en">
           A story about grief, guilt, and a young man caught between life and death
           after a tragedy of his own making. As the empty Los Angeles around him
           begins to reveal what happened, his bond with a lost little girl becomes
           a second chance at being the older brother he thought he could no longer be.
         </p>
+        <p class="es" lang="es">
+          Un cuento sobre el duelo, la culpa y un joven atrapado entre la vida y la
+          muerte después de una tragedia que él mismo provocó. Mientras el Los Ángeles
+          vacío a su alrededor empieza a revelar lo que pasó, su vínculo con una niña
+          perdida se vuelve una segunda oportunidad de ser el hermano mayor que creía
+          que ya no podía ser.
+        </p>
       </article>
 
       <article class="entry">
-         <h3>Other work<span class="status">In progress</span></h3>
-         <p class="meta">Fiction &middot; longer-form projects</p>
-         <p>
+         <h3><span class="en">Other work</span><span class="es" lang="es">Otros proyectos</span><span class="status"><span class="en">In progress</span><span class="es" lang="es">En proceso</span></span></h3>
+         <p class="meta en">Fiction &middot; longer-form projects</p>
+         <p class="meta es" lang="es">Narrativa &middot; proyectos de largo aliento</p>
+         <p class="en">
            I&rsquo;m also working on several longer-form fiction projects, most of which
            are still private and in various stages of drafting.
+         </p>
+         <p class="es" lang="es">
+           También trabajo en varios proyectos de narrativa más largos; la mayoría
+           siguen siendo privados y están en distintas etapas de escritura.
          </p>
        </article>
     </section>
@@ -655,10 +739,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ══════════════════════ TAB 8 · CONTACT ═══════════════════════ -->
   <div class="view" id="v-contact">
     <section id="contact" aria-labelledby="contact-h">
-      <div class="head"><h2 id="contact-h">Contact</h2><span class="count">Stanford, CA</span></div>
+      <div class="head"><h2 id="contact-h"><span class="en">Contact</span><span class="es" lang="es">Contacto</span></h2><span class="count">Stanford, CA</span></div>
       <div class="contact">
         <div>
-          <span class="mono">Email</span>
+          <span class="mono"><span class="en">Email</span><span class="es" lang="es">Correo</span></span>
           <p><a href="mailto:jocampog@stanford.edu">jocampog@stanford.edu</a></p>
         </div>
         <div>
@@ -666,20 +750,22 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
           <p><a href="https://orcid.org/0009-0009-4123-9214">0009-0009-4123-9214</a></p>
         </div>
         <div>
-          <span class="mono">Code</span>
+          <span class="mono"><span class="en">Code</span><span class="es" lang="es">Código</span></span>
           <p><a href="https://github.com/jrocampogomez">github.com/jrocampogomez</a></p>
         </div>
         <div>
           <span class="mono">CV</span>
-          <p><a href="Ocampo-Gomez-CV.pdf">Download (PDF)</a></p>
+          <p><a href="Ocampo-Gomez-CV.pdf"><span class="en">Download (PDF)</span><span class="es" lang="es">Descargar (PDF)</span></a></p>
         </div>
       </div>
-      <p class="note">Languages: Spanish (fluent), English.</p>
+      <p class="note en">Languages: Spanish (fluent), English.</p>
+      <p class="note es" lang="es">Idiomas: español, inglés.</p>
     </section>
   </div>
 
     <footer>
-      <p>Last updated August 2026 &middot; Built by hand in one HTML file &middot; &copy; José R. Ocampo Gómez</p>
+      <p class="en">Last updated August 2026 &middot; Built by hand in one HTML file &middot; &copy; José R. Ocampo Gómez</p>
+      <p class="es" lang="es">Última actualización: agosto de 2026 &middot; Hecho a mano en un solo archivo HTML &middot; &copy; José R. Ocampo Gómez</p>
     </footer>
   </main>
 </div>
@@ -722,6 +808,23 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     root.setAttribute('data-theme', dark ? 'dark' : 'light');
     label();
     document.dispatchEvent(new CustomEvent('themechange'));
+  });
+
+  /* ── language ──────────────────────────────────────────────────── */
+  // data-lang is already in the markup, so CSS alone renders the right
+  // language before this runs. This only handles switching.
+  var langBtn = document.getElementById('lang');
+  function setLang(code){
+    root.setAttribute('data-lang', code);
+    root.setAttribute('lang', code);
+    langBtn.textContent = code === 'es' ? 'English' : 'Español';
+    langBtn.setAttribute('lang', code === 'es' ? 'en' : 'es');
+    // the canvas figures draw their own axis labels, and every block just
+    // changed height, so both need to know
+    document.dispatchEvent(new CustomEvent('langchange'));
+  }
+  langBtn.addEventListener('click', function(){
+    setLang(root.getAttribute('data-lang') === 'es' ? 'en' : 'es');
   });
 
   /* ── scroll reveals ────────────────────────────────────────────── */
@@ -831,6 +934,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   });
   window.addEventListener('popstate', function(){ show(idFor(location.hash), true); });
 
+  document.addEventListener('langchange', function(){
+    var active = document.querySelector('.view.is-active');
+    if(active) reveal(active);
+  });
+
   show(idFor(location.hash), false);
 })();
 </script>
@@ -894,6 +1002,14 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     var rul = cs.getPropertyValue('--rule').trim()  || '#d9cdc9';
     var sub = cs.getPropertyValue('--ink-2').trim() || '#6b585a';
 
+    // axis text follows the page language
+    var ES = document.documentElement.getAttribute('data-lang') === 'es';
+    var T = ES
+      ? {x:'desplazamiento al rojo  z', y:'log L  [erg s\u207B\u00B9]',
+         note:'POR DEBAJO DEL LÍMITE DE FLUJO — FUERA DEL CATÁLOGO'}
+      : {x:'redshift  z',            y:'log L  [erg s\u207B\u00B9]',
+         note:'BELOW THE FLUX LIMIT — NOT IN THE CATALOGUE'};
+
     var pad = {l:44, r:8, t:10, b:26};
     var X = function(z){ return pad.l + (z-Z0)/(ZMAX-Z0) * (w-pad.l-pad.r); };
     var Y = function(L){ return h-pad.b - (L-LMIN)/(LMAX-LMIN) * (h-pad.t-pad.b); };
@@ -917,11 +1033,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     });
 
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText('redshift  z', pad.l+2, h-2);
+    ctx.fillText(T.x, pad.l+2, h-2);
     ctx.save();
     ctx.translate(11, pad.t+2); ctx.rotate(-Math.PI/2);
     ctx.textAlign = 'right';
-    ctx.fillText('log L  [erg s⁻¹]', 0, 0);
+    ctx.fillText(T.y, 0, 0);
     ctx.restore();
 
     var curve = LIM.map(function(d){ return [X(d[0]), Y(d[1])]; });
@@ -957,7 +1073,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       ctx.globalAlpha = Math.min((t-0.75)/0.25, 1) * 0.85;
       ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
       ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
-      ctx.fillText('BELOW THE FLUX LIMIT — NOT IN THE CATALOGUE', w-pad.r-6, h-pad.b-7);
+      ctx.fillText(T.note, w-pad.r-6, h-pad.b-7);
       ctx.globalAlpha = 1;
     }
   }
@@ -990,6 +1106,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
   window.addEventListener('resize', repaint);
   document.addEventListener('themechange', repaint);
+  document.addEventListener('langchange', repaint);
   document.addEventListener('viewshown', function(){
     // Arriving on this tab again: replay the draw from the start.
     var view = cv.closest('.view');
@@ -1114,6 +1231,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     var sub  = cs.getPropertyValue('--ink-2').trim()  || '#6b585a';
     var mono = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
 
+    var ES = document.documentElement.getAttribute('data-lang') === 'es';
+    var T = ES
+      ? {x:'tiempo  [días]', y:'flujo relativo', lag:'retraso \u03C4',
+         c:'CONTINUO', l:'LÍNEA DE EMISIÓN'}
+      : {x:'time  [days]',   y:'relative flux',  lag:'lag \u03C4',
+         c:'CONTINUUM', l:'EMISSION LINE'};
+
     var pad = {l:44, r:8, t:12, b:26};
     var rowH = (h - pad.t - pad.b)/2;
     var X = function(t){ return pad.l + (t/TMAX)*(w-pad.l-pad.r); };
@@ -1135,11 +1259,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       ctx.fillText(String(d), X(d), h-pad.b+7);
     });
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText('time  [days]', pad.l+2, h-2);
+    ctx.fillText(T.x, pad.l+2, h-2);
     ctx.save();
     ctx.translate(11, pad.t+2); ctx.rotate(-Math.PI/2);
     ctx.textAlign = 'right';
-    ctx.fillText('relative flux', 0, 0);
+    ctx.fillText(T.y, 0, 0);
     ctx.restore();
 
     function model(arr,row,colour){
@@ -1195,7 +1319,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         });
         ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
         ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-        ctx.fillText('lag \u03c4', (pad.l+bx)/2, by-4);
+        ctx.fillText(T.lag, (pad.l+bx)/2, by-4);
       }
     }
 
@@ -1203,8 +1327,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     model(line,1,acc);   epochs(lPts,1,acc,2.1);
 
     ctx.font = mono; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-    ctx.fillStyle = sub; ctx.fillText('CONTINUUM',     pad.l+7, pad.t+4);
-    ctx.fillStyle = acc; ctx.fillText('EMISSION LINE', pad.l+7, pad.t+rowH+4);
+    ctx.fillStyle = sub; ctx.fillText(T.c, pad.l+7, pad.t+4);
+    ctx.fillStyle = acc; ctx.fillText(T.l, pad.l+7, pad.t+rowH+4);
   }
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1233,6 +1357,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
   window.addEventListener('resize', repaint);
   document.addEventListener('themechange', repaint);
+  document.addEventListener('langchange', repaint);
   document.addEventListener('viewshown', function(){
     // Arriving on this tab again: replay the draw from the start.
     var view = cv.closest('.view');
