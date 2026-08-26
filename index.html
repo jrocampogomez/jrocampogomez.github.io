@@ -278,7 +278,14 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   body{background:#fff;color:#000;font-size:10.5pt}
   a{color:#000;border:0}
 }
-</style></head>
+</style>
+<noscript><style>
+  /* No JavaScript: show every view and skip the reveal animation, so the
+     whole site is still readable instead of just the first tab. */
+  .view{display:block!important}
+  .rv{opacity:1!important;transform:none!important}
+</style></noscript>
+</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
@@ -322,7 +329,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <main id="main">
 
   <!-- ══════════════════ TAB 1 · LANDING + ABOUT ═══════════════════ -->
-  <div class="view is-active" id="v-about" role="tabpanel" aria-labelledby="tab-about">
+  <div class="view is-active" id="v-about">
     <div id="top" class="hero">
       <h1>I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
       <p>I'm a physics undergraduate at Stanford, where I currently work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping, mentored by Dr. Zhefu Yu.</p>
@@ -374,7 +381,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ══════════════════════ TAB 2 · RESEARCH ══════════════════════
        TO ADD A PROJECT: copy one <article class="entry"> block.
        ═══════════════════════════════════════════════════════════════ -->
-  <div class="view" id="v-research" role="tabpanel" aria-labelledby="tab-research">
+  <div class="view" id="v-research">
     <section id="research" aria-labelledby="research-h">
       <div class="head"><h2 id="research-h">Research</h2><span class="count">3 active &middot; 1 past</span></div>
 
@@ -411,11 +418,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </div>
 
   <!-- ════════════════════════ TAB 3 · CODE ════════════════════════ -->
-  <div class="view" id="v-code" role="tabpanel" aria-labelledby="tab-code">
+  <div class="view" id="v-code">
     <section id="code" aria-labelledby="code-h">
       <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects</span></div>
       <div class="prose">
-        <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind the projects above.</p>
+        <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind my research projects.</p>
       </div>
 
       <article class="entry" style="margin-top:1.9rem">
@@ -428,12 +435,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <article class="entry">
         <h3>Lag-recovery testing for reverberation mapping</h3>
         <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
-        <p>Computational tools for measuring and validating reverberation lags in the OzDES data described above. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
+        <p>Computational tools for measuring and validating reverberation lags in the OzDES reverberation mapping data. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
         <p>A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
       </article>
 
       <article class="entry">
-        <h3>Bayesian AGN SED modelling</h3>
+        <h3><a href="https://github.com/jrocampogomez/blazar-disk-sed-mcmc">Bayesian AGN SED modelling</a><span class="status live">Public</span></h3>
         <p class="meta">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
         <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
       </article>
@@ -455,7 +462,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ═══════════════════ TAB 4 · PRESENTATIONS ════════════════════
        TO ADD A ROW: copy one <li> block.
        ═══════════════════════════════════════════════════════════════ -->
-  <div class="view" id="v-presentations" role="tabpanel" aria-labelledby="tab-presentations">
+  <div class="view" id="v-presentations">
     <section id="presentations" aria-labelledby="pres-h">
       <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">5 posters &middot; 3 talks</span></div>
 
@@ -502,9 +509,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </div>
 
   <!-- ═══════════════════════ TAB 5 · AWARDS ═══════════════════════ -->
-  <div class="view" id="v-awards" role="tabpanel" aria-labelledby="tab-awards">
+  <div class="view" id="v-awards">
     <section id="awards" aria-labelledby="awards-h">
-      <div class="head"><h2 id="awards-h">Awards &amp; Fellowships</h2><span class="count">6 awards</span></div>
+      <div class="head"><h2 id="awards-h">Awards</h2><span class="count">6 awards</span></div>
 
       <ul class="rows">
         <li>
@@ -536,9 +543,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </div>
 
   <!-- ═════════════════ TAB 6 · OUTREACH & SERVICE ═════════════════ -->
-  <div class="view" id="v-outreach" role="tabpanel" aria-labelledby="tab-outreach">
+  <div class="view" id="v-outreach">
     <section id="outreach" aria-labelledby="outreach-h">
-      <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">STEM outreach &middot; mentoring</span></div>
+      <div class="head"><h2 id="outreach-h">Outreach</h2><span class="count">STEM outreach &middot; mentoring</span></div>
 
       <article class="entry">
         <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
@@ -563,7 +570,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </div>
 
   <!-- ══════════════════════ TAB 7 · WRITING ═══════════════════════ -->
-  <div class="view" id="v-writing" role="tabpanel" aria-labelledby="tab-writing">
+  <div class="view" id="v-writing">
     <section id="writing" aria-labelledby="writing-h">
       <div class="head">
         <h2 id="writing-h">Writing</h2>
@@ -612,7 +619,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </div>
 
   <!-- ══════════════════════ TAB 8 · CONTACT ═══════════════════════ -->
-  <div class="view" id="v-contact" role="tabpanel" aria-labelledby="tab-contact">
+  <div class="view" id="v-contact">
     <section id="contact" aria-labelledby="contact-h">
       <div class="head"><h2 id="contact-h">Contact</h2><span class="count">Stanford, CA</span></div>
       <div class="contact">
@@ -934,7 +941,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
   window.addEventListener('resize', repaint);
   document.addEventListener('themechange', repaint);
-  document.addEventListener('viewshown', repaint);
+  document.addEventListener('viewshown', function(){
+    // arriving on this tab again: allow the draw to play from the start
+    if(!cv.closest('.view').classList.contains('is-active')) return;
+    played = false; progress = REDUCED ? 1 : 0;
+    repaint();
+    if('IntersectionObserver' in window){ vio.observe(cv); } else { play(); }
+  });
 })();
 </script>
 
@@ -1150,7 +1163,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
   window.addEventListener('resize', repaint);
   document.addEventListener('themechange', repaint);
-  document.addEventListener('viewshown', repaint);
+  document.addEventListener('viewshown', function(){
+    // arriving on this tab again: allow the draw to play from the start
+    if(!cv.closest('.view').classList.contains('is-active')) return;
+    played = false; progress = REDUCED ? 1 : 0;
+    repaint();
+    if('IntersectionObserver' in window){ vio.observe(cv); } else { play(); }
+  });
 })();
 </script>
 </body>
