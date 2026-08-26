@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>José R. Ocampo Gómez — Physics, Stanford University</title>
+<title>José R. Ocampo Gómez &middot; Physics, Stanford University</title>
 <meta name="description" content="José R. Ocampo Gómez, physics undergraduate at Stanford University. High-energy astrophysics: AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.">
 <meta name="author" content="José R. Ocampo Gómez">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="José R. Ocampo Gómez — Physics, Stanford University">
+<meta property="og:title" content="José R. Ocampo Gómez &middot; Physics, Stanford University">
 <meta property="og:description" content="High-energy astrophysics: AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.">
 <meta name="twitter:card" content="summary">
 
@@ -137,12 +137,20 @@ nav a[aria-current="page"]::before{background:var(--accent);width:20px}
 .navbtn{display:none}
 .navscrim{display:none}
 @media (max-width:900px){
-  .navbtn{
-    display:block;position:fixed;z-index:60;top:.85rem;right:.85rem;
-    font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  /* Menu, theme and language are all accessibility controls, so on a phone
+     they ride together in one fixed cluster instead of being scrolled away. */
+  .btnrow{
+    position:fixed;z-index:60;top:.7rem;right:.7rem;
+    flex-direction:row;align-items:center;gap:.35rem
+  }
+  .btnrow .themebtn,.navbtn{
     background:var(--paper);border:1px solid var(--rule);color:var(--ink);
-    padding:.55rem .85rem;cursor:pointer;border-radius:2px;
-    box-shadow:0 2px 10px rgba(0,0,0,.10)
+    padding:.5rem .7rem;border-radius:2px;
+    box-shadow:0 2px 10px rgba(0,0,0,.12)
+  }
+  .navbtn{
+    display:block;font-family:var(--mono);font-size:.68rem;
+    letter-spacing:.12em;text-transform:uppercase;cursor:pointer
   }
   .navbtn[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
 
@@ -156,7 +164,7 @@ nav a[aria-current="page"]::before{background:var(--accent);width:20px}
     position:fixed;z-index:55;top:0;right:0;bottom:0;
     width:min(74vw,270px);background:var(--paper);
     border-left:1px solid var(--rule);
-    padding:4.6rem 1.5rem 1.5rem;overflow-y:auto;
+    padding:4.9rem 1.5rem 1.5rem;overflow-y:auto;
     transform:translateX(102%);transition:transform .3s var(--ease)
   }
   nav.open{transform:none;box-shadow:-8px 0 26px rgba(0,0,0,.16)}
@@ -164,6 +172,20 @@ nav a[aria-current="page"]::before{background:var(--accent);width:20px}
   nav a{font-size:.82rem;padding:.62rem 0;border-bottom:1px solid var(--rule)}
   nav ol li:last-child a{border-bottom:0}
   nav a::before{display:inline-block}
+
+  /* Theme and language are accessibility controls, so they stay reachable
+     from anywhere on the page rather than scrolling away with the header. */
+  .btnrow{
+    position:fixed;z-index:60;top:3.4rem;right:.85rem;
+    flex-direction:column;align-items:flex-end;gap:.4rem;
+    transition:opacity .22s var(--ease)
+  }
+  .btnrow .themebtn{
+    background:var(--paper);color:var(--ink);
+    box-shadow:0 2px 10px rgba(0,0,0,.10)
+  }
+  /* out of the way while the tab panel is open */
+  body.nav-open .btnrow{opacity:0;pointer-events:none}
 }
 @media (prefers-reduced-motion:reduce){
   nav,.navscrim{transition:none}
@@ -330,8 +352,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ════════════════════════════════════════════════════════════════
        SIDEBAR — wordmark, tab nav, links, theme button
        ════════════════════════════════════════════════════════════════ -->
-  <button class="navbtn" id="navtoggle" type="button"
-          aria-expanded="false" aria-controls="tabnav">Menu</button>
   <div class="navscrim" id="navscrim"></div>
 
   <header class="rail">
@@ -366,6 +386,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <button class="themebtn" id="theme" type="button" aria-live="polite">Dark</button>
         <button class="themebtn" id="lang" type="button" aria-live="polite"
                 lang="es" hreflang="es">Español</button>
+        <button class="navbtn" id="navtoggle" type="button"
+                aria-expanded="false" aria-controls="tabnav">Menu</button>
       </div>
     </div>
   </header>
@@ -386,8 +408,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <canvas id="plot" width="1520" height="620" role="img"
         aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
       <figcaption class="figcap">
-        <p class="en">Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
-        <p class="es" lang="es">Luminosidad contra desplazamiento al rojo en una muestra limitada por flujo. La curva marca el umbral de detección: las fuentes por debajo de ella son simplemente demasiado débiles para que el sondeo las registre. Esa población ausente es lo que vuelve engañosas a estas muestras; entender qué nos falta es buena parte del problema. <em>Esquema ilustrativo &mdash; puntos sintéticos, sin datos.</em></p>
+        <p class="en">Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch: synthetic points, no data.</em></p>
+        <p class="es" lang="es">Luminosidad contra desplazamiento al rojo en una muestra limitada por flujo. La curva marca el umbral de detección: las fuentes por debajo de ella son simplemente demasiado débiles para que el sondeo las registre. Esa población ausente es lo que vuelve engañosas a estas muestras; entender qué nos falta es buena parte del problema. <em>Esquema ilustrativo: puntos sintéticos, sin datos.</em></p>
         <span class="tag en">Fig. 1 &nbsp;/&nbsp; truncation</span>
         <span class="tag es" lang="es">Fig. 1 &nbsp;/&nbsp; truncamiento</span>
       </figcaption>
@@ -398,8 +420,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <canvas id="rmPlot" width="1520" height="620" role="img"
         aria-label="Illustrative two-panel reverberation mapping figure. The upper panel shows a variable continuum light curve; the lower panel shows the emission line responding to it, smoothed and delayed, with no data for the first lag because the echo has not yet arrived."></canvas>
       <figcaption class="figcap">
-        <p class="en">The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
-        <p class="es" lang="es">La idea básica del mapeo de reverberación: cuando una galaxia activa varía, el gas alrededor de su agujero negro central responde después de un retraso. Medir ese retraso nos permite estimar el tamaño de la región que produce la emisión y, en última instancia, la masa del agujero negro supermasivo que habita el centro de la galaxia. <em>Esquema ilustrativo &mdash; curvas de luz sintéticas, sin datos.</em></p>
+        <p class="en">The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch: synthetic light curves, no data.</em></p>
+        <p class="es" lang="es">La idea básica del mapeo de reverberación: cuando una galaxia activa varía, el gas alrededor de su agujero negro central responde después de un retraso. Medir ese retraso nos permite estimar el tamaño de la región que produce la emisión y, en última instancia, la masa del agujero negro supermasivo que habita el centro de la galaxia. <em>Esquema ilustrativo: curvas de luz sintéticas, sin datos.</em></p>
         <span class="tag en">Fig. 2 &nbsp;/&nbsp; reverberation</span>
         <span class="tag es" lang="es">Fig. 2 &nbsp;/&nbsp; reverberación</span>
       </figcaption>
@@ -413,8 +435,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <p class="lede es" lang="es">Mi camino hacia la física ha sido un poco fuera de lo común.</p>
         <p class="en">I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
         <p class="es" lang="es">Empecé en Los Angeles City College, donde hice mi primera investigación a través del NASA California Space Grant Consortium bajo la supervisión del Prof. Jayesh Bhakta, y me transferí a Stanford como becario de transferencia de la Fundación Jack Kent Cooke. No es el camino que esperaba tomar, pero es el que me trajo hasta aquí.</p>
-        <p class="en">Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
-        <p class="es" lang="es">Fuera de la astrofísica, soy co-líder del equipo de política pública en la Stanford Student Space Initiative, donde trabajo en derecho espacial internacional, seguridad espacial y no proliferación nuclear. También participo en divulgación en STEM: desde asesorar a estudiantes de <i>community college</i> a través del Community College Outreach Program de Stanford hasta apoyar en las noches públicas de observación, donde opero los telescopios y ayudo a los visitantes a recorrer el cielo. Buena parte de lo que me importa es que la ciencia se sienta accesible—ya sea ayudándole a alguien a encontrar su camino hacia STEM o simplemente dándole la oportunidad de asomarse a un telescopio y hacer preguntas.</p>
+        <p class="en">Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible, whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
+        <p class="es" lang="es">Fuera de la astrofísica, soy co-líder del equipo de política pública en la Stanford Student Space Initiative, donde trabajo en derecho espacial internacional, seguridad espacial y no proliferación nuclear. También participo en divulgación en STEM: desde asesorar a estudiantes de <i>community college</i> a través del Community College Outreach Program de Stanford hasta apoyar en las noches públicas de observación, donde opero los telescopios y ayudo a los visitantes a recorrer el cielo. Buena parte de lo que me importa es que la ciencia se sienta accesible, ya sea ayudándole a alguien a encontrar su camino hacia STEM o simplemente dándole la oportunidad de asomarse a un telescopio y hacer preguntas.</p>
         <p class="en">Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
         <p class="es" lang="es">A largo plazo quiero trabajar en astrofísica, donde sea que eso me deje entre la teoría y la observación, sin dejar de involucrarme en las preguntas más amplias sobre ciencia, tecnología y sociedad. Fuera de la física escribo poesía y narrativa, y me gusta estar al aire libre: bajo un cielo despejado, en la playa, o perdido en el bosque.</p>
       </div>
@@ -445,9 +467,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <h3><span class="en">Cosmological evolution of FSRQ luminosity functions</span><span class="es" lang="es">Evolución cosmológica de las funciones de luminosidad de los FSRQ</span><span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
         <p class="meta en">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
         <p class="meta es" lang="es">KIPAC, Universidad de Stanford &nbsp;&middot;&nbsp; <b>Asesor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; junio 2025&ndash;presente<br><b>Métodos:</b> prueba de permutación de Efron&ndash;Petrosian &middot; C&minus; de Lynden-Bell &middot; correcciones K &middot; bootstrap</p>
-        <p class="en">A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
+        <p class="en">A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift: three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
         <p class="es" lang="es">Un cuásar de espectro plano en radio entra en esta muestra sólo si es lo bastante brillante en rayos &gamma;, lo bastante brillante en radio <em>y además</em> tiene un desplazamiento al rojo óptico medido: tres truncamientos distintos actuando sobre un mismo conjunto de datos. Estudio la evolución cosmológica de las funciones de luminosidad en rayos &gamma; y en radio de los FSRQ con una muestra trivariada construida a partir de observaciones de Fermi-LAT, VLBI y Gaia DR2, tomando en cuenta el sesgo de selección adicional que introduce la medición del desplazamiento al rojo óptico.</p>
-        <p class="en">Once the evolution is separated out, what remains is the intrinsic &gamma;-ray&ndash;radio luminosity correlation &mdash; a constraint on how much of a blazar&rsquo;s output comes from the jet rather than the disk.</p>
+        <p class="en">Once the evolution is separated out, what remains is the intrinsic &gamma;-ray&ndash;radio luminosity correlation, a constraint on how much of a blazar&rsquo;s output comes from the jet rather than the disk.</p>
         <p class="es" lang="es">Una vez separada la evolución, lo que queda es la correlación intrínseca entre las luminosidades en rayos &gamma; y en radio: una restricción sobre cuánto de lo que emite un blazar viene del jet y no del disco.</p>
       </article>
 
@@ -456,8 +478,8 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <p class="meta en">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>
         <p class="meta es" lang="es">KIPAC, Universidad de Stanford &nbsp;&middot;&nbsp; <b>Asesor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; junio 2025&ndash;presente<br><b>Métodos:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; validación con simulaciones</p>
         <p class="en">Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at z&nbsp;&asymp;&nbsp;1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
-        <p class="es" lang="es">El mapeo de reverberación convierte un retraso temporal en un tamaño físico, así que un radio &mdash; o una masa de agujero negro &mdash; es apenas tan confiable como el retraso del que salió. Estoy midiendo retrasos de reverberación entre el continuo del AGN y la emisión de Fe&nbsp;II en el ultravioleta en 25 núcleos activos de galaxias monitoreados por OzDES a z&nbsp;&asymp;&nbsp;1&ndash;2, con observaciones fotométricas y espectroscópicas de varios años.</p>
-        <p class="en">A lag is a light-travel time, so measuring it measures a size &mdash; and that radius, with the width of the emission line, gives a black hole mass through the virial theorem. Each measurement takes years of monitoring, so the sample of objects measured this way is still small.</p>
+        <p class="es" lang="es">El mapeo de reverberación convierte un retraso temporal en un tamaño físico, así que un radio, o una masa de agujero negro, es apenas tan confiable como el retraso del que salió. Estoy midiendo retrasos de reverberación entre el continuo del AGN y la emisión de Fe&nbsp;II en el ultravioleta en 25 núcleos activos de galaxias monitoreados por OzDES a z&nbsp;&asymp;&nbsp;1&ndash;2, con observaciones fotométricas y espectroscópicas de varios años.</p>
+        <p class="en">A lag is a light-travel time, so measuring it measures a size; that radius, with the width of the emission line, gives a black hole mass through the virial theorem. Each measurement takes years of monitoring, so the sample of objects measured this way is still small.</p>
         <p class="es" lang="es">Un retraso es un tiempo de viaje de la luz, así que medirlo es medir un tamaño; y ese radio, junto con el ancho de la línea de emisión, da una masa de agujero negro por el teorema del virial. Cada medición pide años de monitoreo, así que la muestra de objetos medidos de esta forma sigue siendo chica.</p>
       </article>
 
@@ -466,7 +488,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <h3><span class="en">Space law, space security, and a rocketry framework for Uruguay</span><span class="es" lang="es">Derecho espacial, seguridad espacial y un marco regulatorio de cohetería para Uruguay</span><span class="status live"><span class="en">Active</span><span class="es" lang="es">Activo</span></span></h3>
         <p class="meta en">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Policy researcher, Sept 2025&ndash;present &nbsp;&middot;&nbsp; <b>Policy Team co-lead</b> since March 2026<br><b>Areas:</b> international space law &middot; space security &middot; nuclear nonproliferation &middot; satellite traffic management</p>
         <p class="meta es" lang="es">Stanford Student Space Initiative &nbsp;&middot;&nbsp; Investigador de política pública, sept 2025&ndash;presente &nbsp;&middot;&nbsp; <b>Co-líder del equipo de política</b> desde marzo 2026<br><b>Áreas:</b> derecho espacial internacional &middot; seguridad espacial &middot; no proliferación nuclear &middot; gestión del tráfico satelital</p>
-        <p class="es" lang="es">La cohetería amateur y de alta potencia en Uruguay queda fuera de cualquier régimen nacional dedicado de licencias o de espacio aéreo. Sin embargo, bajo el Artículo&nbsp;VI del Tratado sobre el Espacio Ultraterrestre, un Estado responde por las actividades de sus actores no gubernamentales, las haya autorizado o no. Trabajo en un proyecto para redactar un marco regulatorio modelo para la actividad, comparando regímenes que ya existen &mdash; como las clasificaciones de cohetes amateur de la FAA y los códigos de seguridad que la afición misma se ha puesto &mdash; y viendo qué disposiciones de licenciamiento, clasificación de motores y coordinación del espacio aéreo podrían trasladarse a la legislación aeronáutica uruguaya.</p>
+        <p class="es" lang="es">La cohetería amateur y de alta potencia en Uruguay queda fuera de cualquier régimen nacional dedicado de licencias o de espacio aéreo. Sin embargo, bajo el Artículo&nbsp;VI del Tratado sobre el Espacio Ultraterrestre, un Estado responde por las actividades de sus actores no gubernamentales, las haya autorizado o no. Trabajo en un proyecto para redactar un marco regulatorio modelo para la actividad, comparando regímenes que ya existen, como las clasificaciones de cohetes amateur de la FAA y los códigos de seguridad que la afición misma se ha puesto, y viendo qué disposiciones de licenciamiento, clasificación de motores y coordinación del espacio aéreo podrían trasladarse a la legislación aeronáutica uruguaya.</p>
         <p class="en">Amateur and high-power rocketry in Uruguay sits outside any dedicated national licensing or airspace regime. Under Article&nbsp;VI of the Outer Space Treaty, however, a state is responsible for the activities of its non-governmental actors whether or not it has authorised them. I&rsquo;m working on a project to draft a model regulatory framework for the activity, comparing existing regimes such as the FAA&rsquo;s amateur rocket classifications and the safety codes developed by the hobby itself, and considering which licensing, motor-classification, and airspace-coordination provisions could transfer into Uruguayan civil aviation law.</p>
         <p class="es" lang="es">El objetivo más amplio es explorar si Uruguay podría volverse un centro regional de cohetería amateur, y no nada más un lugar donde la actividad está permitida. Eso abre preguntas sobre dónde se pueden autorizar los lanzamientos, quién responde por los daños a terceros, y cómo un Estado pequeño construye capacidad regulatoria donde todavía no hay un marco dedicado. También fui coautor de un documento de política sobre cómo prevenir el despliegue de armas nucleares en órbita, y encabezo trabajo adicional sobre gestión del tráfico satelital.</p>
         <p class="en">The larger goal is to explore whether Uruguay could become a regional hub for amateur rocketry rather than simply a place where the activity is permitted. That raises questions about launch-site siting, third-party liability, and how a small state can build regulatory capacity where a dedicated framework does not yet exist. I also co-authored a policy paper on preventing the deployment of nuclear weapons in orbit and lead additional work on satellite traffic management.</p>
@@ -587,7 +609,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         </li>
         <li>
           <span class="when">2025</span>
-          <p class="what"><span class="kind"><span class="en">In Spanish</span><span class="es" lang="es">En español</span></span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
+          <p class="what"><span class="kind"><span class="en">In Spanish</span><span class="es" lang="es">En español</span></span><a href="https://drive.google.com/file/d/1Z4CzEXCW82dScKzFT85iaKCZ_L9HroUE/view">Agujeros Negros: Los motores invisibles del Universo</a><small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
         </li>
       </ul>
     </section>
@@ -638,8 +660,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <p class="meta es" lang="es">Miembro del equipo &nbsp;&middot;&nbsp; sept 2025&ndash;presente</p>
         <p class="en">I volunteer at public stargazing nights at the Stanford Student Observatory, operating the telescopes and talking with visitors about whatever&rsquo;s up that night. I also give career talks and run demonstrations for high school and community college students.</p>
         <p class="es" lang="es">Soy voluntario en las noches públicas de observación en el Stanford Student Observatory: opero los telescopios y platico con los visitantes sobre lo que se alcance a ver esa noche. También doy charlas sobre trayectorias en ciencia y hago demostraciones para estudiantes de preparatoria y de <i>community college</i>.</p>
-        <p class="en">I give some of these talks in Spanish through the Noches Astronómicas programme &mdash; which is harder than translating, since a lot of this vocabulary I only ever learned in English.</p>
+        <p class="en">I give some of these talks in Spanish through the Noches Astronómicas programme, which is harder than translating, since a lot of this vocabulary I only ever learned in English.</p>
         <p class="es" lang="es">Algunas de estas charlas las doy en español, con el programa Noches Astronómicas, y resulta más difícil que traducir: buena parte de este vocabulario nunca lo aprendí en español.</p>
+        <p class="meta en"><a href="https://drive.google.com/file/d/1Z4CzEXCW82dScKzFT85iaKCZ_L9HroUE/view">Recording of my Noches Astronómicas talk</a></p>
+        <p class="meta es" lang="es"><a href="https://drive.google.com/file/d/1Z4CzEXCW82dScKzFT85iaKCZ_L9HroUE/view">Grabación de mi charla en Noches Astronómicas</a></p>
       </article>
 
       <article class="entry">
@@ -819,6 +843,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     root.setAttribute('lang', code);
     langBtn.textContent = code === 'es' ? 'English' : 'Español';
     langBtn.setAttribute('lang', code === 'es' ? 'en' : 'es');
+    // the Menu label is set in JS, so it has to follow the language too
+    var nb = document.getElementById('navtoggle');
+    if(nb){
+      var isOpen = nb.getAttribute('aria-expanded') === 'true';
+      nb.textContent = isOpen ? (code === 'es' ? 'Cerrar' : 'Close')
+                              : (code === 'es' ? 'Menú'   : 'Menu');
+    }
     // the canvas figures draw their own axis labels, and every block just
     // changed height, so both need to know
     document.dispatchEvent(new CustomEvent('langchange'));
@@ -906,9 +937,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   var scrim  = document.getElementById('navscrim');
   function setNav(open){
     nav.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
     scrim.classList.toggle('open', open);
     navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    navBtn.textContent = open ? 'Close' : 'Menu';
+    var es = root.getAttribute('data-lang') === 'es';
+    navBtn.textContent = open ? (es ? 'Cerrar' : 'Close') : (es ? 'Menú' : 'Menu');
   }
   navBtn.addEventListener('click', function(){
     setNav(navBtn.getAttribute('aria-expanded') !== 'true');
@@ -1006,9 +1039,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     var ES = document.documentElement.getAttribute('data-lang') === 'es';
     var T = ES
       ? {x:'desplazamiento al rojo  z', y:'log L  [erg s\u207B\u00B9]',
-         note:'POR DEBAJO DEL LÍMITE DE FLUJO — FUERA DEL CATÁLOGO'}
+         note:'POR DEBAJO DEL LÍMITE DE FLUJO / FUERA DEL CATÁLOGO'}
       : {x:'redshift  z',            y:'log L  [erg s\u207B\u00B9]',
-         note:'BELOW THE FLUX LIMIT — NOT IN THE CATALOGUE'};
+         note:'BELOW THE FLUX LIMIT / NOT IN THE CATALOGUE'};
 
     var pad = {l:44, r:8, t:10, b:26};
     var X = function(z){ return pad.l + (z-Z0)/(ZMAX-Z0) * (w-pad.l-pad.r); };
