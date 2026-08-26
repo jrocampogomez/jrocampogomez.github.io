@@ -328,13 +328,13 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <h3>Cosmological evolution of FSRQ luminosity functions<span class="status live">Active</span></h3>
         <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Vahé Petrosian &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> Efron&ndash;Petrosian permutation test &middot; Lynden-Bell C&minus; &middot; K-corrections &middot; bootstrap</p>
         <p>A flat-spectrum radio quasar makes it into this sample only if it is bright enough in &gamma;-rays, bright enough in radio, <em>and</em> has a measured optical redshift &mdash; three separate truncations acting on one dataset. I&rsquo;m studying the cosmological evolution of the &gamma;-ray and radio luminosity functions of FSRQs using a tri-variate sample built from Fermi-LAT, VLBI, and Gaia DR2 observations, accounting for the additional selection bias introduced by optical redshift measurement.</p>
-        <p>Using the Efron&ndash;Petrosian method and Lynden-Bell&rsquo;s <span class="meta">C&minus;</span> estimator, I&rsquo;m recovering the luminosity evolution and local luminosity functions of the population. Once the evolution is removed, the same analysis allows me to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
+        <p>Using the Efron&ndash;Petrosian method and Lynden-Bell&rsquo;s C&minus; estimator, I&rsquo;m recovering the luminosity evolution and local luminosity functions of the population. Once the evolution is removed, the same analysis allows me to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
       </article>
 
       <article class="entry">
         <h3>The Fe&nbsp;II emitting region in AGN<span class="status live">Active</span></h3>
         <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>        
-        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at <span class="meta">z</span> &asymp; 1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
+        <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at z&nbsp;&asymp;&nbsp;1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
         <p>I&rsquo;m applying and cross-validating three independent lag estimators, then using simulations to quantify their accuracy and failure modes under realistic noise and sampling. The goal is to constrain the Fe&nbsp;II radius&ndash;luminosity relation and ultimately use it to estimate supermassive black hole masses.</p>
       </article>
 
@@ -355,167 +355,196 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       </article>
     </section>
 
-    <!-- ─────────────────────────── CODE ──────────────────────────── -->
-    <section id="code" aria-labelledby="code-h">
-      <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects &middot; 1 public</span></div>
-      <div class="prose">
-        <p>Nearly all of my research is code, so I treat it as part of the result rather than scaffolding around it: version-controlled, diagnosed, and written so that someone else can find out where it&rsquo;s wrong.</p>
-      </div>
-
-      <article class="entry" style="margin-top:1.9rem">
-        <h3>FSRQ luminosity-function pipeline</h3>
-        <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
-        <p>End-to-end analysis of a cross-matched blazar catalogue: sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian test statistic, C&minus; reconstruction of the local luminosity function, broken-power-law fitting with multi-start optimisation, bootstrap uncertainties, and a suite of numbered diagnostics that each answer one question about whether the previous step actually worked.</p>
-        <p>Two fixes I&rsquo;m fond of: replacing a fragile <span class="meta">fsolve</span> call for the maximum accessible redshift with a bracketed <span class="meta">brentq</span> solver that cannot silently converge to the wrong root, and catching a sign error in a K-correction average that had been quietly assigning much of the sample to the wrong subset.</p>
-      </article>
-
-      <article class="entry">
-        <h3>Bayesian AGN SED modelling</h3>
-        <p class="meta">Python &middot; Metropolis&ndash;Hastings MCMC &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
-        <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using Metropolis&ndash;Hastings MCMC to infer black hole masses and accretion rates from observational data. It reproduced published measurements for high-redshift blazars, and I used it to test how sensitive the inferred parameters are to the choice of numerical integration scheme &mdash; which turned out to matter more than I expected.</p>
-      </article>
-
-      <article class="entry">
-        <h3>Lag-recovery testing for reverberation mapping</h3>
-        <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
-        <p>Tooling to run three lag estimators over the same OzDES light curves and compare them, plus a simulator that generates continuum and line light curves on a real survey&rsquo;s cadence and noise so that recovery can be tested against a known truth.</p>
-      </article>
-
-      <article class="entry">
-        <h3>RC aircraft telemetry firmware and ground station</h3>
-        <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing &nbsp;&middot;&nbsp; <a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">github.com/jrocampogomez/RC-Plane-Telemetry&hellip;</a></p>
-        <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public, with the poster included.</p>
-      </article>
-
-      <ul class="chips" aria-label="Tools">
-        <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
-        <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
-        <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
-      </ul>
-      <p class="note">Repositories available on request while manuscripts are in preparation.</p>
-    </section>
+   <!-- ─────────────────────────── CODE ──────────────────────────── -->
+   <section id="code" aria-labelledby="code-h">
+     <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects</span></div>
+     <div class="prose">
+       <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind the projects above.</p>
+     </div>
+   
+     <article class="entry" style="margin-top:1.9rem">
+       <h3>FSRQ luminosity evolution analysis</h3>
+       <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
+       <p>Computational analysis of a tri-variate FSRQ sample constructed from Fermi-LAT &gamma;-ray, VLBI radio, and Gaia DR2 optical observations. The analysis includes sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian method, and Lynden-Bell&rsquo;s C&minus; estimator to recover the luminosity evolution, differential luminosity functions, cumulative density functions, and co-moving density evolution of the population.</p>
+       <p>I&rsquo;m also characterizing the resulting luminosity functions with broken-power-law models and estimating uncertainties through bootstrap resampling. Once the evolution is removed, the same analysis can be used to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
+     </article>
+   
+     <article class="entry">
+       <h3>Lag-recovery testing for reverberation mapping</h3>
+       <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
+       <p>Computational tools for measuring and validating reverberation lags in the OzDES data described above. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
+       <p>A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
+     </article>
+   
+     <article class="entry">
+       <h3>Bayesian AGN SED modelling</h3>
+       <p class="meta">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
+       <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
+     </article>
+   
+     <article class="entry">
+       <h3>RC aircraft telemetry firmware and ground station</h3>
+       <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing &nbsp;&middot;&nbsp; <a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">github.com/jrocampogomez/RC-Plane-Telemetry&hellip;</a></p>
+       <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public repository and poster.</p>
+     </article>
+   
+     <ul class="chips" aria-label="Tools">
+       <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
+       <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
+       <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
+     </ul>
+   </section>
 
     <!-- ────────────────────── PRESENTATIONS ────────────────────────
-         TO ADD A ROW: copy one <li> block.
-         ─────────────────────────────────────────────────────────── -->
-    <section id="presentations" aria-labelledby="pres-h">
-      <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">4 posters &middot; 3 talks</span></div>
-
-      <p class="subhead">Posters</p>
-      <ul class="rows">
-        <li>
-          <span class="when">2026</span>
-          <p class="what">Probing the Fe&nbsp;II emission region of AGN with the OzDES RM project<small>Stanford Symposium of Undergraduate Research and Public Service (SURPS)</small></p>
-        </li>
-        <li>
-          <span class="when">2025</span>
-          <p class="what">Probing the Fe&nbsp;II emission region of AGN with the OzDES RM project<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
-        </li>
-        <li>
-          <span class="when">2024</span>
-          <p class="what">Flight data telemetry device with data logging using customised off-the-shelf modules for experimental radio-control aircraft<small>National Conference on Undergraduate Research (NCUR)</small></p>
-        </li>
-        <li>
-          <span class="when">2023</span>
-          <p class="what">Flight data telemetry device with data logging using customised off-the-shelf modules for experimental radio-control aircraft<small>Southern California Conferences for Undergraduate Research (SCCUR)</small></p>
-        </li>
-      </ul>
-
-      <p class="subhead">Talks</p>
-      <ul class="rows">
-        <li>
-          <span class="when">2026</span>
-          <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
-        </li>
-        <li>
-          <span class="when">2026</span>
-          <p class="what">Magic with Lights<small>TRiO CenCal Conference, Evergreen Valley College &middot; KIPAC Public Outreach</small></p>
-        </li>
-        <li>
-          <span class="when">2025</span>
-          <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
-        </li>
-      </ul>
-    </section>
+     TO ADD A ROW: copy one <li> block.
+     ─────────────────────────────────────────────────────────── -->
+      <section id="presentations" aria-labelledby="pres-h">
+        <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">5 posters &middot; 3 talks</span></div>
+      
+        <p class="subhead">Posters</p>
+        <ul class="rows">
+          <li>
+            <span class="when">2026</span>
+            <p class="what">The cosmological evolution of gamma-ray and radio luminosity functions in FSRQs<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
+          </li>
+          <li>
+            <span class="when">2026</span>
+            <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Symposium of Undergraduate Research and Public Service (SURPS)</small></p>
+          </li>
+          <li>
+            <span class="when">2025</span>
+            <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
+          </li>
+          <li>
+            <span class="when">2024</span>
+            <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>National Conference for Undergraduate Research (NCUR)</small></p>
+          </li>
+          <li>
+            <span class="when">2023</span>
+            <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>Southern California Conference for Undergraduate Research (SCCUR)</small></p>
+          </li>
+        </ul>
+      
+        <p class="subhead">Talks</p>
+        <ul class="rows">
+          <li>
+            <span class="when">2026</span>
+            <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
+          </li>
+          <li>
+            <span class="when">2026</span>
+            <p class="what">Magic with Lights<small>TRiO CenCal Conference, Evergreen Valley College &middot; KIPAC Public Outreach</small></p>
+          </li>
+          <li>
+            <span class="when">2025</span>
+            <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
+          </li>
+        </ul>
+      </section>
 
     <!-- ─────────────────────────── AWARDS ────────────────────────── -->
-    <section id="awards" aria-labelledby="awards-h">
-      <div class="head"><h2 id="awards-h">Awards</h2><span class="count">fellowships &amp; scholarships</span></div>
-      <ul class="rows">
-        <li>
-          <span class="when">2026</span>
-          <p class="what">VPUE STEM Fellow<small>Stanford University</small></p>
-        </li>
-        <li>
-          <span class="when">2025</span>
-          <p class="what">Physics SURP Funding<small>Stanford University</small></p>
-        </li>
-        <li>
-          <span class="when">2024</span>
-          <p class="what">Undergraduate Transfer Scholarship<small>Jack Kent Cooke Foundation &middot; national award for community college transfer students</small></p>
-        </li>
-        <li>
-          <span class="when">2023</span>
-          <p class="what">Physics &amp; Engineering Department Scholarship<small>Los Angeles City College</small></p>
-        </li>
-        <li>
-          <span class="when">2023</span>
-          <p class="what">Mathematics Department Scholarship<small>Los Angeles City College</small></p>
-        </li>
-        <li>
-          <span class="when">2022</span>
-          <p class="what">Eugene McKnight Philosophy Scholarship<small>Los Angeles City College</small></p>
-        </li>
-      </ul>
-      <p class="note">Member: American Physical Society &middot; National Society of Hispanic Physicists &middot; Society of Physics Students (since 2025)</p>
-    </section>
+      <section id="awards" aria-labelledby="awards-h">
+        <div class="head"><h2 id="awards-h">Awards &amp; Fellowships</h2><span class="count">6 awards</span></div>
+      
+        <ul class="rows">
+          <li>
+            <span class="when">2026</span>
+            <p class="what">VPUE STEM Fellow<small>Stanford University</small></p>
+          </li>
+          <li>
+            <span class="when">2025</span>
+            <p class="what">Physics SURP Funding<small>Stanford University</small></p>
+          </li>
+          <li>
+            <span class="when">2024</span>
+            <p class="what">Jack Kent Cooke Transfer Scholarship<small>Jack Kent Cooke Foundation</small></p>
+          </li>
+          <li>
+            <span class="when">2023</span>
+            <p class="what">Physics &amp; Engineering Department Scholarship<small>Los Angeles City College</small></p>
+          </li>
+          <li>
+            <span class="when">2023</span>
+            <p class="what">Mathematics Department Scholarship<small>Los Angeles City College</small></p>
+          </li>
+          <li>
+            <span class="when">2022</span>
+            <p class="what">Eugene McKnight Philosophy Scholarship<small>Los Angeles City College</small></p>
+          </li>
+        </ul>
+      </section>
+     
+   <!-- ────────────────── OUTREACH & SERVICE ─────────────────────── -->
+   <section id="outreach" aria-labelledby="outreach-h">
+     <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">STEM outreach &middot; mentoring</span></div>
+   
+     <article class="entry">
+       <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
+       <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
+       <p>I facilitate public stargazing nights at the Stanford Student Observatory, operating telescopes and talking with visitors about what we&rsquo;re observing. I also give career-focused talks and lead scientific demonstrations for high school and community college students from underrepresented backgrounds.</p>
+       <p>Through the Noches Astronómicas outreach program, I give astronomy talks in Spanish and take part in moderated Q&amp;A sessions.</p>
+     </article>
+   
+     <article class="entry">
+       <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
+       <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+       <p>I facilitate workshops for 120+ students on the transfer process, particularly for students pursuing STEM, and lead small-group discussions of eight to ten students where I can offer more personalized advice, answer questions, and point students toward resources for navigating the transfer process.</p>
+       <p>I transferred to Stanford from a community college myself, so helping other students navigate that path is something I care about personally.</p>
+     </article>
+   
+     <article class="entry">
+       <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
+       <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+       <p>Helping build community among Stanford&rsquo;s transfer students and alumni, with responsibilities including finances, budgeting, and event planning.</p>
+     </article>
+   </section>
 
-    <!-- ────────────────── OUTREACH & SERVICE ─────────────────────── -->
-    <section id="outreach" aria-labelledby="outreach-h">
-      <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">public observing &middot; mentoring</span></div>
-
-      <article class="entry">
-        <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
-        <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
-        <p>I run public stargazing nights at the Stanford Student Observatory &mdash; operating the telescopes, managing the queue, and standing next to strangers while they see Saturn for the first time. It is the fastest way I know to remember why any of this matters.</p>
-        <p>I also give career talks and lead demonstrations for high school students from underrepresented backgrounds, and deliver astronomy talks in Spanish through the Noches Astronómicas programme, including moderated Q&amp;A.</p>
-      </article>
-
-      <article class="entry">
-        <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
-        <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-        <p>Facilitating workshops for 120+ students on the transfer process in STEM, and leading small groups of eight to ten for the part that actually helps: specific questions, specific answers, and the resources nobody tells you about.</p>
-        <p>I transferred from a community college myself, and the path is navigable in a way almost nobody explains. If that&rsquo;s you, write to me.</p>
-      </article>
-
-      <article class="entry">
-        <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
-        <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-        <p>Building community among transfer students and alumni; responsible for finances, budgeting, and the planning behind events that make a large university feel navigable when you arrive two years late.</p>
-      </article>
-    </section>
-
-    <!-- ─────────────────────────── WRITING ─────────────────────────
-         Fill these in or delete the section entirely.
-         ─────────────────────────────────────────────────────────── -->
-    <section id="writing" aria-labelledby="writing-h">
-      <div class="head"><h2 id="writing-h">Writing</h2><span class="count">poetry &middot; short fiction</span></div>
-      <div class="prose">
-        <p>I write poems and short stories. I don&rsquo;t keep it in a separate drawer from the physics: both are trained attention, and both are mostly revision.</p>
-      </div>
-
-      <article class="entry" style="margin-top:1.9rem">
-        <h3><em>Adiós, y Bienvenidos</em><span class="status">In progress</span></h3>
-        <p class="meta">Poetry collection &middot; manuscript</p>
-        <p>A collection about leaving and arriving, and how often those turn out to be the same act. <span class="meta">[Two sentences in your own words &mdash; what the collection is actually doing.]</span></p>
-      </article>
-
-      <article class="entry">
-        <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
-        <p class="meta">Short story</p>
-        <p><span class="meta">[A line or two about the story, and a link if it&rsquo;s published anywhere.]</span></p>
-      </article>
-    </section>
+    <!-- ─────────────────────────── WRITING ───────────────────────── -->
+      <section id="writing" aria-labelledby="writing-h">
+        <div class="head">
+          <h2 id="writing-h">Writing</h2>
+          <span class="count">poetry &middot; fiction</span>
+        </div>
+      
+        <div class="prose">
+          <p>
+           I write poetry and fiction alongside studying physics. I&rsquo;ve written more than
+           a hundred poems, as well as short stories and the beginnings of several
+           longer works. I enjoy moving between different forms, voices, and styles.
+          </p>
+        </div>
+      
+        <article class="entry" style="margin-top:1.9rem">
+          <h3><em>Adiós, y Bienvenidos</em><span class="status">Poetry</span></h3>
+          <p class="meta">Poetry collection &middot; ongoing</p>
+          <p>
+            Poems about immigration, memory, loneliness, love, and the strange
+            distances between leaving and arriving. Rain, astronomy, and the natural
+            world recur throughout the collection as ways of writing about home,
+            loss, identity, and the people we carry with us.
+          </p>
+        </article>
+      
+        <article class="entry">
+          <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
+          <p class="meta">Short story</p>
+          <p>
+            A story about grief, guilt, and a young man caught between life and death
+            after a tragedy of his own making. As the empty Los Angeles around him
+            begins to reveal what happened, his bond with a lost little girl becomes
+            a second chance at being the older brother he thought he could no longer be.
+          </p>
+        </article>
+      
+        <article class="entry">
+           <h3>Other work<span class="status">In progress</span></h3>
+           <p class="meta">Fiction &middot; longer-form projects</p>
+           <p>
+             I&rsquo;m also working on several longer-form fiction projects, most of which
+             are still private and in various stages of drafting.
+           </p>
+         </article>
+      </section>
 
     <!-- ─────────────────────────── CONTACT ───────────────────────── -->
     <section id="contact" aria-labelledby="contact-h">
