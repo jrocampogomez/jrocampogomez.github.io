@@ -80,6 +80,10 @@ body{
   transition:background-color .3s ease, color .3s ease;
 }
 img{max-width:100%;height:auto;display:block}
+/* long URLs and identifiers must wrap rather than widen the page */
+body{overflow-x:hidden}
+p,li,h1,h2,h3,a{overflow-wrap:anywhere;word-break:normal}
+.meta,.note,.figcap p{overflow-wrap:anywhere}
 a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);transition:border-color .18s,color .18s}
 a:hover{border-bottom-color:var(--accent)}
 ::selection{background:var(--accent-soft);color:var(--ink)}
@@ -105,7 +109,7 @@ a:hover{border-bottom-color:var(--accent)}
 }
 @media (max-width:900px){
   .rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);
-        padding:1.9rem var(--gutter) 0}
+        padding:1.9rem var(--gutter) 0;gap:1.1rem}
 }
 .wordmark{font-family:var(--display);font-size:1.72rem;font-weight:400;line-height:1.05;
   letter-spacing:0;margin:0}
@@ -127,17 +131,42 @@ nav a:hover::before{background:var(--accent-soft)}
 nav a[aria-current="page"]{color:var(--accent)}
 nav a[aria-current="page"]::before{background:var(--accent);width:20px}
 
-/* mobile: a horizontally scrollable tab strip that sticks to the top */
+/* ── mobile navigation ──────────────────────────────────────────
+   A fixed button rather than a strip across the top: the tab list stays
+   vertical, travels with the reader, and takes no width when closed. */
+.navbtn{display:none}
+.navscrim{display:none}
 @media (max-width:900px){
-  nav{position:sticky;top:0;z-index:30;background:var(--paper);
-      margin:1.2rem calc(-1*var(--gutter)) 0;padding:.5rem var(--gutter) 0;
-      box-shadow:0 1px 0 var(--rule)}
-  nav ol{flex-direction:row;flex-wrap:nowrap;gap:0 1.35rem;overflow-x:auto;
-         scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  nav ol::-webkit-scrollbar{display:none}
-  nav a{white-space:nowrap;padding:.35rem 0 .6rem;border-bottom:2px solid transparent}
-  nav a::before{display:none}
-  nav a[aria-current="page"]{border-bottom-color:var(--accent)}
+  .navbtn{
+    display:block;position:fixed;z-index:60;top:.85rem;right:.85rem;
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--paper);border:1px solid var(--rule);color:var(--ink);
+    padding:.55rem .85rem;cursor:pointer;border-radius:2px;
+    box-shadow:0 2px 10px rgba(0,0,0,.10)
+  }
+  .navbtn[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+
+  .navscrim{
+    display:block;position:fixed;inset:0;z-index:50;background:var(--ink);
+    opacity:0;pointer-events:none;transition:opacity .28s var(--ease)
+  }
+  .navscrim.open{opacity:.34;pointer-events:auto}
+
+  nav{
+    position:fixed;z-index:55;top:0;right:0;bottom:0;
+    width:min(74vw,270px);background:var(--paper);
+    border-left:1px solid var(--rule);
+    padding:4.6rem 1.5rem 1.5rem;overflow-y:auto;
+    transform:translateX(102%);transition:transform .3s var(--ease)
+  }
+  nav.open{transform:none;box-shadow:-8px 0 26px rgba(0,0,0,.16)}
+  nav ol{flex-direction:column;gap:.15rem}
+  nav a{font-size:.82rem;padding:.62rem 0;border-bottom:1px solid var(--rule)}
+  nav ol li:last-child a{border-bottom:0}
+  nav a::before{display:inline-block}
+}
+@media (prefers-reduced-motion:reduce){
+  nav,.navscrim{transition:none}
 }
 
 /* External links in the rail */
@@ -294,13 +323,17 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <!-- ════════════════════════════════════════════════════════════════
        SIDEBAR — wordmark, tab nav, links, theme button
        ════════════════════════════════════════════════════════════════ -->
+  <button class="navbtn" id="navtoggle" type="button"
+          aria-expanded="false" aria-controls="tabnav">Menu</button>
+  <div class="navscrim" id="navscrim"></div>
+
   <header class="rail">
     <div>
       <p class="wordmark"><a href="#about"><span class="given">José R.</span>Ocampo Gómez</a></p>
       <p class="rail-sub">Physics undergraduate<br>Stanford University</p>
     </div>
 
-    <nav aria-label="Sections">
+    <nav id="tabnav" aria-label="Sections">
       <ol>
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
@@ -331,7 +364,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   <div class="view is-active" id="v-about">
     <div id="top" class="hero">
       <h1>I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
-      <p>I'm a physics undergraduate at Stanford, where I currently work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping, mentored by Dr. Zhefu Yu.</p>
+      <p>I'm a physics undergraduate at Stanford, where I work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC), with Dr. Zhefu Yu as my mentor on the latter project.</p>
     </div>
 
     <!-- SIGNATURE FIGURE 1. Synthetic/illustrative only: no data, no results. -->
@@ -358,7 +391,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     <section id="about" aria-labelledby="about-h">
       <div class="head"><h2 id="about-h">About</h2><span class="count">Stanford &middot; KIPAC</span></div>
       <div class="prose">
-        <p class="lede">I’m a physics major at Stanford University, where I work with Professor Vahé Petrosian on AGN luminosity evolution and Professor Steven Allen on reverberation mapping, through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC).</p>
+        <p class="lede">My path into physics has been a little unconventional.</p>
         <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
         <p>Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
         <p>Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
@@ -409,7 +442,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <article class="entry">
         <h3>Flight telemetry for experimental radio-controlled aircraft<span class="status">Completed</span></h3>
         <p class="meta">NASA California Space Grant Consortium, Los Angeles City College &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Jayesh Bhakta &nbsp;&middot;&nbsp; April 2023&ndash;April 2024<br><b>Technologies:</b> Raspberry Pi Pico &middot; MicroPython &middot; nRF24L01 &middot; Java / Processing</p>
-        <p>I built a low-cost flight telemetry and data-logging system for experimental RC aircraft, integrating inertial, barometric, GPS, and current sensors on a Raspberry Pi Pico programmed in MicroPython. The system used a packet-based nRF24L01 radio link alongside onboard microSD logging, so data would be preserved even if the radio connection was lost.</p>
+        <p>Working with a four-person team, I built a low-cost flight telemetry and data-logging system for experimental RC aircraft, integrating inertial, barometric, GPS, and current sensors on a Raspberry Pi Pico programmed in MicroPython. The system used a packet-based nRF24L01 radio link alongside onboard microSD logging, so data would be preserved even if the radio connection was lost.</p>
         <p>I also developed a real-time ground-station display in Java and Processing, deriving aircraft pitch and roll from three-axis accelerometer data. During flight testing, I identified radio-frequency interference between the aircraft&rsquo;s control and telemetry transmissions as the source of instability in the downlink.</p>
         <p class="meta"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
       </article>
@@ -455,6 +488,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
         <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
       </ul>
+      <p class="note">The two AGN pipelines stay private until their manuscripts are out; happy to share on request.</p>
     </section>
   </div>
 
@@ -485,7 +519,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         </li>
         <li>
           <span class="when">2023</span>
-                    <p class="what"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico/blob/main/SCCUR-2023-telemetry-poster.pdf">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft</a><small>Southern California Conference for Undergraduate Research (SCCUR)</small></p>
+          <p class="what"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico/blob/main/SCCUR-2023-telemetry-poster.pdf">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft</a><small>Southern California Conference for Undergraduate Research (SCCUR)</small></p>
         </li>
       </ul>
 
@@ -760,18 +794,32 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     requestAnimationFrame(function(){
       document.dispatchEvent(new CustomEvent('viewshown', {detail:viewId}));
     });
-    // keep the active tab visible in the mobile strip
-    var active = links.filter(function(a){ return a.hasAttribute('aria-current'); })[0];
-    if(active && active.scrollIntoView) {
-      try { active.scrollIntoView({block:'nearest', inline:'center'}); } catch(err){}
-    }
   }
+
+  /* ── mobile nav panel ──────────────────────────────────────────── */
+  var nav    = document.getElementById('tabnav');
+  var navBtn = document.getElementById('navtoggle');
+  var scrim  = document.getElementById('navscrim');
+  function setNav(open){
+    nav.classList.toggle('open', open);
+    scrim.classList.toggle('open', open);
+    navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navBtn.textContent = open ? 'Close' : 'Menu';
+  }
+  navBtn.addEventListener('click', function(){
+    setNav(navBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  scrim.addEventListener('click', function(){ setNav(false); });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape') setNav(false);
+  });
 
   links.forEach(function(a){
     a.addEventListener('click', function(ev){
       ev.preventDefault();
       var hash = a.getAttribute('href');
       if(history.pushState) history.pushState(null,'',hash);
+      setNav(false);            // choosing a tab closes the panel
       show(idFor(hash), true);
     });
   });
@@ -947,10 +995,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     if(!view || !view.classList.contains('is-active')) return;
     played = false; running = false; start = null;
     progress = REDUCED ? 1 : 0;
-    // Wait for the tab's layout and its fade-in to settle, otherwise the
-    // draw races the reveal transition and is mostly over before it is
-    // visible. Then decide directly whether the canvas is on screen —
-    // re-observing alone is unreliable, since observe() does nothing for a
+    // A canvas keeps its pixels while its tab is hidden, so without this the
+    // old finished plot is on screen until the animation clears it: complete,
+    // then blank, then rebuilding. Clear it now so the tab opens empty.
+    draw();
+    // Then a short beat for layout before deciding whether the canvas is on
+    // screen. Re-observing alone is unreliable: observe() does nothing for a
     // target that was never unobserved (a figure that never played).
     setTimeout(function(){
       if(!cv.clientWidth) return;
@@ -964,7 +1014,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         vio.observe(cv);
         draw();              // show the empty axes until it scrolls in
       }
-    }, 420);
+    }, 140);
   });
 })();
 </script>
@@ -1188,10 +1238,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     if(!view || !view.classList.contains('is-active')) return;
     played = false; running = false; start = null;
     progress = REDUCED ? 1 : 0;
-    // Wait for the tab's layout and its fade-in to settle, otherwise the
-    // draw races the reveal transition and is mostly over before it is
-    // visible. Then decide directly whether the canvas is on screen —
-    // re-observing alone is unreliable, since observe() does nothing for a
+    // A canvas keeps its pixels while its tab is hidden, so without this the
+    // old finished plot is on screen until the animation clears it: complete,
+    // then blank, then rebuilding. Clear it now so the tab opens empty.
+    draw();
+    // Then a short beat for layout before deciding whether the canvas is on
+    // screen. Re-observing alone is unreliable: observe() does nothing for a
     // target that was never unobserved (a figure that never played).
     setTimeout(function(){
       if(!cv.clientWidth) return;
@@ -1205,7 +1257,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         vio.observe(cv);
         draw();              // show the empty axes until it scrolls in
       }
-    }, 420);
+    }, 140);
   });
 })();
 </script>
