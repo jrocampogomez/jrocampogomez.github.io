@@ -13,62 +13,76 @@
 <meta property="og:description" content="High-energy astrophysics: AGN luminosity evolution, reverberation mapping, and statistical methods for flux-limited samples.">
 <meta name="twitter:card" content="summary">
 
-<meta name="theme-color" content="#f3f5f2" media="(prefers-color-scheme:light)">
-<meta name="theme-color" content="#121614" media="(prefers-color-scheme:dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23171c1a'/%3E%3Cpath d='M4 26 C12 26 18 18 28 6' stroke='%237fc4b1' stroke-width='2' fill='none'/%3E%3Ccircle cx='9' cy='11' r='1.6' fill='%23f3f5f2'/%3E%3Ccircle cx='16' cy='8' r='1.6' fill='%23f3f5f2'/%3E%3Ccircle cx='22' cy='15' r='1.6' fill='%23f3f5f2'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#f6f3f1" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#121012" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a1315'/%3E%3Cpath d='M4 26 C12 26 18 18 28 6' stroke='%23cf4054' stroke-width='2' fill='none'/%3E%3Ccircle cx='9' cy='11' r='1.6' fill='%23f6f3f1'/%3E%3Ccircle cx='16' cy='8' r='1.6' fill='%23f6f3f1'/%3E%3Ccircle cx='22' cy='15' r='1.6' fill='%23f6f3f1'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════════
    1. DESIGN TOKENS — change a color here and it changes everywhere
    ═══════════════════════════════════════════════════════════════════ */
 :root{
-  --paper:#f3f5f2;        /* cool graph-paper white */
-  --paper-2:#e9ece8;      /* recessed panels */
-  --ink:#171c1a;          /* near-black, green undertone */
-  --ink-2:#5d6763;        /* secondary text, metadata */
-  --rule:#c9cfc9;         /* hairlines */
-  --accent:#25534a;       /* deep verdigris — links, data curve */
-  --accent-soft:rgba(37,83,74,.09);
+  --paper:#f6f3f1;        /* pale warm paper, kept near-neutral so red reads red */
+  --paper-2:#eae3e0;      /* recessed panels */
+  --ink:#1a1315;          /* near-black with a plum undertone */
+  --ink-2:#6b585a;        /* secondary text, metadata */
+  --rule:#d9cdc9;         /* hairlines */
+  --accent:#8c2733;       /* deep crimson, hue 353 — links, data curves */
+  --accent-deep:#5c1521;  /* oxblood, for weight */
+  --accent-soft:rgba(140,39,51,.11);
+  --data:#4f2a32;         /* plot markers: wine-tinted, not raw black */
 
-  --serif:"Newsreader",Iowan Old Style,Palatino,Georgia,serif;
+  --display:"Instrument Serif",Didot,"Bodoni 72","Bodoni MT",Georgia,serif;
+  --serif:"Crimson Pro","Crimson Text",Palatino,"Iowan Old Style","Book Antiqua",Georgia,serif;
+  /* Display is Instrument Serif (one weight only, so keep display text at 400).
+     To try another: "Bodoni Moda" = colder and more theatrical ·
+     "Cormorant Garamond" = softer and more romantic · "Spectral" = more technical.
+     Change --display and add the family to the fonts link above. */
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 
   --measure:63ch;         /* reading width */
   --rail:272px;           /* sidebar width */
   --gutter:clamp(1.4rem,5vw,4rem);
+  --ease:cubic-bezier(.2,.7,.3,1);
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --paper:#121614; --paper-2:#1a201d; --ink:#e6eae6; --ink-2:#98a39e;
-    --rule:#2e3733; --accent:#7fc4b1; --accent-soft:rgba(127,196,177,.10);
+    --paper:#121012; --paper-2:#1c1719; --ink:#efe6e4; --ink-2:#a28f90;
+    --rule:#37292d; --accent:#cf4054; --accent-deep:#8e2b38;
+    --accent-soft:rgba(207,64,84,.15); --data:#e3d0cb;
   }
 }
 /* Manual override set by the theme button */
 html[data-theme="light"]{
-  --paper:#f3f5f2; --paper-2:#e9ece8; --ink:#171c1a; --ink-2:#5d6763;
-  --rule:#c9cfc9; --accent:#25534a; --accent-soft:rgba(37,83,74,.09);
+  --paper:#f6f3f1; --paper-2:#eae3e0; --ink:#1a1315; --ink-2:#6b585a;
+  --rule:#d9cdc9; --accent:#8c2733; --accent-deep:#5c1521;
+  --accent-soft:rgba(140,39,51,.11); --data:#4f2a32;
 }
 html[data-theme="dark"]{
-  --paper:#121614; --paper-2:#1a201d; --ink:#e6eae6; --ink-2:#98a39e;
-  --rule:#2e3733; --accent:#7fc4b1; --accent-soft:rgba(127,196,177,.10);
+  --paper:#121012; --paper-2:#1c1719; --ink:#efe6e4; --ink-2:#a28f90;
+  --rule:#37292d; --accent:#cf4054; --accent-deep:#8e2b38;
+  --accent-soft:rgba(207,64,84,.15); --data:#e3d0cb;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    2. BASE
    ═══════════════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   margin:0; background:var(--paper); color:var(--ink);
-  font-family:var(--serif); font-size:clamp(1.02rem,.4vw + .95rem,1.14rem);
-  font-weight:400; line-height:1.62; letter-spacing:.002em;
+  font-family:var(--serif); font-size:clamp(1.06rem,.44vw + .99rem,1.2rem);
+  font-weight:400; line-height:1.64; letter-spacing:.003em;
+  font-kerning:normal; font-feature-settings:"liga" 1,"kern" 1;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  transition:background-color .3s ease, color .3s ease;
 }
 img{max-width:100%;height:auto;display:block}
 a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);transition:border-color .18s,color .18s}
 a:hover{border-bottom-color:var(--accent)}
+::selection{background:var(--accent-soft);color:var(--ink)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:1rem;top:1rem;z-index:99;background:var(--paper);padding:.6rem 1rem;border:1px solid var(--accent)}
@@ -79,7 +93,7 @@ a:hover{border-bottom-color:var(--accent)}
 .meta{font-family:var(--mono);font-size:.735rem;line-height:1.75;letter-spacing:.01em;color:var(--ink-2);text-transform:none}
 
 /* ═══════════════════════════════════════════════════════════════════
-   3. LAYOUT — persistent rail on the left, content on the right
+   3. LAYOUT — persistent rail on the left, one view at a time on the right
    ═══════════════════════════════════════════════════════════════════ */
 .shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;min-height:100vh}
 @media (max-width:900px){.shell{grid-template-columns:1fr}}
@@ -91,24 +105,40 @@ a:hover{border-bottom-color:var(--accent)}
 }
 @media (max-width:900px){
   .rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);
-        padding:1.9rem var(--gutter) 1.5rem}
+        padding:1.9rem var(--gutter) 0}
 }
-.wordmark{font-size:1.34rem;font-weight:500;line-height:1.15;letter-spacing:-.012em;margin:0}
+.wordmark{font-family:var(--display);font-size:1.72rem;font-weight:400;line-height:1.05;
+  letter-spacing:0;margin:0}
 .wordmark a{color:inherit;border:0}
-.wordmark .given{display:block;color:var(--ink-2);font-weight:400;font-style:italic}
+.wordmark .given{display:block;color:var(--accent);font-weight:400;font-style:italic;font-size:.84em}
 .rail-sub{margin:.55rem 0 0;font-size:.85rem;line-height:1.5;color:var(--ink-2)}
 
+/* ── tab navigation ─────────────────────────────────────────────── */
 nav ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.1rem}
-@media (max-width:900px){nav ol{flex-direction:row;flex-wrap:wrap;gap:.1rem 1.1rem}}
 nav a{
   display:block;padding:.22rem 0;border:0;color:var(--ink);
   font-family:var(--mono);font-size:.745rem;letter-spacing:.13em;text-transform:uppercase;
+  transition:color .2s;cursor:pointer;
 }
 nav a::before{content:"";display:inline-block;width:13px;height:1px;margin-right:9px;
-  vertical-align:middle;background:transparent;transition:background .2s}
-nav a:hover::before,nav a[aria-current="true"]::before{background:var(--accent)}
-nav a[aria-current="true"]{color:var(--accent)}
-@media (max-width:900px){nav a::before{display:none}}
+  vertical-align:middle;background:transparent;transition:background .25s var(--ease),width .25s var(--ease)}
+nav a:hover{color:var(--accent)}
+nav a:hover::before{background:var(--accent-soft)}
+nav a[aria-current="page"]{color:var(--accent)}
+nav a[aria-current="page"]::before{background:var(--accent);width:20px}
+
+/* mobile: a horizontally scrollable tab strip that sticks to the top */
+@media (max-width:900px){
+  nav{position:sticky;top:0;z-index:30;background:var(--paper);
+      margin:1.2rem calc(-1*var(--gutter)) 0;padding:.5rem var(--gutter) 0;
+      box-shadow:0 1px 0 var(--rule)}
+  nav ol{flex-direction:row;flex-wrap:nowrap;gap:0 1.35rem;overflow-x:auto;
+         scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav ol::-webkit-scrollbar{display:none}
+  nav a{white-space:nowrap;padding:.35rem 0 .6rem;border-bottom:2px solid transparent}
+  nav a::before{display:none}
+  nav a[aria-current="page"]{border-bottom-color:var(--accent)}
+}
 
 /* External links in the rail */
 .ilinks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.12rem}
@@ -119,7 +149,7 @@ nav a[aria-current="true"]{color:var(--accent)}
 .rail-foot{margin-top:auto;display:flex;flex-direction:column;gap:.8rem}
 @media (max-width:900px){
   .rail-foot{flex-direction:row;align-items:center;justify-content:space-between;
-             gap:1rem;margin-top:.4rem;flex-wrap:wrap}
+             gap:1rem;margin:0;padding:.9rem 0 1rem;flex-wrap:wrap}
 }
 .themebtn{
   font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
@@ -130,13 +160,18 @@ nav a[aria-current="true"]{color:var(--accent)}
 
 main{padding:0 var(--gutter) 5rem;min-width:0}
 
+/* ── one view at a time ─────────────────────────────────────────── */
+.view{display:none}
+.view.is-active{display:block}
+
 /* ═══════════════════════════════════════════════════════════════════
    4. HERO — the figure is the thesis of the page
    ═══════════════════════════════════════════════════════════════════ */
 .hero{padding:clamp(2.6rem,7vw,5.2rem) 0 0;max-width:var(--measure)}
 .hero h1{
-  font-size:clamp(1.72rem,3.4vw,2.62rem);font-weight:300;line-height:1.24;
-  letter-spacing:-.018em;margin:0 0 1.1rem;text-wrap:balance;
+  font-family:var(--display);
+  font-size:clamp(2rem,4.2vw,3.05rem);font-weight:400;line-height:1.1;
+  letter-spacing:-.002em;margin:0 0 1.15rem;text-wrap:balance;
 }
 .hero h1 em{font-style:italic;color:var(--accent)}
 .hero p{margin:0 0 1rem;color:var(--ink-2);font-size:1.02em}
@@ -152,18 +187,20 @@ main{padding:0 var(--gutter) 5rem;min-width:0}
    5. SECTIONS
    ═══════════════════════════════════════════════════════════════════ */
 section{padding:clamp(3rem,7vw,4.6rem) 0 0;scroll-margin-top:1.5rem}
+.view > section:first-child{padding-top:clamp(2.4rem,6vw,4rem)}
 .head{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--rule);padding-bottom:.5rem;margin-bottom:1.9rem}
-.head h2{font-size:1.06rem;font-weight:500;letter-spacing:.01em;margin:0;flex:0 0 auto}
+.head h2{font-family:var(--display);font-size:1.58rem;font-weight:400;letter-spacing:.004em;
+  line-height:1.08;margin:0;flex:0 0 auto}
 .head .count{margin-left:auto;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:right}
 .prose{max-width:var(--measure)}
 .prose p{margin:0 0 1.05em}
 .prose p:last-child{margin-bottom:0}
-.lede{font-size:1.1em}
+.lede{font-size:1.13em;line-height:1.62}
 
 /* Entry: one research project, one repo, one piece of writing */
 .entry{max-width:var(--measure);padding:0 0 2.1rem;margin:0 0 2.1rem;border-bottom:1px solid var(--rule)}
 .entry:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
-.entry h3{font-size:1.12rem;font-weight:500;letter-spacing:-.005em;margin:0 0 .3rem;line-height:1.35}
+.entry h3{font-size:1.14rem;font-weight:600;letter-spacing:.002em;margin:0 0 .32rem;line-height:1.34}
 .entry h3 a{border-bottom-color:var(--rule)}
 .entry .meta{display:block;margin:0 0 .8rem}
 .entry .meta b{font-weight:400;color:var(--ink)}
@@ -171,7 +208,7 @@ section{padding:clamp(3rem,7vw,4.6rem) 0 0;scroll-margin-top:1.5rem}
 .entry p:last-child{margin-bottom:0}
 .status{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;
   border:1px solid var(--rule);padding:.16rem .45rem;margin-left:.4rem;color:var(--ink-2);vertical-align:.12em;white-space:nowrap}
-.status.live{color:var(--accent);border-color:var(--accent)}
+.status.live{color:var(--accent);border-color:var(--accent-soft);background:var(--accent-soft)}
 
 /* Compact list: talks, awards, courses */
 .rows{list-style:none;margin:0;padding:0;max-width:var(--measure)}
@@ -190,9 +227,10 @@ section{padding:clamp(3rem,7vw,4.6rem) 0 0;scroll-margin-top:1.5rem}
 .chips li{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;color:var(--ink-2);
   background:var(--paper-2);padding:.28rem .55rem}
 
-/* Pull-quote used once, in the writing section */
-.pull{max-width:var(--measure);margin:0 0 2.1rem;padding:0 0 0 1.2rem;border-left:2px solid var(--accent);
-  font-style:italic;color:var(--ink-2)}
+/* Pull-quote */
+.pull{max-width:var(--measure);margin:0 0 2.1rem;padding:0 0 0 1.3rem;border-left:2px solid var(--accent);
+  font-family:var(--display);font-size:1.34em;font-weight:400;font-style:italic;
+  line-height:1.38;color:var(--ink-2)}
 .pull p{margin:0}
 
 /* Contact block */
@@ -202,21 +240,19 @@ section{padding:clamp(3rem,7vw,4.6rem) 0 0;scroll-margin-top:1.5rem}
 footer{max-width:var(--measure);margin-top:clamp(3rem,7vw,4.6rem);padding-top:1.1rem;border-top:1px solid var(--rule)}
 footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:var(--ink-2)}
 
-/* Entrance: one quiet orchestrated reveal, then nothing moves again. */
+/* ═══════════════════════════════════════════════════════════════════
+   6. MOTION — blocks fade up as they enter the viewport, once each.
+   JS adds .rv to every block, then .in when it should appear.
+   ═══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion:no-preference){
-  .reveal{opacity:0;transform:translateY(9px);animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards}
-  .reveal:nth-child(1){animation-delay:.05s}
-  .reveal:nth-child(2){animation-delay:.13s}
-  .reveal:nth-child(3){animation-delay:.21s}
-  .reveal:nth-child(4){animation-delay:.29s}
-  @keyframes rise{to{opacity:1;transform:none}}
+  .rv{opacity:0;transform:translateY(15px);
+      transition:opacity .66s var(--ease), transform .66s var(--ease)}
+  .rv.in{opacity:1;transform:none}
+  .view.is-active{animation:viewIn .34s var(--ease) both}
+  @keyframes viewIn{from{opacity:0}to{opacity:1}}
 }
-
-@media print{
-  .rail nav,.themebtn,.figure{display:none}
-  .shell{display:block}
-  body{background:#fff;color:#000;font-size:10.5pt}
-  a{color:#000;border:0}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none}
 }
 
 /* --- additions for the expanded content ------------------------- */
@@ -229,6 +265,15 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 .subhead:first-of-type{margin-top:0}
 .note{max-width:var(--measure);margin:1.5rem 0 0;font-family:var(--mono);font-size:.715rem;
   line-height:1.7;color:var(--ink-2)}
+
+@media print{
+  .rail nav,.themebtn,.figure{display:none}
+  .shell{display:block}
+  .view{display:block !important}
+  .rv{opacity:1 !important;transform:none !important}
+  body{background:#fff;color:#000;font-size:10.5pt}
+  a{color:#000;border:0}
+}
 </style></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -236,11 +281,11 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 <div class="shell">
 
   <!-- ════════════════════════════════════════════════════════════════
-       SIDEBAR
+       SIDEBAR — wordmark, tab nav, links, theme button
        ════════════════════════════════════════════════════════════════ -->
   <header class="rail">
     <div>
-      <p class="wordmark"><a href="#top"><span class="given">José R.</span>Ocampo Gómez</a></p>
+      <p class="wordmark"><a href="#about"><span class="given">José R.</span>Ocampo Gómez</a></p>
       <p class="rail-sub">Physics undergraduate<br>Stanford University</p>
     </div>
 
@@ -271,30 +316,33 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   </header>
 
   <main id="main">
+
+  <!-- ══════════════════ TAB 1 · LANDING + ABOUT ═══════════════════ -->
+  <div class="view is-active" id="v-about" role="tabpanel" aria-labelledby="tab-about">
     <div id="top" class="hero">
-      <h1 class="reveal">I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
-      <p class="reveal">I'm a physics undergraduate at Stanford, where I currently work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping, mentored by Dr. Zhefu Yu.</p>
+      <h1>I work on active galaxies, in particular how their light evolves, how big their emitting regions are, and what even our best telescopes <em>can't see</em>.</h1>
+      <p>I'm a physics undergraduate at Stanford, where I currently work with Prof. Vahé Petrosian on AGN luminosity evolution and with Prof. Steven Allen on reverberation mapping, mentored by Dr. Zhefu Yu.</p>
     </div>
 
-     <!-- SIGNATURE FIGURE 1. Synthetic/illustrative only: no data, no results. -->
-<figure class="figure reveal">
-  <canvas id="plot" width="1520" height="620" role="img"
-    aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
-  <figcaption class="figcap">
-    <p>Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
-    <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
-  </figcaption>
-</figure>
+    <!-- SIGNATURE FIGURE 1. Synthetic/illustrative only: no data, no results. -->
+    <figure class="figure">
+      <canvas id="plot" width="1520" height="620" role="img"
+        aria-label="Illustrative scatter plot of luminosity against redshift. A rising curve marks the survey flux limit; no sources appear below it, because such sources are too faint to detect."></canvas>
+      <figcaption class="figcap">
+        <p>Luminosity vs. redshift for a flux-limited sample. The curve marks the detection threshold: sources below it are simply too faint for the survey to detect. That missing population is what makes these samples tricky; understanding what we're missing is a big part of the problem. <em>Illustrative sketch &mdash; synthetic points, no data.</em></p>
+        <span class="tag">Fig. 1 &nbsp;/&nbsp; truncation</span>
+      </figcaption>
+    </figure>
 
-<!-- SIGNATURE FIGURE 2. Synthetic/illustrative only: no data, no results. -->
-<figure class="figure reveal">
-  <canvas id="rmPlot" width="1520" height="620" role="img"
-    aria-label="Illustrative two-panel reverberation mapping figure. The left panel shows a variable continuum light curve, while the right panel shows an emission-line light curve responding after a time delay."></canvas>
-  <figcaption class="figcap">
-    <p>The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
-    <span class="tag">Fig. 2 &nbsp;/&nbsp; reverberation</span>
-  </figcaption>
-</figure>
+    <!-- SIGNATURE FIGURE 2. Synthetic/illustrative only: no data, no results. -->
+    <figure class="figure">
+      <canvas id="rmPlot" width="1520" height="620" role="img"
+        aria-label="Illustrative two-panel reverberation mapping figure. The upper panel shows a variable continuum light curve; the lower panel shows the emission line responding to it, smoothed and delayed, with no data for the first lag because the echo has not yet arrived."></canvas>
+      <figcaption class="figcap">
+        <p>The basic idea behind reverberation mapping: as an active galaxy varies, the gas around its central black hole responds after a delay. Measuring that delay gives us a way to estimate the size of the region producing the emission and ultimately the mass of the supermassive black hole lurking at the galaxy's center. <em>Illustrative sketch &mdash; synthetic light curves, no data.</em></p>
+        <span class="tag">Fig. 2 &nbsp;/&nbsp; reverberation</span>
+      </figcaption>
+    </figure>
 
     <!-- ─────────────────────────── ABOUT ─────────────────────────── -->
     <section id="about" aria-labelledby="about-h">
@@ -302,7 +350,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       <div class="prose">
         <p class="lede">I’m a physics major at Stanford University, where I work with Professor Vahé Petrosian on AGN luminosity evolution and Professor Steven Allen on reverberation mapping, through the Kavli Institute for Particle Astrophysics and Cosmology (KIPAC).</p>
         <p>I started at Los Angeles City College, did my first research there through the NASA California Space Grant Consortium under the supervision of Prof. Jayesh Bhakta, and transferred to Stanford as a Jack Kent Cooke Undergraduate Transfer Scholar. It’s not the path I expected to take, but it’s the one that brought me here.</p>
-        <p>Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>        
+        <p>Outside of astrophysics, I’m a co-lead on the Policy Team at the Stanford Student Space Initiative, where I work on international space law, space security, and nuclear nonproliferation. I’m also involved in STEM outreach, from mentoring community college students through Stanford’s Community College Outreach Program to facilitating public observing nights, where I operate telescopes and help visitors explore the night sky. A big part of what I care about is making science feel accessible—whether that means helping someone navigate a path into STEM or simply giving them a chance to look through a telescope and ask questions.</p>
         <p>Long term, I want to work in astrophysics, wherever that takes me between theory and observation, while staying involved in the broader questions surrounding science, technology, and society. Outside of physics, I write poetry and fiction, and I like spending time outdoors, whether that's under a clear night sky, at the beach, or somewhere out in the woods.</p>
       </div>
 
@@ -317,10 +365,12 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         </li>
       </ul>
     </section>
+  </div>
 
-    <!-- ─────────────────────────── RESEARCH ────────────────────────
-         TO ADD A PROJECT: copy one <article class="entry"> block.
-         ─────────────────────────────────────────────────────────── -->
+  <!-- ══════════════════════ TAB 2 · RESEARCH ══════════════════════
+       TO ADD A PROJECT: copy one <article class="entry"> block.
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view" id="v-research" role="tabpanel" aria-labelledby="tab-research">
     <section id="research" aria-labelledby="research-h">
       <div class="head"><h2 id="research-h">Research</h2><span class="count">3 active &middot; 1 past</span></div>
 
@@ -333,7 +383,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
       <article class="entry">
         <h3>The Fe&nbsp;II emitting region in AGN<span class="status live">Active</span></h3>
-        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>        
+        <p class="meta">KIPAC, Stanford University &nbsp;&middot;&nbsp; <b>Advisor:</b> Prof. Steven Allen &nbsp;&middot;&nbsp; <b>Mentor:</b> Dr. Zhefu Yu &nbsp;&middot;&nbsp; June 2025&ndash;present<br><b>Methods:</b> PyCCF &middot; JAVELIN &middot; PyROA &middot; simulation-based validation</p>
         <p>Reverberation mapping converts a time delay into a physical size, so a radius or a black hole mass is only as trustworthy as the lag it came from. I&rsquo;m measuring reverberation lags between the AGN continuum and UV Fe&nbsp;II emission across 25 OzDES-monitored active galactic nuclei at z&nbsp;&asymp;&nbsp;1&ndash;2, using multi-year photometric and spectroscopic observations.</p>
         <p>I&rsquo;m applying and cross-validating three independent lag estimators, then using simulations to quantify their accuracy and failure modes under realistic noise and sampling. The goal is to constrain the Fe&nbsp;II radius&ndash;luminosity relation and ultimately use it to estimate supermassive black hole masses.</p>
       </article>
@@ -354,199 +404,211 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         <p class="meta"><a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">Repository and poster</a> &middot; presented at SCCUR&nbsp;2023 and NCUR&nbsp;2024</p>
       </article>
     </section>
+  </div>
 
-   <!-- ─────────────────────────── CODE ──────────────────────────── -->
-   <section id="code" aria-labelledby="code-h">
-     <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects</span></div>
-     <div class="prose">
-       <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind the projects above.</p>
-     </div>
-   
-     <article class="entry" style="margin-top:1.9rem">
-       <h3>FSRQ luminosity evolution analysis</h3>
-       <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
-       <p>Computational analysis of a tri-variate FSRQ sample constructed from Fermi-LAT &gamma;-ray, VLBI radio, and Gaia DR2 optical observations. The analysis includes sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian method, and Lynden-Bell&rsquo;s C&minus; estimator to recover the luminosity evolution, differential luminosity functions, cumulative density functions, and co-moving density evolution of the population.</p>
-       <p>I&rsquo;m also characterizing the resulting luminosity functions with broken-power-law models and estimating uncertainties through bootstrap resampling. Once the evolution is removed, the same analysis can be used to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
-     </article>
-   
-     <article class="entry">
-       <h3>Lag-recovery testing for reverberation mapping</h3>
-       <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
-       <p>Computational tools for measuring and validating reverberation lags in the OzDES data described above. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
-       <p>A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
-     </article>
-   
-     <article class="entry">
-       <h3>Bayesian AGN SED modelling</h3>
-       <p class="meta">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
-       <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
-     </article>
-   
-     <article class="entry">
-       <h3>RC aircraft telemetry firmware and ground station</h3>
-       <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing &nbsp;&middot;&nbsp; <a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">github.com/jrocampogomez/RC-Plane-Telemetry&hellip;</a></p>
-       <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public repository and poster.</p>
-     </article>
-   
-     <ul class="chips" aria-label="Tools">
-       <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
-       <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
-       <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
-     </ul>
-   </section>
+  <!-- ════════════════════════ TAB 3 · CODE ════════════════════════ -->
+  <div class="view" id="v-code" role="tabpanel" aria-labelledby="tab-code">
+    <section id="code" aria-labelledby="code-h">
+      <div class="head"><h2 id="code-h">Code</h2><span class="count">4 projects</span></div>
+      <div class="prose">
+        <p>A lot of my research happens computationally, so this is where I keep some of the analysis and simulation work behind the projects above.</p>
+      </div>
 
-    <!-- ────────────────────── PRESENTATIONS ────────────────────────
-     TO ADD A ROW: copy one <li> block.
-     ─────────────────────────────────────────────────────────── -->
-      <section id="presentations" aria-labelledby="pres-h">
-        <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">5 posters &middot; 3 talks</span></div>
-      
-        <p class="subhead">Posters</p>
-        <ul class="rows">
-          <li>
-            <span class="when">2026</span>
-            <p class="what">The cosmological evolution of gamma-ray and radio luminosity functions in FSRQs<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
-          </li>
-          <li>
-            <span class="when">2026</span>
-            <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Symposium of Undergraduate Research and Public Service (SURPS)</small></p>
-          </li>
-          <li>
-            <span class="when">2025</span>
-            <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
-          </li>
-          <li>
-            <span class="when">2024</span>
-            <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>National Conference for Undergraduate Research (NCUR)</small></p>
-          </li>
-          <li>
-            <span class="when">2023</span>
-            <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>Southern California Conference for Undergraduate Research (SCCUR)</small></p>
-          </li>
-        </ul>
-      
-        <p class="subhead">Talks</p>
-        <ul class="rows">
-          <li>
-            <span class="when">2026</span>
-            <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
-          </li>
-          <li>
-            <span class="when">2026</span>
-            <p class="what">Magic with Lights<small>TRiO CenCal Conference, Evergreen Valley College &middot; KIPAC Public Outreach</small></p>
-          </li>
-          <li>
-            <span class="when">2025</span>
-            <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
-          </li>
-        </ul>
-      </section>
+      <article class="entry" style="margin-top:1.9rem">
+        <h3>FSRQ luminosity evolution analysis</h3>
+        <p class="meta">Python &middot; NumPy &middot; SciPy &middot; Astropy &middot; pandas &middot; Jupyter</p>
+        <p>Computational analysis of a tri-variate FSRQ sample constructed from Fermi-LAT &gamma;-ray, VLBI radio, and Gaia DR2 optical observations. The analysis includes sample construction and truncation limits, K-corrections, the Efron&ndash;Petrosian method, and Lynden-Bell&rsquo;s C&minus; estimator to recover the luminosity evolution, differential luminosity functions, cumulative density functions, and co-moving density evolution of the population.</p>
+        <p>I&rsquo;m also characterizing the resulting luminosity functions with broken-power-law models and estimating uncertainties through bootstrap resampling. Once the evolution is removed, the same analysis can be used to measure the intrinsic &gamma;-ray&ndash;radio luminosity correlation and investigate the relationship between jet and accretion-disk emission.</p>
+      </article>
 
-    <!-- ─────────────────────────── AWARDS ────────────────────────── -->
-      <section id="awards" aria-labelledby="awards-h">
-        <div class="head"><h2 id="awards-h">Awards &amp; Fellowships</h2><span class="count">6 awards</span></div>
-      
-        <ul class="rows">
-          <li>
-            <span class="when">2026</span>
-            <p class="what">VPUE STEM Fellow<small>Stanford University</small></p>
-          </li>
-          <li>
-            <span class="when">2025</span>
-            <p class="what">Physics SURP Funding<small>Stanford University</small></p>
-          </li>
-          <li>
-            <span class="when">2024</span>
-            <p class="what">Jack Kent Cooke Transfer Scholarship<small>Jack Kent Cooke Foundation</small></p>
-          </li>
-          <li>
-            <span class="when">2023</span>
-            <p class="what">Physics &amp; Engineering Department Scholarship<small>Los Angeles City College</small></p>
-          </li>
-          <li>
-            <span class="when">2023</span>
-            <p class="what">Mathematics Department Scholarship<small>Los Angeles City College</small></p>
-          </li>
-          <li>
-            <span class="when">2022</span>
-            <p class="what">Eugene McKnight Philosophy Scholarship<small>Los Angeles City College</small></p>
-          </li>
-        </ul>
-      </section>
-     
-   <!-- ────────────────── OUTREACH & SERVICE ─────────────────────── -->
-   <section id="outreach" aria-labelledby="outreach-h">
-     <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">STEM outreach &middot; mentoring</span></div>
-   
-     <article class="entry">
-       <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
-       <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
-       <p>I facilitate public stargazing nights at the Stanford Student Observatory, operating telescopes and talking with visitors about what we&rsquo;re observing. I also give career-focused talks and lead scientific demonstrations for high school and community college students from underrepresented backgrounds.</p>
-       <p>Through the Noches Astronómicas outreach program, I give astronomy talks in Spanish and take part in moderated Q&amp;A sessions.</p>
-     </article>
-   
-     <article class="entry">
-       <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
-       <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-       <p>I facilitate workshops for 120+ students on the transfer process, particularly for students pursuing STEM, and lead small-group discussions of eight to ten students where I can offer more personalized advice, answer questions, and point students toward resources for navigating the transfer process.</p>
-       <p>I transferred to Stanford from a community college myself, so helping other students navigate that path is something I care about personally.</p>
-     </article>
-   
-     <article class="entry">
-       <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
-       <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
-       <p>Helping build community among Stanford&rsquo;s transfer students and alumni, with responsibilities including finances, budgeting, and event planning.</p>
-     </article>
-   </section>
+      <article class="entry">
+        <h3>Lag-recovery testing for reverberation mapping</h3>
+        <p class="meta">Python &middot; PyCCF &middot; JAVELIN &middot; PyROA &middot; simulated light curves</p>
+        <p>Computational tools for measuring and validating reverberation lags in the OzDES data described above. I run three independent lag estimators over the same light curves and use simulations with realistic survey cadence and noise to test how reliably each method recovers known input lags.</p>
+        <p>A current focus is developing quality cuts that distinguish reliable lag measurements from cases where the recovered lag is sensitive to noise, sampling, or other features of the light curves. These cuts will be used to establish a reliable sample for constraining the Fe&nbsp;II radius&ndash;luminosity relation and, ultimately, black hole masses.</p>
+      </article>
 
-    <!-- ─────────────────────────── WRITING ───────────────────────── -->
-      <section id="writing" aria-labelledby="writing-h">
-        <div class="head">
-          <h2 id="writing-h">Writing</h2>
-          <span class="count">poetry &middot; fiction</span>
-        </div>
-      
-        <div class="prose">
-          <p>
-           I write poetry and fiction alongside studying physics. I&rsquo;ve written more than
-           a hundred poems, as well as short stories and the beginnings of several
-           longer works. I enjoy moving between different forms, voices, and styles.
-          </p>
-        </div>
-      
-        <article class="entry" style="margin-top:1.9rem">
-          <h3><em>Adiós, y Bienvenidos</em><span class="status">Poetry</span></h3>
-          <p class="meta">Poetry collection &middot; ongoing</p>
-          <p>
-            Poems about immigration, memory, loneliness, love, and the strange
-            distances between leaving and arriving. Rain, astronomy, and the natural
-            world recur throughout the collection as ways of writing about home,
-            loss, identity, and the people we carry with us.
-          </p>
-        </article>
-      
-        <article class="entry">
-          <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
-          <p class="meta">Short story</p>
-          <p>
-            A story about grief, guilt, and a young man caught between life and death
-            after a tragedy of his own making. As the empty Los Angeles around him
-            begins to reveal what happened, his bond with a lost little girl becomes
-            a second chance at being the older brother he thought he could no longer be.
-          </p>
-        </article>
-      
-        <article class="entry">
-           <h3>Other work<span class="status">In progress</span></h3>
-           <p class="meta">Fiction &middot; longer-form projects</p>
-           <p>
-             I&rsquo;m also working on several longer-form fiction projects, most of which
-             are still private and in various stages of drafting.
-           </p>
-         </article>
-      </section>
+      <article class="entry">
+        <h3>Bayesian AGN SED modelling</h3>
+        <p class="meta">Python &middot; custom Metropolis&ndash;Hastings MCMC &middot; custom numerical integration &nbsp;&middot;&nbsp; Stanford Physics 113, 2026</p>
+        <p>A Python implementation of thin-disk spectral energy distribution fitting for AGN, using my own Metropolis&ndash;Hastings MCMC implementation and numerical integrator to infer black hole masses and accretion rates from observational data. I reproduced published measurements for high-redshift blazars and tested how the inferred parameters depend on the numerical integration scheme.</p>
+      </article>
 
-    <!-- ─────────────────────────── CONTACT ───────────────────────── -->
+      <article class="entry">
+        <h3>RC aircraft telemetry firmware and ground station</h3>
+        <p class="meta">MicroPython &middot; Raspberry Pi Pico &middot; Java / Processing &nbsp;&middot;&nbsp; <a href="https://github.com/jrocampogomez/RC-Plane-Telemetry-Device-Using-Raspberry-Pi-Pico">github.com/jrocampogomez/RC-Plane-Telemetry&hellip;</a></p>
+        <p>Onboard firmware reading an IMU, barometer, GPS, and current sensor over I&sup2;C and SPI, writing to microSD and transmitting over a packet radio link; plus a ground-station application that decodes the stream and plots orientation and power telemetry live. Public repository and poster.</p>
+      </article>
+
+      <ul class="chips" aria-label="Tools">
+        <li>Python</li><li>NumPy</li><li>SciPy</li><li>Astropy</li><li>pandas</li>
+        <li>Matplotlib</li><li>Jupyter</li><li>C++</li><li>MicroPython</li>
+        <li>Java / Processing</li><li>Mathematica</li><li>LaTeX</li><li>Git</li><li>UNIX / Bash</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ═══════════════════ TAB 4 · PRESENTATIONS ════════════════════
+       TO ADD A ROW: copy one <li> block.
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="view" id="v-presentations" role="tabpanel" aria-labelledby="tab-presentations">
+    <section id="presentations" aria-labelledby="pres-h">
+      <div class="head"><h2 id="pres-h">Presentations</h2><span class="count">5 posters &middot; 3 talks</span></div>
+
+      <p class="subhead">Posters</p>
+      <ul class="rows">
+        <li>
+          <span class="when">2026</span>
+          <p class="what">The cosmological evolution of gamma-ray and radio luminosity functions in FSRQs<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
+        </li>
+        <li>
+          <span class="when">2026</span>
+          <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Symposium of Undergraduate Research and Public Service (SURPS)</small></p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <p class="what">Probing the Fe&nbsp;II emission region of AGNs with the OzDES RM project<small>Stanford Physics Summer Undergraduate Research Program (SURP)</small></p>
+        </li>
+        <li>
+          <span class="when">2024</span>
+          <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>National Conference for Undergraduate Research (NCUR)</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Flight data telemetry device with data logging using customized off-the-shelf modules for experimental radio control aircraft<small>Southern California Conference for Undergraduate Research (SCCUR)</small></p>
+        </li>
+      </ul>
+
+      <p class="subhead">Talks</p>
+      <ul class="rows">
+        <li>
+          <span class="when">2026</span>
+          <p class="what"><span class="kind">Invited</span>Listening to the Echoes of Supermassive Black Holes<small>MESA Program, College of San Mateo Planetarium</small></p>
+        </li>
+        <li>
+          <span class="when">2026</span>
+          <p class="what">Magic with Lights<small>TRiO CenCal Conference, Evergreen Valley College &middot; KIPAC Public Outreach</small></p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <p class="what"><span class="kind">In Spanish</span>Agujeros Negros: Los motores invisibles del Universo<small>Noches Astronómicas &middot; KIPAC Public Outreach</small></p>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════ TAB 5 · AWARDS ═══════════════════════ -->
+  <div class="view" id="v-awards" role="tabpanel" aria-labelledby="tab-awards">
+    <section id="awards" aria-labelledby="awards-h">
+      <div class="head"><h2 id="awards-h">Awards &amp; Fellowships</h2><span class="count">6 awards</span></div>
+
+      <ul class="rows">
+        <li>
+          <span class="when">2026</span>
+          <p class="what">VPUE STEM Fellow<small>Stanford University</small></p>
+        </li>
+        <li>
+          <span class="when">2025</span>
+          <p class="what">Physics SURP Funding<small>Stanford University</small></p>
+        </li>
+        <li>
+          <span class="when">2024</span>
+          <p class="what">Jack Kent Cooke Transfer Scholarship<small>Jack Kent Cooke Foundation</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Physics &amp; Engineering Department Scholarship<small>Los Angeles City College</small></p>
+        </li>
+        <li>
+          <span class="when">2023</span>
+          <p class="what">Mathematics Department Scholarship<small>Los Angeles City College</small></p>
+        </li>
+        <li>
+          <span class="when">2022</span>
+          <p class="what">Eugene McKnight Philosophy Scholarship<small>Los Angeles City College</small></p>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ═════════════════ TAB 6 · OUTREACH & SERVICE ═════════════════ -->
+  <div class="view" id="v-outreach" role="tabpanel" aria-labelledby="tab-outreach">
+    <section id="outreach" aria-labelledby="outreach-h">
+      <div class="head"><h2 id="outreach-h">Outreach &amp; service</h2><span class="count">STEM outreach &middot; mentoring</span></div>
+
+      <article class="entry">
+        <h3>KIPAC Public Outreach<span class="status live">Active</span></h3>
+        <p class="meta">Team member &nbsp;&middot;&nbsp; Sept 2025&ndash;present</p>
+        <p>I facilitate public stargazing nights at the Stanford Student Observatory, operating telescopes and talking with visitors about what we&rsquo;re observing. I also give career-focused talks and lead scientific demonstrations for high school and community college students from underrepresented backgrounds.</p>
+        <p>Through the Noches Astronómicas outreach program, I give astronomy talks in Spanish and take part in moderated Q&amp;A sessions.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Stanford Community College Outreach Program<span class="status live">Active</span></h3>
+        <p class="meta">Mentor &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p>I facilitate workshops for 120+ students on the transfer process, particularly for students pursuing STEM, and lead small-group discussions of eight to ten students where I can offer more personalized advice, answer questions, and point students toward resources for navigating the transfer process.</p>
+        <p>I transferred to Stanford from a community college myself, so helping other students navigate that path is something I care about personally.</p>
+      </article>
+
+      <article class="entry">
+        <h3>Stanford Transfer Network<span class="status live">Active</span></h3>
+        <p class="meta">Co-president &nbsp;&middot;&nbsp; June 2026&ndash;present</p>
+        <p>Helping build community among Stanford&rsquo;s transfer students and alumni, with responsibilities including finances, budgeting, and event planning.</p>
+      </article>
+    </section>
+  </div>
+
+  <!-- ══════════════════════ TAB 7 · WRITING ═══════════════════════ -->
+  <div class="view" id="v-writing" role="tabpanel" aria-labelledby="tab-writing">
+    <section id="writing" aria-labelledby="writing-h">
+      <div class="head">
+        <h2 id="writing-h">Writing</h2>
+        <span class="count">poetry &middot; fiction</span>
+      </div>
+
+      <div class="prose">
+        <p>
+         I write poetry and fiction alongside studying physics. I&rsquo;ve written more than
+         a hundred poems, as well as short stories and the beginnings of several
+         longer works. I enjoy moving between different forms, voices, and styles.
+        </p>
+      </div>
+
+      <article class="entry" style="margin-top:1.9rem">
+        <h3><em>Adiós, y Bienvenidos</em><span class="status">Poetry</span></h3>
+        <p class="meta">Poetry collection &middot; ongoing</p>
+        <p>
+          Poems about immigration, memory, loneliness, love, and the strange
+          distances between leaving and arriving. Rain, astronomy, and the natural
+          world recur throughout the collection as ways of writing about home,
+          loss, identity, and the people we carry with us.
+        </p>
+      </article>
+
+      <article class="entry">
+        <h3>&ldquo;There Was No Need&rdquo;<span class="status">Short fiction</span></h3>
+        <p class="meta">Short story</p>
+        <p>
+          A story about grief, guilt, and a young man caught between life and death
+          after a tragedy of his own making. As the empty Los Angeles around him
+          begins to reveal what happened, his bond with a lost little girl becomes
+          a second chance at being the older brother he thought he could no longer be.
+        </p>
+      </article>
+
+      <article class="entry">
+         <h3>Other work<span class="status">In progress</span></h3>
+         <p class="meta">Fiction &middot; longer-form projects</p>
+         <p>
+           I&rsquo;m also working on several longer-form fiction projects, most of which
+           are still private and in various stages of drafting.
+         </p>
+       </article>
+    </section>
+  </div>
+
+  <!-- ══════════════════════ TAB 8 · CONTACT ═══════════════════════ -->
+  <div class="view" id="v-contact" role="tabpanel" aria-labelledby="tab-contact">
     <section id="contact" aria-labelledby="contact-h">
       <div class="head"><h2 id="contact-h">Contact</h2><span class="count">Stanford, CA</span></div>
       <div class="contact">
@@ -569,6 +631,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       </div>
       <p class="note">Languages: Spanish (fluent), English.</p>
     </section>
+  </div>
 
     <footer>
       <p>Last updated August 2026 &middot; Built by hand in one HTML file &middot; &copy; José R. Ocampo Gómez</p>
@@ -594,6 +657,115 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   "sameAs":["https://github.com/jrocampogomez","https://orcid.org/0009-0009-4123-9214"]
 }
 </script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   APP — theme toggle, tab routing, scroll reveals.
+   Figures listen for 'themechange' and 'viewshown' and repaint.
+   ═══════════════════════════════════════════════════════════════════ */
+(function(){
+  var root  = document.documentElement;
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── theme ─────────────────────────────────────────────────────── */
+  var btn = document.getElementById('theme');
+  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function label(){ btn.textContent = dark ? 'Light' : 'Dark'; }
+  label();
+  btn.addEventListener('click', function(){
+    dark = !dark;
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    label();
+    document.dispatchEvent(new CustomEvent('themechange'));
+  });
+
+  /* ── scroll reveals ────────────────────────────────────────────── */
+  // Every block that should fade up as it arrives.
+  var SEL = '.hero > *, .figure, .head, .prose, .rows > li, .entry, '
+          + '.chips, .subhead, .note, .pull, .contact > div, footer';
+
+  var io = null;
+  if(!REDUCED && 'IntersectionObserver' in window){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+  }
+
+  function reveal(scope){
+    var items = [].slice.call(scope.querySelectorAll(SEL));
+    if(REDUCED || !io){ items.forEach(function(el){ el.classList.add('rv','in'); }); return; }
+    var vh = window.innerHeight, shown = 0;
+    items.forEach(function(el){
+      el.classList.remove('in');
+      el.classList.add('rv');
+      el.style.transitionDelay = '';
+      var top = el.getBoundingClientRect().top;
+      if(top < vh*0.92){
+        // already on screen when the tab opens: stagger it in
+        el.style.transitionDelay = Math.min(shown*70, 420) + 'ms';
+        shown++;
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ el.classList.add('in'); });
+        });
+      } else {
+        io.observe(el);
+      }
+    });
+  }
+
+  /* ── tabs ──────────────────────────────────────────────────────── */
+  var views = [].slice.call(document.querySelectorAll('.view'));
+  var links = [].slice.call(document.querySelectorAll('nav a[href^="#"]'));
+
+  function idFor(hash){
+    var name = (hash || '').replace('#','');
+    return document.getElementById('v-' + name) ? 'v-' + name : 'v-about';
+  }
+
+  function show(viewId, scroll){
+    views.forEach(function(v){ v.classList.toggle('is-active', v.id === viewId); });
+    links.forEach(function(a){
+      var on = idFor(a.getAttribute('href')) === viewId;
+      if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+    });
+    var view = document.getElementById(viewId);
+    if(!view) return;
+    if(scroll) window.scrollTo(0,0);
+    reveal(view);
+    // let layout settle, then tell the figures to repaint at the new width
+    requestAnimationFrame(function(){
+      document.dispatchEvent(new CustomEvent('viewshown', {detail:viewId}));
+    });
+    // keep the active tab visible in the mobile strip
+    var active = links.filter(function(a){ return a.hasAttribute('aria-current'); })[0];
+    if(active && active.scrollIntoView) {
+      try { active.scrollIntoView({block:'nearest', inline:'center'}); } catch(err){}
+    }
+  }
+
+  links.forEach(function(a){
+    a.addEventListener('click', function(ev){
+      ev.preventDefault();
+      var hash = a.getAttribute('href');
+      if(history.pushState) history.pushState(null,'',hash);
+      show(idFor(hash), true);
+    });
+  });
+  document.querySelector('.wordmark a').addEventListener('click', function(ev){
+    ev.preventDefault();
+    if(history.pushState) history.pushState(null,'','#about');
+    show('v-about', true);
+  });
+  window.addEventListener('popstate', function(){ show(idFor(location.hash), true); });
+
+  show(idFor(location.hash), false);
+})();
+</script>
+
 <script>
 /* ═══════════════════════════════════════════════════════════════════
    Fig. 1 — a flux-limited sample.
@@ -618,56 +790,50 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   }
   var Z0 = 0.02, ZMAX = 3.6;
   var LMIN = 43.0, LMAX = 49.4;
-  // limiting luminosity: L_lim proportional to 4*pi*dL^2. The offset is
-  // chosen so the threshold enters at the bottom-left of the frame.
   var OFF = LMIN - 2*Math.log10(dL(Z0));
   function logLlim(z){ return 2*Math.log10(Math.max(dL(z),1e-6)) + OFF; }
 
-  // precompute the threshold in data coordinates (draw runs every frame)
   var LIM = [];
   for(var k=0;k<=240;k++){
     var zk = Z0 + k/240*(ZMAX-Z0);
     LIM.push([zk, Math.max(LMIN, Math.min(logLlim(zk), LMAX))]);
   }
 
-  // --- seeded RNG so the scatter is the same every load -------------
   var seed = 20260819;
   function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
 
-  // --- build a synthetic sample ------------------------------------
   var pts = [], tries = 0;
   while(pts.length < 420 && tries++ < 40000){
     var z = Z0 + Math.pow(rnd(), 0.62) * (ZMAX - Z0);
-    // luminosity function-ish: common faint, rare bright
     var L = 43.5 + Math.pow(rnd(), 2.35) * 5.7;
     if(L > logLlim(z) + 0.02) pts.push([z, L, rnd()]);
   }
 
   function draw(){
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = cv.clientWidth || 760, h = Math.round(w * 0.408);
+    var w = cv.clientWidth;
+    if(!w) return;                       // hidden tab: nothing to draw yet
+    var h = Math.round(w * 0.408);
     cv.width = w*dpr; cv.height = h*dpr;
     cv.style.height = h + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,w,h);
 
     var cs  = getComputedStyle(document.documentElement);
-    var ink = cs.getPropertyValue('--ink').trim()   || '#171c1a';
-    var acc = cs.getPropertyValue('--accent').trim()|| '#25534a';
-    var rul = cs.getPropertyValue('--rule').trim()  || '#c9cfc9';
-    var sub = cs.getPropertyValue('--ink-2').trim() || '#5d6763';
+    var ink = cs.getPropertyValue('--data').trim()  || '#4f2a32';
+    var acc = cs.getPropertyValue('--accent').trim()|| '#8c2733';
+    var rul = cs.getPropertyValue('--rule').trim()  || '#d9cdc9';
+    var sub = cs.getPropertyValue('--ink-2').trim() || '#6b585a';
 
     var pad = {l:44, r:8, t:10, b:26};
     var X = function(z){ return pad.l + (z-Z0)/(ZMAX-Z0) * (w-pad.l-pad.r); };
     var Y = function(L){ return h-pad.b - (L-LMIN)/(LMAX-LMIN) * (h-pad.t-pad.b); };
 
-    // axes
     ctx.strokeStyle = rul; ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h-pad.b); ctx.lineTo(w-pad.r, h-pad.b);
     ctx.stroke();
 
-    // ticks
     ctx.fillStyle = sub;
     ctx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -681,7 +847,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
       ctx.fillText(String(L), pad.l-7, Y(L));
     });
 
-    // axis titles
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
     ctx.fillText('redshift  z', pad.l+2, h-2);
     ctx.save();
@@ -690,7 +855,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.fillText('log L  [erg s⁻¹]', 0, 0);
     ctx.restore();
 
-    // unobservable region + threshold curve
     var curve = LIM.map(function(d){ return [X(d[0]), Y(d[1])]; });
     ctx.beginPath();
     ctx.moveTo(curve[0][0], h-pad.b);
@@ -699,8 +863,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.closePath();
     ctx.fillStyle = acc; ctx.globalAlpha = 0.06; ctx.fill(); ctx.globalAlpha = 1;
 
-    // points, revealed left to right
-    var t = prefersMotion ? progress : 1;
+    var t = REDUCED ? 1 : progress;
     ctx.fillStyle = ink;
     pts.forEach(function(p){
       var zn = (p[0]-Z0)/(ZMAX-Z0);
@@ -712,7 +875,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     });
     ctx.globalAlpha = 1;
 
-    // the curve itself, drawn on top
     ctx.strokeStyle = acc; ctx.lineWidth = 1.5;
     ctx.beginPath();
     curve.forEach(function(p,i){
@@ -721,7 +883,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     });
     ctx.stroke();
 
-    // label on the empty region
     if(t > 0.75){
       ctx.fillStyle = acc;
       ctx.globalAlpha = Math.min((t-0.75)/0.25, 1) * 0.85;
@@ -732,49 +893,37 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     }
   }
 
-  var prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var progress = 0, start = null;
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = REDUCED ? 1 : 0, start = null, running = false, played = false;
   function frame(ts){
     if(start === null) start = ts;
     progress = Math.min((ts-start)/1400, 1);
     draw();
-    if(progress < 1) requestAnimationFrame(frame);
+    if(progress < 1) requestAnimationFrame(frame); else running = false;
   }
-  draw();
-  if(prefersMotion) requestAnimationFrame(frame); else { progress = 1; draw(); }
+  function play(){
+    if(played || REDUCED){ progress = 1; draw(); return; }
+    played = true; running = true; start = null;
+    requestAnimationFrame(frame);
+  }
 
-  var rt;
-  window.addEventListener('resize', function(){
-    clearTimeout(rt); rt = setTimeout(draw, 140);
-  });
-
-  /* ── theme button ──────────────────────────────────────────────── */
-  var btn = document.getElementById('theme');
-  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  function label(){ btn.textContent = dark ? 'Light' : 'Dark'; }
-  label();
-  btn.addEventListener('click', function(){
-    dark = !dark;
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-    label(); draw();
-  });
-
-  /* ── mark the section you're reading in the sidebar ────────────── */
-  var links = [].slice.call(document.querySelectorAll('nav a'));
-  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  // draw the points only once the figure has scrolled into view
   if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(!e.isIntersecting) return;
-        links.forEach(function(a,i){
-          a.setAttribute('aria-current', targets[i] === e.target ? 'true' : 'false');
-        });
-      });
-    }, {rootMargin:'-15% 0px -70% 0px'});
-    targets.forEach(function(t){ if(t) io.observe(t); });
-  }
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ play(); vio.unobserve(e.target); } });
+    }, {threshold:0.2});
+    vio.observe(cv);
+  } else { play(); }
+
+  draw();
+  var rt;
+  function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
+  window.addEventListener('resize', repaint);
+  document.addEventListener('themechange', repaint);
+  document.addEventListener('viewshown', repaint);
 })();
 </script>
+
 <script>
 /* ═══════════════════════════════════════════════════════════════════
    Fig. 2 — the emission line as an echo of the continuum.
@@ -803,13 +952,10 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   var N = Math.round(TMAX/DT) + 1;
   function tOf(i){ return i*DT; }
 
-  // continuum: damped random walk, starting when the campaign starts
   var cont = new Array(N), x = 0;
   var a = Math.exp(-DT/TAU_DRW), b = Math.sqrt(1 - a*a);
   for(var i=0;i<N;i++){ x = a*x + b*gauss(); cont[i] = x; }
 
-  // line: the continuum smoothed and shifted. Undefined until a full
-  // transfer function's worth of continuum exists behind it.
   var kern = [], kSpan = Math.ceil((LAG + 2.5*WIDTH)/DT);
   for(var k=0;k<=kSpan;k++){
     var e = (k*DT - LAG)/WIDTH;
@@ -827,10 +973,9 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     // continuum known only from t=0, the echo cannot exist before t=tau.
     line[i2] = (tOf(i2) >= LAG && wt > 0) ? acc/wt : NaN;
   }
-  var tStart = LAG;                                 // where the echo begins
+  var tStart = LAG;
   for(var i3=0;i3<N;i3++){ if(!isNaN(line[i3])){ tStart = tOf(i3); break; } }
 
-  // put both on a common scale
   function normalise(arr){
     var v = arr.filter(function(d){ return !isNaN(d); });
     var lo = Math.min.apply(null,v), hi = Math.max.apply(null,v);
@@ -839,7 +984,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
   }
   cont = normalise(cont); line = normalise(line);
 
-  // sample into observing seasons
   function observe(model, cadence, noise){
     var pts = [], t = 0;
     while(t < TMAX){
@@ -859,17 +1003,19 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
 
   function draw(){
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = cv.clientWidth || 760, h = Math.round(w * 0.48);
+    var w = cv.clientWidth;
+    if(!w) return;
+    var h = Math.round(w * 0.48);
     cv.width = w*dpr; cv.height = h*dpr;
     cv.style.height = h + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.clearRect(0,0,w,h);
 
     var cs   = getComputedStyle(document.documentElement);
-    var ink  = cs.getPropertyValue('--ink').trim()    || '#171c1a';
-    var acc  = cs.getPropertyValue('--accent').trim() || '#25534a';
-    var rul  = cs.getPropertyValue('--rule').trim()   || '#c9cfc9';
-    var sub  = cs.getPropertyValue('--ink-2').trim()  || '#5d6763';
+    var ink  = cs.getPropertyValue('--data').trim()   || '#4f2a32';
+    var acc  = cs.getPropertyValue('--accent').trim() || '#8c2733';
+    var rul  = cs.getPropertyValue('--rule').trim()   || '#d9cdc9';
+    var sub  = cs.getPropertyValue('--ink-2').trim()  || '#6b585a';
     var mono = '500 9.5px "IBM Plex Mono", ui-monospace, monospace';
 
     var pad = {l:44, r:8, t:12, b:26};
@@ -877,8 +1023,7 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     var X = function(t){ return pad.l + (t/TMAX)*(w-pad.l-pad.r); };
     var Y = function(v,row){ return pad.t + rowH*(row+0.5) - v*(rowH*0.36); };
 
-    var prog = prefersMotion ? progress : 1;
-    var tCut = prog*TMAX;
+    var tCut = (REDUCED ? 1 : progress)*TMAX;
 
     ctx.strokeStyle = rul; ctx.lineWidth = 1;
     ctx.beginPath();
@@ -887,7 +1032,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.beginPath();
     ctx.moveTo(pad.l, pad.t+rowH); ctx.lineTo(w-pad.r, pad.t+rowH); ctx.stroke();
 
-    // ticks
     ctx.fillStyle = sub; ctx.font = mono;
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     [0,300,600,900,1200,1500,1800].forEach(function(d){
@@ -943,7 +1087,6 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
         ctx.moveTo(bx, pad.t+rowH+1); ctx.lineTo(bx, h-pad.b);
         ctx.stroke(); ctx.setLineDash([]);
 
-        // bracket across the blank, labelled with the lag
         var by = h - pad.b - 9;
         ctx.strokeStyle = acc; ctx.fillStyle = acc; ctx.lineWidth = 1.1;
         ctx.beginPath(); ctx.moveTo(pad.l+1, by); ctx.lineTo(bx, by); ctx.stroke();
@@ -968,29 +1111,33 @@ footer p{margin:0;font-family:var(--mono);font-size:.7rem;line-height:1.8;color:
     ctx.fillStyle = acc; ctx.fillText('EMISSION LINE', pad.l+7, pad.t+rowH+4);
   }
 
-  var prefersMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var progress = 0, start = null;
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var progress = REDUCED ? 1 : 0, start = null, running = false, played = false;
   function frame(ts){
     if(start === null) start = ts;
     progress = Math.min((ts-start)/1700, 1);
     draw();
-    if(progress < 1) requestAnimationFrame(frame);
+    if(progress < 1) requestAnimationFrame(frame); else running = false;
   }
+  function play(){
+    if(played || REDUCED){ progress = 1; draw(); return; }
+    played = true; running = true; start = null;
+    requestAnimationFrame(frame);
+  }
+  if('IntersectionObserver' in window){
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ play(); vio.unobserve(e.target); } });
+    }, {threshold:0.2});
+    vio.observe(cv);
+  } else { play(); }
+
   draw();
-  if(prefersMotion) requestAnimationFrame(frame); else { progress = 1; draw(); }
-
   var rt;
-  window.addEventListener('resize', function(){
-    clearTimeout(rt); rt = setTimeout(draw, 140);
-  });
-
-  if(window.MutationObserver){
-    new MutationObserver(draw).observe(document.documentElement,
-      {attributes:true, attributeFilter:['data-theme']});
-  }
+  function repaint(){ clearTimeout(rt); rt = setTimeout(function(){ if(!running) draw(); }, 60); }
+  window.addEventListener('resize', repaint);
+  document.addEventListener('themechange', repaint);
+  document.addEventListener('viewshown', repaint);
 })();
 </script>
 </body>
 </html>
-
-
